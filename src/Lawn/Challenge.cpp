@@ -3058,7 +3058,7 @@ void Challenge::DrawRain(Graphics* g)
 	if (mBoard->mCutScene->IsBeforePreloading() || !mApp->Is3DAccelerated())
 		return;
 
-	int aBoardOffsetX;
+	int aBoardOffsetX = 0;
 	if (aBoardOffsetX > 0)
 	{
 		aBoardOffsetX = (mBoard->mX + 100) / 100 * -100;
