@@ -60,6 +60,7 @@ BassMusicInterface::BassMusicInterface(HWND theHWnd)
 	{
 		success = gBass->BASS_Init2(1, 44100, 0, theHWnd, NULL);
 		gBass->BASS_SetConfig(BASS_CONFIG_BUFFER, 2000);
+		gBass->BASS_SetConfig(BASS_CONFIG_FLOATDSP, TRUE);
 	}
 	else
 		success = gBass->BASS_Init(-1, 44100, 0, theHWnd);
