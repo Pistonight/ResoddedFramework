@@ -60,6 +60,12 @@ endif()
 
 foreach(FILE_PATH IN LISTS SOURCES)
     file(RELATIVE_PATH REL_PATH "${CMAKE_SOURCE_DIR}/src/Lawn" "${FILE_PATH}")
+
+    # skip files if . or ..
+    if(REL_PATH MATCHES "^\\.\\.")
+        continue()
+    endif()
+
     get_filename_component(FOLDER_PATH "${REL_PATH}" PATH)
     string(REPLACE "/" "\\" FILTER_PATH "${FOLDER_PATH}")
     source_group("${FILTER_PATH}" FILES "${FILE_PATH}")
