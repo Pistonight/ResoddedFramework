@@ -1301,6 +1301,11 @@ void LawnApp::Init()
 	mSukhbirCheck = new TypingCheck("sukhbir");
 
 #ifdef _DEBUG
+	mTodCheatKeys = true;
+	mDebugKeysEnabled = true;
+#endif
+
+#ifdef _DEBUG
 	aDuration = mTimer.GetDuration();
 	TodTrace("loading: 'system' %d ms", aDuration);
 #endif
@@ -1344,12 +1349,8 @@ void LawnApp::HandleCmdLineParam(const std::string& theParamName, const std::str
 #ifndef _DEBUG
 	if (theParamName == "-tod")
 	{
-#endif
-#ifdef _DEBUG
 		mTodCheatKeys = true;
 		mDebugKeysEnabled = true;
-#endif
-#ifndef _DEBUG
 	}
 	else
 #endif
