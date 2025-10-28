@@ -2462,8 +2462,28 @@ void* gResources[(int)Sexy::ResourceId::RESOURCE_ID_MAX] =
 
 Sexy::Image* Sexy::GetImageById(ResourceId theId)
 {
-	return *(Sexy::Image**)gResources[(int)theId];
+	if (gResources == nullptr)
+		return nullptr;
+
+	int index = (int)theId;
+
+	if (index < 0 || index >= (int)Sexy::ResourceId::RESOURCE_ID_MAX)
+	{
+		printf("Invalid resource ID: %d\n", index);
+		return nullptr;
+	}
+
+	void* entry = gResources[index];
+	if (entry == nullptr)
+	{
+		printf("Resource %d is null!\n", index);
+		return nullptr;
+	}
+
+	Sexy::Image* img = *(Sexy::Image**)entry;
+	return img;
 }
+
 
 Sexy::Font* Sexy::GetFontById(ResourceId theId)
 {
