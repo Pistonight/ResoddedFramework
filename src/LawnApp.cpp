@@ -118,7 +118,6 @@ LawnApp::LawnApp()
 	std::string aTitleName = "Plants vs. Zombies";
 #ifdef _DEBUG
 	aTitleName += " BETA ";
-	aTitleName += mProductVersion;
 #endif
 
 	mTitle = StringToSexyStringFast(aTitleName);
