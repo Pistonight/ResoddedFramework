@@ -280,6 +280,7 @@ void CutScene::FindPlaceForStreetZombies(ZombieType theZombieType, bool theZombi
 	else
 	{
 		TodWeightedGridArray* aGrid = TodPickFromWeightedGridArray(aPicks, aPicksCount);
+		if (!aGrid) return;
 		thePosX = aGrid->mX;
 		thePosY = aGrid->mY;
 	}

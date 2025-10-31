@@ -3829,6 +3829,7 @@ void Challenge::ScaryPotterPlacePot(ScaryPotType theScaryPotType, ZombieType the
 	while (theCount > 0)
 	{
 		TodWeightedGridArray* aGrid = TodPickFromWeightedGridArray(theGridArray, theGridArrayCount);
+		if (!aGrid) return;
 
 		GridItem* aScaryPot = mBoard->mGridItems.DataArrayAlloc();
 		aScaryPot->mGridItemType = GRIDITEM_SCARY_POT;

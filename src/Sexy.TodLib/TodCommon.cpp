@@ -159,7 +159,12 @@ TodWeightedGridArray* TodPickFromWeightedGridArray(const TodWeightedGridArray* t
 	{
 		aTotalWeight += theArray[i].mWeight;
 	}
-	TOD_ASSERT(aTotalWeight > 0);
+
+	if (aTotalWeight <= 0)
+	{
+		int randIndex = rand() % theCount;
+		return const_cast<TodWeightedGridArray*>(&theArray[randIndex]);
+	}
 
 	aTotalWeight = Sexy::Rand(aTotalWeight);
 
