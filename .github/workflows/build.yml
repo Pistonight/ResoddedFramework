@@ -21,7 +21,7 @@ jobs:
       - name: Setup CMake
         uses: lukka/get-cmake@latest
         with:
-          cmake-version: '3.27.2'
+          cmakeVersion: '3.27.2'
 
       - name: Create build directory
         run: mkdir build
