@@ -626,7 +626,8 @@ bool DefinitionIsCompiled(const SexyString &theXMLFilePath)
 
 	if (!GetFileAttributesEx(theXMLFilePath.c_str(), _GET_FILEEX_INFO_LEVELS::GetFileExInfoStandard, &lpFileData))
 	{
-		TodTrace(_S("Can't file source file to compile '%s'"), theXMLFilePath);
+		// This message PISSES me off
+		//TodTrace(_S("Can't file source file to compile '%s'"), theXMLFilePath);
 		return true;
 	}
 	else
