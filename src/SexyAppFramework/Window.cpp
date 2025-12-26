@@ -1,0 +1,27 @@
+#include "Window.h"
+#include "SexyAppBase.h"
+
+using namespace Sexy;
+
+    
+Window::Window(SexyAppBase* theApp)
+{
+    mApp = theApp;
+    mInternalWindow = SDL_CreateWindow(mApp->mTitle.c_str(), mApp->mWidth, mApp->mHeight, 0);
+}
+
+Window::~Window()
+{
+    SDL_DestroyWindow(mInternalWindow);
+}
+
+#ifdef WIN32
+ 
+HWND Window::GetHWND()
+{
+    SDL_PropertiesID props = SDL_GetWindowProperties(mInternalWindow);
+    HWND hwnd = (HWND)SDL_GetPointerProperty(props, SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+    return hwnd;
+}
+
+#endif

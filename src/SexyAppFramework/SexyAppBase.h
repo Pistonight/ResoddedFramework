@@ -29,6 +29,7 @@ class MusicInterface;
 class MemoryImage;
 class HTTPTransfer;
 class Dialog;
+class Window;
 
 class ResourceManager;
 
@@ -169,6 +170,7 @@ class SexyAppBase : public ButtonListener, public DialogListener
 	bool mInitialized;
 	bool mProcessInTimer;
 	DWORD mTimeLoaded;
+	Window* mWindow;
 	HWND mHWnd;
 	HWND mInvisHWnd;
 	bool mIsScreenSaver;

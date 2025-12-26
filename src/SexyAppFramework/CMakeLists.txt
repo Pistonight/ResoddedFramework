@@ -27,6 +27,8 @@ endforeach()
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL3::SDL3-static)
+
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     WIN32
     $<$<CONFIG:Debug>:DEBUG>

@@ -1,0 +1,27 @@
+#pragma once
+
+#include <SDL3/SDL.h>
+
+#ifdef WIN32
+#include "windows.h"
+#endif
+
+namespace Sexy
+{
+    class SexyAppBase;
+
+    class Window
+    {
+    public:
+        SexyAppBase* mApp;
+        SDL_Window* mInternalWindow;
+    public:
+        Window(SexyAppBase* theApp);
+        ~Window();
+
+        #ifdef WIN32
+            HWND GetHWND();
+        #endif
+    };
+
+} // namespace Sexy

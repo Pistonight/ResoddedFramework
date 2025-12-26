@@ -12,6 +12,7 @@
 #include "D3DInterface.h"
 #include "D3DTester.h"
 #include "DDImage.h"
+#include "Window.h"
 #include "MemoryImage.h"
 #include "HTTPTransfer.h"
 #include "Dialog.h"
@@ -165,6 +166,7 @@ SexyAppBase::SexyAppBase()
 	mPreferredY = -1;
 	mIsScreenSaver = false;
 	mAllowMonitorPowersave = true;
+	mWindow = nullptr;
 	mHWnd = NULL;
 	mDDInterface = NULL;
 	mMusicInterface = NULL;
@@ -447,18 +449,11 @@ SexyAppBase::~SexyAppBase()
 	delete mMusicInterface;
 	delete mSoundManager;
 
-	if (mHWnd != NULL)
+	if (mWindow != NULL)
 	{
-		HWND aWindow = mHWnd;
-		mHWnd = NULL;
-
-		SetWindowLong(aWindow, GWL_USERDATA, NULL);
-
-		/*char aStr[256];
-		sprintf(aStr, "HWND: %d\r\n", aWindow);
-		OutputDebugString(aStr);*/
-
-		DestroyWindow(aWindow);
+		SDL_PropertiesID props = SDL_GetWindowProperties(mWindow->mInternalWindow);
+		SDL_SetPointerProperty(props, "sexyappframework.userdata", nullptr);
+		delete mWindow;
 	}
 
 	WaitForLoadingThread();
@@ -4105,7 +4100,7 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 		}
 #endif
 	}
-	else if (theKey == VK_F3)
+	else if (theKey == SDLK_F3)
 	{
 		if (mWidgetManager->mKeyDown[KEYCODE_SHIFT])
 		{
@@ -4126,7 +4121,7 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 			gForceDisplay = true;
 		}
 	}
-	else if (theKey == VK_F8)
+	else if (theKey == SDLK_F8)
 	{
 		if (mWidgetManager->mKeyDown[KEYCODE_SHIFT])
 		{
@@ -4142,7 +4137,7 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 
 		return true;
 	}
-	else if (theKey == VK_F10)
+	else if (theKey == SDLK_F10)
 	{
 #ifndef RELEASEFINAL
 		if (mWidgetManager->mKeyDown[KEYCODE_CONTROL])
@@ -4163,7 +4158,7 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 
 		return true;
 	}
-	else if (theKey == VK_F11)
+	else if (theKey == SDLK_F11)
 	{
 		if (mWidgetManager->mKeyDown[KEYCODE_SHIFT])
 			DumpProgramInfo();
@@ -4172,7 +4167,7 @@ bool SexyAppBase::DebugKeyDown(int theKey)
 
 		return true;
 	}
-	else if (theKey == VK_F2)
+	else if (theKey == SDLK_F2)
 	{
 		bool isPerfOn = !SexyPerf::IsPerfOn();
 		if (isPerfOn)
@@ -4203,6 +4198,331 @@ void SexyAppBase::CloseRequestAsync()
 {
 }
 
+bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
+{
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+
+		if ((mRecordingDemoBuffer) && (!mShutdown))
+		{
+			switch (event.type)
+			{
+				case SDL_EVENT_WINDOW_FOCUS_LOST:
+				case SDL_EVENT_WINDOW_FOCUS_GAINED:
+				{
+					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&event);
+					if (theTargetWindow == mWindow->mInternalWindow)
+					{
+						WriteDemoTimingBlock();
+						mDemoBuffer.WriteNumBits(0, 1);
+						mDemoBuffer.WriteNumBits(DEMO_ACTIVATE_APP, 5);
+						mDemoBuffer.WriteNumBits((event.type != SDL_EVENT_WINDOW_FOCUS_LOST) ? 1 : 0, 1);
+					}
+					break;
+				}
+				case SDL_EVENT_WINDOW_MAXIMIZED:
+				case SDL_EVENT_WINDOW_MINIMIZED:
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(DEMO_SIZE, 5);
+					mDemoBuffer.WriteBoolean(event.type == SDL_EVENT_WINDOW_MINIMIZED);
+					break;
+				case SDL_EVENT_MOUSE_MOTION:
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+				{
+
+					int aCurX = event.button.x;
+					int aCurY = event.button.y;
+					int aDiffX = aCurX - mLastDemoMouseX;
+					int aDiffY = aCurY - mLastDemoMouseY;
+
+					if ((abs(aCurX - mLastDemoMouseX) < 32) && (abs(aCurY - mLastDemoMouseY) < 32))
+					{
+						if ((aDiffX != 0) || (aDiffY != 0))
+						{
+							WriteDemoTimingBlock();
+							mDemoBuffer.WriteNumBits(1, 1);
+							mDemoBuffer.WriteNumBits(0, 1);
+							mDemoBuffer.WriteNumBits(aDiffX, 6);
+							mDemoBuffer.WriteNumBits(aDiffY, 6);
+						}
+					}
+					else
+					{
+						WriteDemoTimingBlock();
+						mDemoBuffer.WriteNumBits(0, 1);
+						mDemoBuffer.WriteNumBits(DEMO_MOUSE_POSITION, 5);
+						mDemoBuffer.WriteNumBits(aCurX, 12);
+						mDemoBuffer.WriteNumBits(aCurY, 12);
+					}
+
+					bool down = event.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
+					int aBtnNum = 0;
+					switch (event.button.button)
+					{
+						case SDL_BUTTON_LEFT:
+							aBtnNum = 1;
+							break;
+						case SDL_BUTTON_RIGHT:
+							aBtnNum = -1;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							aBtnNum = 3;
+							break;
+					}
+
+
+					if (aBtnNum != 0)
+					{
+						WriteDemoTimingBlock();
+						mDemoBuffer.WriteNumBits(1, 1);
+						mDemoBuffer.WriteNumBits(1, 1);
+						mDemoBuffer.WriteNumBits(down ? 1 : 0, 1);
+						mDemoBuffer.WriteNumBits(aBtnNum, 3);
+					}
+
+					mLastDemoMouseX = aCurX;
+					mLastDemoMouseY = aCurY;
+				}
+				break;
+				case SDL_EVENT_MOUSE_WHEEL:
+				{				
+					int aZDelta = event.wheel.y;
+
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(DEMO_MOUSE_WHEEL, 5);
+					mDemoBuffer.WriteNumBits(aZDelta, 8);
+				}
+				break;
+				case SDL_EVENT_KEY_DOWN:
+				case SDL_EVENT_KEY_UP:
+				{
+					bool isDown = event.type == SDL_EVENT_KEY_DOWN;
+					SDL_Keycode aKeyCode = event.key.key;
+
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(isDown ? DEMO_KEY_DOWN : DEMO_KEY_UP, 5);
+					mDemoBuffer.WriteNumBits((int)aKeyCode, 8);
+				}
+				break;
+				case SDL_EVENT_TEXT_INPUT:
+				{
+					SexyChar aChar = event.text.text[0]; 
+
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(DEMO_KEY_CHAR, 5);
+					mDemoBuffer.WriteNumBits(sizeof(SexyChar) == 2, 1);
+					mDemoBuffer.WriteNumBits(aChar, sizeof(SexyChar) * 8);
+				}
+				break;
+				case SDL_EVENT_QUIT:
+				{
+					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&event);
+					if (theTargetWindow == mWindow->mInternalWindow)
+					{
+						WriteDemoTimingBlock();
+						mDemoBuffer.WriteNumBits(0, 1);
+						mDemoBuffer.WriteNumBits(DEMO_CLOSE, 5);
+					}
+				}
+
+				int aBufferSize = mDemoBuffer.GetDataLen();
+			}
+			
+		}
+
+		if (!mPlayingDemoBuffer)
+		{
+			switch (event.type)
+			{
+				case SDL_EVENT_WINDOW_FOCUS_GAINED:
+					if ((!gInAssert) && (!mSEHOccured) && (!mShutdown))
+					{
+						mActive = true;
+						RehupFocus();
+						if (!mIsWindowed)
+							mWidgetManager->MarkAllDirty();
+						if (mIsOpeningURL && !mActive)
+							URLOpenSucceeded(mOpeningURL);
+					}
+					break;
+				case SDL_EVENT_WINDOW_FOCUS_LOST:
+					mActive = false;
+					RehupFocus();
+					if (mIsOpeningURL && mActive)
+						URLOpenFailed(mOpeningURL);
+					break;
+				case SDL_EVENT_WINDOW_MINIMIZED:
+					mMinimized = true;
+					if (mMuteOnLostFocus)
+						Mute(true);
+					break;
+				case SDL_EVENT_WINDOW_MAXIMIZED:
+				case SDL_EVENT_WINDOW_RESTORED:
+					mMinimized = false;
+					if (mMuteOnLostFocus)
+						Unmute(true);
+					mWidgetManager->MarkAllDirty();
+					break;
+				case SDL_EVENT_MOUSE_MOTION:
+					if (!gInAssert && !mSEHOccured)
+					{
+						int x = event.motion.x;
+						int y = event.motion.y;
+						mWidgetManager->RemapMouse(x, y);
+						mLastUserInputTick = mLastTimerTime;
+						mWidgetManager->MouseMove(x, y);
+						if (!mMouseIn)
+						{
+							mMouseIn = true;
+							EnforceCursor();
+						}
+					}
+					break;
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+					if (!gInAssert && !mSEHOccured)
+					{
+						int btnCode = 0;
+						bool down = event.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
+
+						switch (event.button.button)
+						{
+						case SDL_BUTTON_LEFT:
+							btnCode = 1;
+							break;
+						case SDL_BUTTON_RIGHT:
+							btnCode = -1;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							btnCode = 3;
+							break;
+						}
+
+						int x = event.button.x;
+						int y = event.button.y;
+
+						mWidgetManager->RemapMouse(x, y);
+
+						mLastUserInputTick = mLastTimerTime;
+
+						mWidgetManager->MouseMove(x, y);
+
+						if (!mMouseIn)
+						{
+							if (mRecordingDemoBuffer)
+							{
+								WriteDemoTimingBlock();
+								mDemoBuffer.WriteNumBits(0, 1);
+								mDemoBuffer.WriteNumBits(DEMO_MOUSE_ENTER, 5);
+							}
+
+							mMouseIn = true;
+							EnforceCursor();
+						}
+
+
+						if (down)
+							mWidgetManager->MouseDown(x, y, btnCode);
+						else
+							mWidgetManager->MouseUp(x, y, btnCode);
+					}
+					break;
+				case SDL_EVENT_MOUSE_WHEEL:
+					mWidgetManager->MouseWheel(event.wheel.y);
+					break;
+				case SDL_EVENT_KEY_DOWN:
+				case SDL_EVENT_KEY_UP: {
+					bool isDown = event.type == SDL_EVENT_KEY_DOWN;
+					SDL_Keycode key = event.key.key;
+
+					mLastUserInputTick = mLastTimerTime;
+
+					if (isDown && mDebugKeysEnabled && DebugKeyDown(key))
+						break;
+
+					if (isDown)
+						mWidgetManager->KeyDown(GetKeyCodeFromSDLKeycode(key));
+					else
+						mWidgetManager->KeyUp(GetKeyCodeFromSDLKeycode(key));
+					break;
+				}
+				case SDL_EVENT_TEXT_INPUT: {
+					mLastUserInputTick = mLastTimerTime;
+
+					SexyChar aChar = event.text.text[0]; // assumes UTF-8 safe
+
+					mWidgetManager->KeyChar((SexyChar)aChar);
+					break;
+				}
+				case SDL_EVENT_WINDOW_MOVED:
+				{
+					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&event);
+					if (mWindow->mInternalWindow != theTargetWindow && mIsWindowed)
+					{
+						mPreferredX = event.window.data1;
+						mPreferredY = event.window.data2;
+					}
+					break;
+				}
+				case SDL_EVENT_WINDOW_RESIZED:
+				{
+					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&event);
+					if (mWindow->mInternalWindow != theTargetWindow && !mShutdown && (SDL_GetWindowFlags(mWindow->mInternalWindow) & SDL_WINDOW_MINIMIZED != mMinimized))
+					{
+						mMinimized = SDL_GetWindowFlags(mWindow->mInternalWindow) & SDL_WINDOW_MINIMIZED;
+
+						// We don't want any sounds (or music) playing while its minimized
+						if (mMinimized)
+						{
+							if (mMuteOnLostFocus)
+								Mute(true);
+						}
+						else
+						{
+							if (mMuteOnLostFocus)
+								Unmute(true);
+
+							mWidgetManager->MarkAllDirty();
+						}
+						RehupFocus();
+					}
+					break;
+				}
+				
+				case SDL_EVENT_WINDOW_DISPLAY_CHANGED:
+					mWidgetManager->SysColorChangedAll();
+					mWidgetManager->MarkAllDirty();
+					break;
+			}
+
+		}
+
+		//Demo independent events.
+		switch (event.type)
+		{
+			case SDL_EVENT_QUIT:
+				// This should short-circuit all demo calls, otherwise we will get
+				//  all sorts of weird asserts because we are changing
+				//  program flow
+				mManualShutdown = true;
+
+				Shutdown();
+				break;
+			
+			default:
+				break;
+		}
+	}
+	
+	return SDL_HasEvents(SDL_EVENT_FIRST, SDL_EVENT_LAST);
+}
+/*
 // Why did I defer messages?  Oh, incase a dialog comes up such as a crash
 //  it won't keep crashing and stuff
 bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
@@ -4216,174 +4536,6 @@ bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
 		LPARAM lParam = aMsg.lParam;
 		WPARAM wParam = aMsg.wParam;
 		HWND hWnd = aMsg.hwnd;
-
-		if ((mRecordingDemoBuffer) && (!mShutdown))
-		{
-			switch (uMsg)
-			{
-				//  TODO: switch to killfocus/setfocus?
-				//			case WM_SETFOCUS:
-				//			case WM_KILLFOCUS:
-				//				if (hWnd == mHWnd)
-				//				{
-				//					WriteDemoTimingBlock();
-				//					mDemoBuffer.WriteNumBits(0, 1);
-				//					mDemoBuffer.WriteNumBits(DEMO_ACTIVATE_APP, 5);
-				//					mDemoBuffer.WriteNumBits(uMsg==WM_SETFOCUS ? 1 : 0, 1);
-				//				}
-				//				break;
-
-			case WM_ACTIVATEAPP:
-				if (hWnd == mHWnd)
-				{
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_ACTIVATE_APP, 5);
-					mDemoBuffer.WriteNumBits((wParam != 0) ? 1 : 0, 1);
-				}
-				break;
-
-			case WM_SIZE: {
-				bool isMinimized = wParam == SIZE_MINIMIZED;
-
-				WriteDemoTimingBlock();
-				mDemoBuffer.WriteNumBits(0, 1);
-				mDemoBuffer.WriteNumBits(DEMO_SIZE, 5);
-				mDemoBuffer.WriteBoolean(isMinimized);
-			}
-			break;
-			case WM_LBUTTONDOWN:
-			case WM_RBUTTONDOWN:
-			case WM_MBUTTONDOWN:
-			case WM_LBUTTONDBLCLK:
-			case WM_RBUTTONDBLCLK:
-			case WM_LBUTTONUP:
-			case WM_RBUTTONUP:
-			case WM_MBUTTONUP:
-			case WM_MOUSEMOVE: {
-				int aCurX = (short)LOWORD(lParam);
-				int aCurY = (short)HIWORD(lParam);
-
-				int aDiffX = aCurX - mLastDemoMouseX;
-				int aDiffY = aCurY - mLastDemoMouseY;
-
-				if ((abs(aCurX - mLastDemoMouseX) < 32) && (abs(aCurY - mLastDemoMouseY) < 32))
-				{
-					if ((aDiffX != 0) || (aDiffY != 0))
-					{
-						WriteDemoTimingBlock();
-						mDemoBuffer.WriteNumBits(1, 1);
-						mDemoBuffer.WriteNumBits(0, 1);
-						mDemoBuffer.WriteNumBits(aDiffX, 6);
-						mDemoBuffer.WriteNumBits(aDiffY, 6);
-					}
-				}
-				else
-				{
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_MOUSE_POSITION, 5);
-					mDemoBuffer.WriteNumBits(aCurX, 12);
-					mDemoBuffer.WriteNumBits(aCurY, 12);
-				}
-
-				bool down = true;
-				int aBtnNum = 0;
-				switch (uMsg)
-				{
-				case WM_LBUTTONDOWN:
-					aBtnNum = 1;
-					break;
-				case WM_RBUTTONDOWN:
-					aBtnNum = -1;
-					break;
-				case WM_MBUTTONDOWN:
-					aBtnNum = 3;
-					break;
-				case WM_LBUTTONDBLCLK:
-					aBtnNum = 2;
-					break;
-				case WM_RBUTTONDBLCLK:
-					aBtnNum = -2;
-					break;
-				case WM_LBUTTONUP:
-					aBtnNum = 1;
-					down = false;
-					break;
-				case WM_RBUTTONUP:
-					aBtnNum = -1;
-					down = false;
-					break;
-				case WM_MBUTTONUP:
-					aBtnNum = 3;
-					down = false;
-					break;
-				}
-
-				if (aBtnNum != 0)
-				{
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(1, 1);
-					mDemoBuffer.WriteNumBits(1, 1);
-					mDemoBuffer.WriteNumBits(down ? 1 : 0, 1);
-					mDemoBuffer.WriteNumBits(aBtnNum, 3);
-				}
-
-				mLastDemoMouseX = aCurX;
-				mLastDemoMouseY = aCurY;
-			}
-			break;
-			case WM_MOUSEWHEEL: {
-				int aZDelta = ((short)HIWORD(wParam)) / 120;
-
-				WriteDemoTimingBlock();
-				mDemoBuffer.WriteNumBits(0, 1);
-				mDemoBuffer.WriteNumBits(DEMO_MOUSE_WHEEL, 5);
-				mDemoBuffer.WriteNumBits(aZDelta, 8);
-			}
-			break;
-			case WM_KEYDOWN:
-			case WM_SYSKEYDOWN: {
-				KeyCode aKeyCode = (KeyCode)wParam;
-
-				WriteDemoTimingBlock();
-				mDemoBuffer.WriteNumBits(0, 1);
-				mDemoBuffer.WriteNumBits(DEMO_KEY_DOWN, 5);
-				mDemoBuffer.WriteNumBits(aKeyCode, 8);
-			}
-			break;
-			case WM_KEYUP:
-			case WM_SYSKEYUP: {
-				KeyCode aKeyCode = (KeyCode)wParam;
-
-				WriteDemoTimingBlock();
-				mDemoBuffer.WriteNumBits(0, 1);
-				mDemoBuffer.WriteNumBits(DEMO_KEY_UP, 5);
-				mDemoBuffer.WriteNumBits((int)aKeyCode, 8);
-			}
-			break;
-			case WM_CHAR: {
-				SexyChar aChar = (SexyChar)wParam;
-
-				WriteDemoTimingBlock();
-				mDemoBuffer.WriteNumBits(0, 1);
-				mDemoBuffer.WriteNumBits(DEMO_KEY_CHAR, 5);
-				mDemoBuffer.WriteNumBits(sizeof(SexyChar) == 2, 1);
-				mDemoBuffer.WriteNumBits(aChar, sizeof(SexyChar) * 8);
-			}
-			break;
-			case WM_CLOSE:
-				if ((hWnd == mHWnd) || (hWnd == mInvisHWnd))
-				{
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_CLOSE, 5);
-				}
-				break;
-			}
-
-			int aBufferSize = mDemoBuffer.GetDataLen();
-		}
 
 		if (!mPlayingDemoBuffer)
 		{
@@ -4651,7 +4803,7 @@ bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
 
 	return (mDeferredMessages.size() > 0);
 }
-
+*/
 void SexyAppBase::Done3dTesting()
 {
 }
@@ -4666,16 +4818,22 @@ void SexyAppBase::MakeWindow()
 {
 	//OutputDebugString("MAKING WINDOW\r\n");
 
-	if (mHWnd != NULL)
+	if (mWindow != NULL)
 	{
-		SetWindowLong(mHWnd, GWL_USERDATA, NULL);
+		/*SetWindowLong(mHWnd, GWL_USERDATA, NULL);
 		HWND anOldWindow = mHWnd;
 		mHWnd = NULL;
-		DestroyWindow(anOldWindow);
+		DestroyWindow(anOldWindow);*/
+		delete mWindow;
 		mWidgetManager->mImage = NULL;
 	}
+	
+	mWindow = new Window(this);
+	#ifdef WIN32
+	mHWnd = mWindow->GetHWND();
+	#endif
 
-	if ((mPlayingDemoBuffer) || (mIsWindowed && !mFullScreenWindow))
+	if ((mPlayingDemoBuffer) || (mIsWindowed && !mFullScreenWindow)) //todo:replace
 	{
 		DWORD aWindowStyle = WS_CLIPCHILDREN | WS_POPUP | WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 		if (mEnableMaximizeButton)
@@ -4719,90 +4877,25 @@ void SexyAppBase::MakeWindow()
 				aPlaceY = aDesktopRect.bottom - aHeight - aSpacing;
 		}
 
-		if (CheckFor98Mill())
-		{
-			mHWnd = CreateWindowExA(0,
-									"MainWindow",
-									SexyStringToStringFast(mTitle).c_str(),
-									aWindowStyle,
-									aPlaceX,
-									aPlaceY,
-									aWidth,
-									aHeight,
-									NULL,
-									NULL,
-									gHInstance,
-									0);
-		}
-		else
-		{
-			mHWnd = CreateWindowEx(0,
-								   _S("MainWindow"),
-								   mTitle.c_str(),
-								   aWindowStyle,
-								   aPlaceX,
-								   aPlaceY,
-								   aWidth,
-								   aHeight,
-								   NULL,
-								   NULL,
-								   gHInstance,
-								   0);
-		}
 
 		if (mPreferredX == -1)
 		{
-			::MoveWindow(mHWnd,
-						 aDesktopRect.left + ((aDesktopRect.right - aDesktopRect.left) - aWidth) / 2,
-						 aDesktopRect.top + (int)(((aDesktopRect.bottom - aDesktopRect.top) - aHeight) * 0.382),
-						 aWidth,
-						 aHeight,
-						 FALSE);
+			SDL_SetWindowPosition(mWindow->mInternalWindow, 
+			aDesktopRect.left + ((aDesktopRect.right - aDesktopRect.left) - aWidth) / 2,  
+			aDesktopRect.top + (int)(((aDesktopRect.bottom - aDesktopRect.top) - aHeight) * 0.382));
 		}
 
 		mIsPhysWindowed = true;
 	}
 	else
-	{
-		if (CheckFor98Mill())
-		{
-			mHWnd = CreateWindowExA(WS_EX_TOPMOST,
-									"MainWindow",
-									SexyStringToStringFast(mTitle).c_str(),
-									WS_POPUP | WS_VISIBLE,
-									0,
-									0,
-									mWidth,
-									mHeight,
-									NULL,
-									NULL,
-									gHInstance,
-									0);
-		}
-		else
-		{
-			mHWnd = CreateWindowEx(WS_EX_TOPMOST,
-								   _S("MainWindow"),
-								   mTitle.c_str(),
-								   WS_POPUP | WS_VISIBLE,
-								   0,
-								   0,
-								   mWidth,
-								   mHeight,
-								   NULL,
-								   NULL,
-								   gHInstance,
-								   0);
-		}
-
 		mIsPhysWindowed = false;
-	}
 
 	/*char aStr[256];
 	sprintf(aStr, "HWND: %d\r\n", mHWnd);
 	OutputDebugString(aStr);*/
 
-	SetWindowLong(mHWnd, GWL_USERDATA, (LONG)this);
+	SDL_PropertiesID props = SDL_GetWindowProperties(mWindow->mInternalWindow);
+	SDL_SetPointerProperty(props, "sexyappframework.userdata", this);
 
 	if (mDDInterface == NULL)
 	{
