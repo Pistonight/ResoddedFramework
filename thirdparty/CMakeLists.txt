@@ -9,4 +9,10 @@ FetchContent_Declare(
   GIT_TAG main
 )
 
-FetchContent_MakeAvailable(SDL3)
+FetchContent_Declare(
+    zlib
+    GIT_REPOSITORY https://github.com/madler/zlib
+    GIT_TAG master
+)
+
+FetchContent_MakeAvailable(SDL3 zlib)

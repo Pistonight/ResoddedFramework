@@ -3,5 +3,6 @@ build/
 *.exe
 *.pdb
 .vscode/
+.vs/
 savefiles/
 crash.txt

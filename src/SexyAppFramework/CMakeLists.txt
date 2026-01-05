@@ -27,7 +27,10 @@ endforeach()
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL3::SDL3-static)
+target_link_libraries(${PROJECT_NAME} PUBLIC 
+    SDL3::SDL3-static
+    zlibstatic
+)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     WIN32
