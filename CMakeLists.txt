@@ -8,6 +8,13 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
+option(GITHUB_ACTIONS "Building in GitHub Actions" OFF)
+
+if(MSVC AND GITHUB_ACTIONS)
+    message(STATUS "GitHub Actions, adding /SAFESEH:NO, screw you BASS")
+    add_link_options(/SAFESEH:NO)
+endif()
+
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
