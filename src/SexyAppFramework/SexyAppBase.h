@@ -586,7 +586,6 @@ class SexyAppBase : public ButtonListener, public DialogListener
 	void ClearUpdateBacklog(bool relaxForASecond = false);
 	bool IsScreenSaver();
 	virtual bool AppCanRestore();
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
 
 extern SexyAppBase *gSexyAppBase;
