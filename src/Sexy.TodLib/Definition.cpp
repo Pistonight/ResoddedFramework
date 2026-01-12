@@ -327,7 +327,7 @@ bool DefinitionLoadXML(const SexyString &theFileName, DefMap *theDefMap, void *t
 void SMemR(void *&_Src, void *_Dst, size_t _Size)
 {
 	memcpy(_Dst, _Src, _Size);
-	_Src = (void *)((uintptr_t)_Src + _Size);
+	_Src = (void *)((size_t)_Src + _Size);
 }
 //0x444020
 bool DefReadFromCacheArray(void *&theReadPtr, DefinitionArrayDef *theArray, DefMap *theDefMap)
@@ -446,7 +446,7 @@ bool DefMapReadFromCache(void *&theReadPtr, DefMap *theDefMap, void *theDefiniti
 }
 
 //0x444380
-uint DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol *theSymbolMap)
+uint32_t DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol *theSymbolMap)
 {
 	while (theSymbolMap->mSymbolName != nullptr)
 	{
@@ -458,7 +458,7 @@ uint DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol *theSymbolMap)
 }
 
 //0x4443D0
-uint DefinitionCalcHashDefMap(int aSchemaHash, DefMap *theDefMap, TodList<DefMap *> &theProgressMaps)
+uint32_t DefinitionCalcHashDefMap(int aSchemaHash, DefMap *theDefMap, TodList<DefMap *> &theProgressMaps)
 {
 	for (TodListNode<DefMap *> *aNode = theProgressMaps.mHead; aNode != nullptr; aNode = aNode->mNext)
 		if (aNode->mValue == theDefMap)
@@ -485,11 +485,10 @@ uint DefinitionCalcHashDefMap(int aSchemaHash, DefMap *theDefMap, TodList<DefMap
 }
 
 //0x444490
-uint DefinitionCalcHash(DefMap *theDefMap)
+uint32_t DefinitionCalcHash(DefMap *theDefMap)
 {
 	TodList<DefMap *> aProgressMaps;
-	uint aResult = DefinitionCalcHashDefMap(crc32(0L, (Bytef *)Z_NULL, NULL) + 1, theDefMap, aProgressMaps);
-	aProgressMaps.RemoveAll();
+	uint32_t aResult = DefinitionCalcHashDefMap(crc32(0L, (Bytef *)Z_NULL, NULL) + 1, theDefMap, aProgressMaps);
 	return aResult;
 }
 
@@ -554,18 +553,18 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 			delete[] aCompressedBuffer;
 			if (aUncompressedBuffer)
 			{
-				uint aDefHash = DefinitionCalcHash(theDefMap); // Calculate the CRC check value, which will be used to detect the integrity of the data
+				uint32_t aDefHash = DefinitionCalcHash(theDefMap); // Calculate the CRC check value, which will be used to detect the integrity of the data
 				if (aUncompressedSize <
 					theDefMap->mDefSize +
 						sizeof(
-							uint)) // Detect whether the length of the decompressed data is sufficient for the length of "define data + a check value to record data"
+							uint32_t)) // Detect whether the length of the decompressed data is sufficient for the length of "define data + a check value to record data"
 					TodTrace(_S("Compiled file size too small: %s\n"), theCompiledFilePath.c_str());
 				else
 				{
 					// A pointer to copy a copy of the decompressed data is used to move when reading, and the original pointer will be used to calculate the size of the read area and delete[] operations in the future.
 					void *aBufferPtr = aUncompressedBuffer;
-					uint aCashHash;
-					SMemR(aBufferPtr, &aCashHash, sizeof(uint)); //Read the CRC check value of the record
+					uint32_t aCashHash;
+					SMemR(aBufferPtr, &aCashHash, sizeof(uint32_t)); //Read the CRC check value of the record
 					if (aCashHash != aDefHash) // Determine whether the check value is consistent, if it is inconsistent, the data is wrong
 						TodTrace(_S("Compiled file schema wrong: %s\n"), theCompiledFilePath.c_str());
 					else
@@ -577,7 +576,7 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 						SMemR(aBufferPtr, theDefinition, theDefMap->mDefSize);
 						// Repair the wild pointer and flag data, and save the result of whether it is successful, and use it as the return value later
 						bool aResult = DefMapReadFromCache(aBufferPtr, theDefMap, theDefinition);
-						size_t aReadMemSize = (uint)aBufferPtr - (uint)aUncompressedBuffer;
+						size_t aReadMemSize = (uint32_t)aBufferPtr - (uint32_t)aUncompressedBuffer;
 						delete[] aUncompressedBuffer;
 						if (aResult && aReadMemSize != aUncompressedSize)
 							TodTrace(_S("Compiled file wrong size: %s\n"), theCompiledFilePath.c_str());
@@ -638,7 +637,7 @@ void DefinitionFillWithDefaults(DefMap *theDefMap, void *theDefinition)
 	for (DefField *aField = theDefMap->mMapFields; *aField->mFieldName != '\0';
 		 aField++) // 遍历 theDefinition 的每一个成员变量
 		if (aField->mFieldType == DefFieldType::DT_STRING)
-			*(char **)((uint)theDefinition + aField->mFieldOffset) =
+			*(char **)((uint32_t)theDefinition + aField->mFieldOffset) =
 				""; // 将所有 char* 类型的成员变量赋值为空字符数组的指针
 }
 
@@ -820,7 +819,7 @@ bool DefinitionReadFloatTrackField(XMLParser *theXmlParser, FloatParameterTrack 
 
 bool DefinitionReadFlagField(XMLParser *theXmlParser,
 							 const SexyString &theElementName,
-							 uint *theResultValue,
+							 uint32_t *theResultValue,
 							 DefSymbol *theSymbolMap)
 {
 	int aValue;
@@ -897,7 +896,7 @@ bool DefinitionReadField(XMLParser *theXmlParser, DefMap *theDefMap, void *theDe
 
 	for (DefField *aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)
 	{
-		void *pVar = (void *)((uint)theDefinition + aField->mFieldOffset);
+		void *pVar = (void *)((uint32_t)theDefinition + aField->mFieldOffset);
 		if (aField->mFieldType == DefFieldType::DT_FLAGS &&
 			DefinitionReadFlagField(theXmlParser, aXMLElement.mValue, nullptr, (DefSymbol *)aField->mExtraData))
 			return true;

@@ -18,7 +18,9 @@
 #include "Dialog.h"
 #include "..\ImageLib\ImageLib.h"
 #include "DSoundManager.h"
+#include "OpenALSoundManager.h"
 #include "DSoundInstance.h"
+#include "OpenALSoundInstance.h"
 #include "Rect.h"
 #include "PropertiesParser.h"
 #include "PerfTimer.h"
@@ -5799,8 +5801,9 @@ void SexyAppBase::Init()
 		mSyncRefreshRate = mDemoBuffer.ReadByte();
 	}
 
-	if (mSoundManager == NULL)
-		mSoundManager = new DSoundManager(mNoSoundNeeded ? NULL : mHWnd, mWantFMod);
+	if (mSoundManager == nullptr)
+		mSoundManager = new OpenALSoundManager();
+		//mSoundManager = new DSoundManager(mNoSoundNeeded ? NULL : mHWnd, mWantFMod);
 
 	SetSfxVolume(mSfxVolume);
 

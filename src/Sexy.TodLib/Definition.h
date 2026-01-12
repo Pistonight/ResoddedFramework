@@ -159,7 +159,7 @@ bool DefinitionReadArrayField(XMLParser *theXmlParser, DefinitionArrayDef *theAr
 bool DefinitionReadFloatTrackField(XMLParser *theXmlParser, FloatParameterTrack *theTrack);
 bool DefinitionReadFlagField(XMLParser *theXmlParser,
 							 const SexyString &theElementName,
-							 uint *theResultValue,
+							 uint32_t *theResultValue,
 							 DefSymbol *theSymbolMap);
 bool DefinitionReadImageField(XMLParser *theXmlParser, Image **theImage);
 bool DefinitionReadFontField(XMLParser *theXmlParser, Font **theFont);
@@ -171,12 +171,12 @@ bool DefinitionCompileFile(const SexyString theXMLFilePath,
 						   void *theDefinition);
 /*inline*/ void *DefinitionAlloc(int theSize);
 void *DefinitionUncompressCompiledBuffer(void *theCompressedBuffer,
-										 uint theCompressedBufferSize,
-										 uint &theUncompressedSize,
+										 uint32_t theCompressedBufferSize,
+										 uint32_t &theUncompressedSize,
 										 const SexyString &theCompiledFilePath);
-uint /*__cdecl*/ DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol *theSymbolMap);
-uint /*__cdecl*/ DefinitionCalcHashDefMap(int aSchemaHash, DefMap *theDefMap, TodList<DefMap *> &theProgressMaps);
-uint /*__cdecl*/ DefinitionCalcHash(DefMap *theDefMap);
+uint32_t /*__cdecl*/ DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol *theSymbolMap);
+uint32_t /*__cdecl*/ DefinitionCalcHashDefMap(int aSchemaHash, DefMap *theDefMap, TodList<DefMap *> &theProgressMaps);
+uint32_t /*__cdecl*/ DefinitionCalcHash(DefMap *theDefMap);
 bool DefReadFromCacheString(void *&theReadPtr, char **theString);
 bool DefReadFromCacheArray(void *&theReadPtr, DefinitionArrayDef *theArray, DefMap *theDefMap);
 bool DefReadFromCacheImage(void *&theReadPtr, Image **theImage);
