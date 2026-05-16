@@ -529,7 +529,7 @@ void *DefinitionUncompressCompiledBuffer(const CompiledDefinitionHeader *aHeader
 	
 	if (theCompressedBufferSize < 8)
 	{
-		TodTrace("Compile def too small", theCompiledFilePath.c_str());
+		TodTrace("[TodLib] - Compile def too small", theCompiledFilePath.c_str());
 		return nullptr;
 	}
 
@@ -561,7 +561,7 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 		fclose(pFile);
 		if (aReadCompressedFailed)
 		{
-			TodTrace("Failed to read compiled file: %s\n", theCompiledFilePath.c_str());
+			TodTrace("[TodLib] - Failed to read compiled file: %s\n", theCompiledFilePath.c_str());
 			return false;
 		}
 
@@ -570,7 +570,7 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 			const CompiledDefinitionHeader *aHeader = aCompiledFile.GetHeader();
 			if (aHeader->mDataOffset > aFileSize)
 			{
-				TodTrace("Data Offset is larger then file size: %s\n", theCompiledFilePath.c_str());
+				TodTrace("[TodLib] - Data Offset is larger then file size: %s\n", theCompiledFilePath.c_str());
 				return false;
 			}
 			size_t aCompressedSize = aFileSize - aHeader->mDataOffset;
@@ -581,7 +581,7 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 
 			if (anUncompressedData == nullptr)
 			{
-				TodTrace("Failed to uncompress: %s\n", theCompiledFilePath.c_str());
+				TodTrace("[TodLib] - Failed to uncompress: %s\n", theCompiledFilePath.c_str());
 				return false;
 			}
 
@@ -649,7 +649,7 @@ void DefinitionXmlError(XMLParser *theXmlParser, const char *theFormat, ...)
 
 	int aLine = theXmlParser->GetCurrentLineNum();
 	std::string aFileName = theXmlParser->GetFileName();
-	TodTraceAndLog("%s(%d): XML Definition Error: %s\n", aFileName.c_str(), aLine, aFormattedMessage.c_str());
+	TodTraceAndLog("[TodLib] - %s(%d): XML Definition Error: %s\n", aFileName.c_str(), aLine, aFormattedMessage.c_str());
 }
 
 bool DefinitionReadXMLString(XMLParser *theXmlParser, SexyString &theValue)
@@ -1298,7 +1298,7 @@ bool DefinitionWriteCompiledFile(const SexyString &theCompiledFilePath, DefMap *
 
 	if (res != Z_OK)
 	{
-		TodTrace("Failed to compress file: %s\nZLib Error: %d", theCompiledFilePath.c_str(), res);
+		TodTrace("[TodLib] - Failed to compress file: %s\nZLib Error: %d", theCompiledFilePath.c_str(), res);
 		DefinitionFree(aCompressedData);
 		return false;
 	}
@@ -1320,7 +1320,7 @@ bool DefinitionCompileFile(const SexyString theXMLFilePath,
 	XMLParser aXMLParser;
 	if (!aXMLParser.OpenFile(theXMLFilePath))
 	{
-		TodTrace("XML file not found: %s\n", theXMLFilePath.c_str());
+		TodTrace("[TodLib] - XML file not found: %s\n", theXMLFilePath.c_str());
 		return false;
 	}
 	else if (!DefinitionLoadMap(&aXMLParser, theDefMap, theDefinition))
@@ -1348,7 +1348,7 @@ bool DefinitionCompileAndLoad(const SexyString &theXMLFilePath, DefMap *theDefMa
 	PerfTimer aTimer;
 	aTimer.Start();
 	bool aResult = DefinitionCompileFile(theXMLFilePath, "fresh_" + aCompiledFilePath, theDefMap, theDefinition); //write to fresh_compiled to not overwrite on game re-compile by accident
-	TodTrace("compile %d ms:'%s'", (int)aTimer.GetDuration(), aCompiledFilePath.c_str());
+	TodTrace("[TodLib] - compile %d ms:'%s'", (int)aTimer.GetDuration(), aCompiledFilePath.c_str());
 	TodHesitationTrace("compiled %s", aCompiledFilePath.c_str());
 	if (aResult)
 		return aResult;

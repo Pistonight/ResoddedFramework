@@ -1149,7 +1149,7 @@ void GameSelector::KeyChar(SexyChar theChar)
 
 	if (mApp->mDebugKeysEnabled)
 	{
-		TodTraceAndLog("Selector cheat key '%c'", theChar);
+		TodTraceAndLog("[LawnProject] - Selector cheat key '%c'", theChar);
 		if (theChar == 'c' || theChar == 'C')
 		{
 			mMinigamesLocked = false;

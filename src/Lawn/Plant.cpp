@@ -3140,7 +3140,7 @@ Reanimation *Plant::AttachBlinkAnim(Reanimation *theReanimBody)
 
 	if (aAnimToAttach == nullptr)
 	{
-		TodTrace("Missing head anim");
+		TodTrace("[LawnProject] - Missing head anim");
 		return nullptr;
 	}
 
@@ -3168,7 +3168,7 @@ Reanimation *Plant::AttachBlinkAnim(Reanimation *theReanimBody)
 	}
 	else
 	{
-		TodTrace("Missing anim_idle for blink");
+		TodTrace("[LawnProject] - Missing anim_idle for blink");
 	}
 
 	aBlinkReanim->mFilterEffect = theReanimBody->mFilterEffect;

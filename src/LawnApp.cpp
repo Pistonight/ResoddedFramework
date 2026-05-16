@@ -746,7 +746,7 @@ AlmanacDialog *LawnApp::DoAlmanacDialog(SeedType theSeedType, ZombieType theZomb
 	}
 
 	int aDuration = mTimer.GetDuration();
-	TodTrace("almanac load time: %d ms", aDuration);
+	TodTrace("[LawnProject] - almanac load time: %d ms", aDuration);
 
 	return aDialog;
 }
@@ -1356,7 +1356,7 @@ void LawnApp::Init()
 
 #ifdef _DEBUG
 	int aDuration = mTimer.GetDuration();
-	TodTrace("loading: 'profiles' %d ms", aDuration);
+	TodTrace("[LawnProject] - loading: 'profiles' %d ms", aDuration);
 #endif
 	mTimer.Start();
 
@@ -1389,7 +1389,7 @@ void LawnApp::Init()
 
 #ifdef _DEBUG
 	aDuration = mTimer.GetDuration();
-	TodTrace("loading: 'system' %d ms", aDuration);
+	TodTrace("[LawnProject] - loading: 'system' %d ms", aDuration);
 #endif
 	mTimer.Start();
 
@@ -1399,7 +1399,7 @@ void LawnApp::Init()
 
 #ifdef _DEBUG
 	aDuration = mTimer.GetDuration();
-	TodTrace("loading: 'loaderbar' %d ms", aDuration);
+	TodTrace("[LawnProject] - loading: 'loaderbar' %d ms", aDuration);
 #endif
 	mTimer.Start();
 }
@@ -1843,7 +1843,7 @@ void LawnApp::LoadingThreadProc()
 		return;
 
 	aHesitationResources.EndBracket();
-	TodTrace("loading '%s' %d ms", "resources", (int)aTimer.GetDuration());
+	TodTrace("[LawnProject] - loading '%s' %d ms", "resources", (int)aTimer.GetDuration());
 
 	mMusic->MusicInit();
 	int aDuration = std::max(aTimer.GetDuration(), 0.0);
@@ -1856,11 +1856,11 @@ void LawnApp::LoadingThreadProc()
 	mReanimatorCache->ReanimatorCacheInitialize();
 	TodFoleyInitialize(gLawnFoleyParamArray, LENGTH(gLawnFoleyParamArray));
 
-	TodTrace("loading '%s' %d ms", "stuff", (int)aTimer.GetDuration());
+	TodTrace("[LawnProject] - loading '%s' %d ms", "stuff", (int)aTimer.GetDuration());
 	aTimer.Start();
 
 	TrailLoadDefinitions(gLawnTrailArray, LENGTH(gLawnTrailArray));
-	TodTrace("loading '%s' %d ms", "trail", (int)aTimer.GetDuration());
+	TodTrace("[LawnProject] - loading '%s' %d ms", "trail", (int)aTimer.GetDuration());
 	aTimer.Start();
 	TodHesitationTrace("trail");
 
@@ -2706,7 +2706,7 @@ void LawnApp::CrazyDaveDoneHanding()
 	ReanimatorTrackInstance *aHandTrackInstance = aCrazyDaveReanim->GetTrackInstanceByName("Dave_handinghand");
 	AttachmentDie(aHandTrackInstance->mAttachmentID);
 
-	TodTrace("DoneHanding");
+	TodTrace("[LawnProject] - DoneHanding");
 }
 
 //0x454520
@@ -2828,7 +2828,7 @@ void LawnApp::CrazyDaveTalkMessage(const SexyString &theMessage)
 
 			Reanimation *aWallnutReanim = AddReanimation(0.0f, 0.0f, 0, ReanimationType::REANIM_WALLNUT);
 			aWallnutReanim->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 12.0f);
-			TodTrace("Handed");
+			TodTrace("[LawnProject] - Handed");
 
 			ReanimatorTrackInstance *aHandTrackInstance = aCrazyDaveReanim->GetTrackInstanceByName("Dave_handinghand");
 			AttachEffect *aAttachEffect =
@@ -3180,7 +3180,7 @@ void LawnApp::PreloadForUser()
 	int aNumTasks = mNumLoadingThreadTasks + GetNumPreloadingTasks();
 	if (mTitleScreen && mTitleScreen->mQuickLoadKey != KeyCode::KEYCODE_UNKNOWN)
 	{
-		TodTrace("preload canceled\n");
+		TodTrace("[LawnProject] - preload canceled\n");
 		mNumLoadingThreadTasks = aNumTasks;
 		return;
 	}
@@ -3216,7 +3216,7 @@ void LawnApp::PreloadForUser()
 
 				if (mTitleScreen && mTitleScreen->mQuickLoadKey != KeyCode::KEYCODE_UNKNOWN)
 				{
-					TodTrace("preload canceled\n");
+					TodTrace("[LawnProject] - preload canceled\n");
 					mNumLoadingThreadTasks = aNumTasks;
 					return;
 				}
@@ -3248,7 +3248,7 @@ void LawnApp::PreloadForUser()
 
 			if (mTitleScreen && mTitleScreen->mQuickLoadKey != KeyCode::KEYCODE_UNKNOWN)
 			{
-				TodTrace("preload canceled\n");
+				TodTrace("[LawnProject] - preload canceled\n");
 				mNumLoadingThreadTasks = aNumTasks;
 				return;
 			}
@@ -3262,7 +3262,7 @@ void LawnApp::PreloadForUser()
 
 	if (mCompletedLoadingThreadTasks != aNumTasks)
 	{
-		TodTrace("num preload tasks wasn't calculated correctly");
+		TodTrace("[LawnProject] - num preload tasks wasn't calculated correctly");
 		mCompletedLoadingThreadTasks = aNumTasks;
 	}
 }
