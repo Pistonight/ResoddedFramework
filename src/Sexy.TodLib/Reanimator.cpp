@@ -161,6 +161,7 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
 	{ReanimationType::REANIM_CREDITS_WEARETHEUNDEAD, "reanim/Credits_WeAreTheUndead.reanim", 1},
 	{ReanimationType::REANIM_CREDITS_DISCOLIGHTS, "reanim/Credits_DiscoLights.reanim", 1},
 	{ReanimationType::REANIM_FLAG, "reanim/Zombie_FlagPole.reanim", 0},
+	{ReanimationType::REANIM_ZOMBATAR_HEAD, "reanim/zombatar_zombie_head.reanim", GetBit(ReanimFlags::REANIM_NO_ATLAS)},
 };
 
 //0x471540
