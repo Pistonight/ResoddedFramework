@@ -1214,7 +1214,8 @@ void GameSelector::ButtonMouseEnter(int theId)
 void GameSelector::ButtonPress(int theId, int theClickCount)
 {
 	if (theId == GameSelector::GameSelector_Adventure || theId == GameSelector::GameSelector_Minigame ||
-		theId == GameSelector::GameSelector_Puzzle || theId == GameSelector::GameSelector_Survival)
+		theId == GameSelector::GameSelector_Puzzle || theId == GameSelector::GameSelector_Survival ||
+		theId == GameSelector::GameSelector_Zombatar)
 		mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
 	else
 		mApp->PlaySample(Sexy::SOUND_TAP);
