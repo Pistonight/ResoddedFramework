@@ -161,6 +161,7 @@ void Zombie::ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Z
 	mHatReanimID = ReanimationID::REANIMATIONID_NULL;
 	mBaseHeadReanimID = ReanimationID::REANIMATIONID_NULL;
 	mHasSetupZombatar = false;
+	mZombatar = nullptr;
 
 	mTargetRow = -1;
 	mFireballRow = -1;
@@ -1044,6 +1045,7 @@ void Zombie::SetupZombatar()
 
 void Zombie::UpdateZombatar(Zombatar &aZombatar)
 {
+	mZombatar = &aZombatar;
 	Reanimation *aTidbitsReanim = mApp->ReanimationGet(mTidbitsReanimID);
 	Reanimation *aAccessoriesReanim = mApp->ReanimationGet(mAccessoriesReanimID);
 	Reanimation *aFacialHairReanim = mApp->ReanimationGet(mFacialHairReanimID);
@@ -1051,7 +1053,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 	Reanimation *aEyewearReanim = mApp->ReanimationGet(mEyewearReanimID);
 	Reanimation *aHatReanim = mApp->ReanimationGet(mHatReanimID);
 
-	//todo:make color work
 	ResetZombatar();
 	if (aZombatar.mHat != -1)
 	{
@@ -1066,7 +1067,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 		aHairReanim->AssignRenderGroupToPrefix(
 			StrFormat("%s_%s", "hair", aZombatar.mHair < 10 ? ("0" + aNum).c_str() : aNum.c_str()).c_str(),
 			RENDER_GROUP_NORMAL);
-		aHairReanim->mColorOverride = gMoreColors[aZombatar.mHairColor];
 	};
 	if (aZombatar.mTidbits != -1)
 	{
@@ -1074,7 +1074,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 		aTidbitsReanim->AssignRenderGroupToPrefix(
 			StrFormat("%s_%s", "tidBits", aZombatar.mTidbits < 10 ? ("0" + aNum).c_str() : aNum.c_str()).c_str(),
 			RENDER_GROUP_NORMAL);
-		aTidbitsReanim->mColorOverride = gMoreColors[aZombatar.mTidbitsColor];
 	};
 	if (aZombatar.mEyewear != -1)
 	{
@@ -1082,7 +1081,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 		aEyewearReanim->AssignRenderGroupToPrefix(
 			StrFormat("%s_%s", "eyeWear", aZombatar.mEyewear < 10 ? ("0" + aNum).c_str() : aNum.c_str()).c_str(),
 			RENDER_GROUP_NORMAL);
-		aEyewearReanim->mColorOverride = gMoreColors[aZombatar.mEyewearColor];
 	};
 	if (aZombatar.mAccessories != -1)
 	{
@@ -1112,7 +1110,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 			StrFormat("%s_%s", "accessories", aCorrectAccessory < 10 ? ("0" + aNum).c_str() : aNum.c_str())
 				.c_str(),
 			RENDER_GROUP_NORMAL);
-		aAccessoriesReanim->mColorOverride = gMoreColors[aZombatar.mAccessoriesColor];
 	};
 	if (aZombatar.mFacialHair != -1)
 	{
@@ -1120,7 +1117,6 @@ void Zombie::UpdateZombatar(Zombatar &aZombatar)
 		aFacialHairReanim->AssignRenderGroupToPrefix(
 			StrFormat("%s_%s", "facialHair", aZombatar.mFacialHair < 10 ? ("0" + aNum).c_str() : aNum.c_str()).c_str(),
 			RENDER_GROUP_NORMAL);
-		aFacialHairReanim->mColorOverride = gMoreColors[aZombatar.mFacialHairColor];
 	};
 
 }
@@ -6021,6 +6017,40 @@ void Zombie::DrawReanim(Graphics *g, const ZombieDrawPosition &theDrawPos, int t
 	else
 	{
 		aBodyReanim->DrawRenderGroup(g, theBaseRenderGroup);
+		if (mZombatar != nullptr)
+		{
+			Reanimation *aTidbitsReanim = mApp->ReanimationGet(mTidbitsReanimID);
+			Reanimation *aAccessoriesReanim = mApp->ReanimationGet(mAccessoriesReanimID);
+			Reanimation *aFacialHairReanim = mApp->ReanimationGet(mFacialHairReanimID);
+			Reanimation *aHairReanim = mApp->ReanimationGet(mHairReanimID);
+			Reanimation *aEyewearReanim = mApp->ReanimationGet(mEyewearReanimID);
+			Reanimation *aHatReanim = mApp->ReanimationGet(mHatReanimID);
+
+			if (mZombatar->mHat != -1)
+			{
+				aHatReanim->mColorOverride = gMoreColors[mZombatar->mHatColor];
+			};
+			if (mZombatar->mHair != -1)
+			{
+				aHairReanim->mColorOverride = gMoreColors[mZombatar->mHairColor];
+			};
+			if (mZombatar->mTidbits != -1)
+			{
+				aTidbitsReanim->mColorOverride = gMoreColors[mZombatar->mTidbitsColor];
+			};
+			if (mZombatar->mEyewear != -1)
+			{
+				aEyewearReanim->mColorOverride = gMoreColors[mZombatar->mEyewearColor];
+			};
+			if (mZombatar->mAccessories != -1)
+			{
+				aAccessoriesReanim->mColorOverride = gMoreColors[mZombatar->mAccessoriesColor];
+			};
+			if (mZombatar->mFacialHair != -1)
+			{
+				aFacialHairReanim->mColorOverride = gMoreColors[mZombatar->mFacialHairColor];
+			};
+		}
 
 		aBodyReanim->DrawRenderGroup(g, RENDER_GROUP_ZOMBATAR_COSMETICS);
 	}
