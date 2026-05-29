@@ -6462,7 +6462,7 @@ void Board::Update()
 
 			// Auto-collect coins/suns near the gamepad cursor
 			// Original GamepadControls::Update logic (0x1C6D90)
-			if (mApp->mGameScene == GameScenes::SCENE_PLAYING && !mApp->IsWhackAZombieLevel())
+			if (mApp->mGameScene == GameScenes::SCENE_PLAYING)
 			{
 				Coin* aCoin = nullptr;
 				while (IterateCoins(aCoin))
