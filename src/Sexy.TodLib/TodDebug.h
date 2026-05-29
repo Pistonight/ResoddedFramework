@@ -2,9 +2,7 @@
 #define __TODDEBUG_H__
 
 #if WIN32
-#ifdef _WIN32
 #include <Windows.h>
-#endif
 #endif
 
 class TodHesitationBracket
@@ -36,12 +34,12 @@ void TodTraceMemory();
 void TodTraceAndLog(const char *theFormat, ...);
 void TodTraceWithoutSpamming(const char *theFormat, ...);
 void TodHesitationTrace(...);
-#ifdef _WIN32
+#if WIN32
 void TodReportError(LPEXCEPTION_POINTERS exceptioninfo, const char *theMessage);
 #endif
 void TodAssertFailed(const char *theCondition, const char *theFile, int theLine, const char *theMsg = "", ...);
 /*inline*/ void TodErrorMessageBox(const char *theMessage, const char *theTitle);
-#ifdef _WIN32
+#if WIN32
 long __stdcall TodUnhandledExceptionFilter(LPEXCEPTION_POINTERS exceptioninfo);
 #endif
 

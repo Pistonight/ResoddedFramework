@@ -28,38 +28,10 @@ foreach(EXCLUDED_FILE IN LISTS EXCLUDE_FILES)
     list(REMOVE_ITEM SOURCES "${EXCLUDED_FILE}")
 endforeach()
 
-if(ANDROID)
-    add_library(${PROJECT_NAME} SHARED ${SOURCES})
-    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "main")
-elseif(IOS)
-    add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES})
-    set_target_properties(${PROJECT_NAME} PROPERTIES
-        MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.wszqkzqk.pvzportable"
-        MACOSX_BUNDLE_BUNDLE_NAME "LawnProject"
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/ios/Info.plist.in"
-        XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
-        XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "15.0"
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "io.github.wszqkzqk.pvzportable"
-        XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "-"
-        XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
-    )
-    if(EXISTS "${CMAKE_SOURCE_DIR}/ios/LaunchScreen.storyboard")
-        target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/ios/LaunchScreen.storyboard")
-        set_source_files_properties("${CMAKE_SOURCE_DIR}/ios/LaunchScreen.storyboard"
-            PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    endif()
-    if(EXISTS "${CMAKE_SOURCE_DIR}/ios/Assets.xcassets")
-        target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/ios/Assets.xcassets")
-        set_source_files_properties("${CMAKE_SOURCE_DIR}/ios/Assets.xcassets"
-            PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    endif()
-else()
-    add_executable(${PROJECT_NAME} ${SOURCES})
-endif()
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
-    $<$<BOOL:${WIN32}>:WIN32>
+    WIN32
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
     _LIB
@@ -125,28 +97,26 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 )
 # DLL
 
-if(WIN32)
-    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty/x64")
-    else()
-        set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty/x86")
-    endif()
-
-    set(DLLS_TO_COPY
-        bass.dll
-        avcodec-61.dll
-        avdevice-61.dll
-        avformat-61.dll
-        avutil-59.dll
-        swresample-5.dll
-        swscale-8.dll
-    )
-
-    foreach(DLL ${DLLS_TO_COPY})
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${THIRDPARTY_DIR}/${DLL}"
-                "${EXPORT_DIR}"
-        )
-    endforeach()
+if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty/x64")
+else()
+    set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty/x86")
 endif()
+
+set(DLLS_TO_COPY
+    bass.dll
+    avcodec-61.dll
+    avdevice-61.dll
+    avformat-61.dll
+    avutil-59.dll
+    swresample-5.dll
+    swscale-8.dll
+)
+
+foreach(DLL ${DLLS_TO_COPY})
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${THIRDPARTY_DIR}/${DLL}"
+            "${EXPORT_DIR}"
+    )
+endforeach()

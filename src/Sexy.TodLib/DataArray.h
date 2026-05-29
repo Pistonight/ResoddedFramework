@@ -1,7 +1,7 @@
 #ifndef __DATAARRAY_H__
 #define __DATAARRAY_H__
 
-#include <new>
+#include <new.h>
 #include <string.h>
 #include "TodDebug.h"
 #include "TodCommon.h"
@@ -112,7 +112,7 @@ template <typename T> class DataArray
 			aItem++;
 
 		DataArray<T>::DataArrayItem *aLast = &mBlock[mMaxUsedCount];
-		while (aItem < aLast)
+		while ((unsigned int)aItem < (unsigned int)aLast)
 		{
 			if (aItem->mID & DATA_ARRAY_KEY_MASK)
 			{

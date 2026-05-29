@@ -411,28 +411,24 @@ bool DefReadFromCacheImage(void *&theReadPtr, Image **theImage)
 {
 	int aLen;
 	SMemR(theReadPtr, &aLen, sizeof(int));		  // 读取贴图标签字符数组的长度
-	char *aImageName = (char *)malloc(aLen + 1); // 在堆上分配贴图标签字符数组的内存空间
+	char *aImageName = (char *)_alloca(aLen + 1); // 在栈上分配贴图标签字符数组的内存空间
 	SMemR(theReadPtr, aImageName, aLen);		  // 读取贴图标签字符数组
 	aImageName[aLen] = '\0';
 
 	*theImage = nullptr;
-	bool aResult = aImageName[0] == '\0' || DefinitionLoadImage(theImage, aImageName);
-	free(aImageName);
-	return aResult;
+	return aImageName[0] == '\0' || DefinitionLoadImage(theImage, aImageName);
 }
 
 bool DefReadFromCacheFont(void *&theReadPtr, Font **theFont)
 {
 	int aLen;
 	SMemR(theReadPtr, &aLen, sizeof(int));		 // 读取字体标签字符数组的长度
-	char *aFontName = (char *)malloc(aLen + 1); // 在堆上分配字体标签字符数组的内存空间
+	char *aFontName = (char *)_alloca(aLen + 1); // 在栈上分配字体标签字符数组的内存空间
 	SMemR(theReadPtr, aFontName, aLen);			 // 读取字体标签字符数组
 	aFontName[aLen] = '\0';
 
 	*theFont = nullptr;
-	bool aResult = aFontName[0] == '\0' || DefinitionLoadFont(theFont, aFontName);
-	free(aFontName);
-	return aResult;
+	return aFontName[0] == '\0' || DefinitionLoadFont(theFont, aFontName);
 }
 
 bool DefMapReadFromCache(void *&theReadPtr, DefMap *theDefMap, void *theDefinition)

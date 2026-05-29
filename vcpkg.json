@@ -1,9 +1,6 @@
 {
   "dependencies": [
-    {
-      "name": "cpptrace",
-      "platform": "!android & !ios"
-    },
+    "cpptrace",
     "curl",
     "freetype",
     "glm",

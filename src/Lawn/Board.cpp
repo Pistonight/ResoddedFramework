@@ -1,5 +1,4 @@
 #include <cmath>
-#include <ctime>
 #include "ZenGarden.h"
 #include "BoardInclude.h"
 #include "System/Music.h"
@@ -123,7 +122,7 @@ Board::Board(LawnApp *theApp)
 	mIntervalDrawTime = 0;
 	mIntervalDrawCountStart = 0;
 	mPreloadTime = 0;
-	mGameID = time(nullptr);
+	mGameID = _time32(nullptr);
 	mMinFPS = 1000.0f;
 	mGravesCleared = 0;
 	mPlantsEaten = 0;

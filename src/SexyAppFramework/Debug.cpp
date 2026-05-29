@@ -4,14 +4,6 @@
 #include "AutoCrit.h"
 #include "CritSect.h"
 
-#ifndef _MAX_PATH
-#ifdef PATH_MAX
-#define _MAX_PATH PATH_MAX
-#else
-#define _MAX_PATH 4096
-#endif
-#endif
-
 #include "memmgr.h"
 
 extern bool gInAssert = false;
@@ -25,7 +17,6 @@ using namespace Sexy;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-#ifdef _WIN32
 struct SEXY_ALLOC_INFO
 {
 	int size;
@@ -53,7 +44,6 @@ class SexyAllocMap : public std::map<void *, SEXY_ALLOC_INFO>
 	}
 };
 static SexyAllocMap gSexyAllocMap;
-#endif // _WIN32
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,7 +108,6 @@ void SexyTraceFmt(const SexyCharByte *fmt...)
 ///////////////////////////////////////////////////////////////////////////////
 void SexyMemAddTrack(void *addr, int asize, const char *fname, int lnum)
 {
-#ifdef _WIN32
 	if (!gSexyAllocMapValid)
 		return;
 
@@ -129,14 +118,12 @@ void SexyMemAddTrack(void *addr, int asize, const char *fname, int lnum)
 	strncpy(info.file, fname, sizeof(info.file) - 1);
 	info.line = lnum;
 	info.size = asize;
-#endif
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 void SexyMemRemoveTrack(void *addr)
 {
-#ifdef _WIN32
 	if (!gSexyAllocMapValid)
 		return;
 
@@ -144,14 +131,12 @@ void SexyMemRemoveTrack(void *addr)
 	SexyAllocMap::iterator anItr = gSexyAllocMap.find(addr);
 	if (anItr != gSexyAllocMap.end())
 		gSexyAllocMap.erase(anItr);
-#endif
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 void SexyDumpUnfreed()
 {
-#ifdef _WIN32
 	if (!gSexyAllocMapValid)
 		return;
 
@@ -248,7 +233,6 @@ void SexyDumpUnfreed()
 	sprintf(buf, "Total Unfreed: %d bytes (%dKB)\n\n", totalSize, totalSize / 1024);
 	printf(buf);
 	fprintf(f, buf);
-#endif // _WIN32
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -260,5 +244,5 @@ void OutputDebug(const SexyCharByte *fmt...)
 	std::string result = vformat(fmt, argList);
 	va_end(argList);
 
-	printf("%s", result.c_str());
+	printf(result.c_str());
 }

@@ -8,10 +8,6 @@ Window::Window(SexyAppBase* theApp)
 {
     mApp = theApp;
 
-#if (defined(__ANDROID__) && !defined(__TERMUX__)) || defined(__IPHONEOS__)
-	SDL_SetHint(SDL_HINT_ORIENTATIONS, "LandscapeLeft LandscapeRight");
-#endif
-
 	mInternalWindow = SDL_CreateWindow(mApp->mTitle.c_str(), mApp->mWidth, mApp->mHeight, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | (mApp->mIsWindowed ? 0 : SDL_WINDOW_FULLSCREEN));
 }
 
@@ -20,7 +16,7 @@ Window::~Window()
     SDL_DestroyWindow(mInternalWindow);
 }
 
-#ifdef _WIN32
+#if WIN32
  
 HWND Window::GetHWND()
 {

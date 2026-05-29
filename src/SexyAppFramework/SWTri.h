@@ -4,7 +4,6 @@
 #include "MemoryImage.h"
 #include "Rect.h"
 #include "SexyMatrix.h"
-#include <stdint.h>
 
 namespace Sexy
 {
@@ -40,7 +39,7 @@ class SWHelper
 		unsigned int a, r, g, b;
 	};
 
-	typedef int64_t signed64;
+	typedef __int64 signed64;
 
   public:
 	// For drawing

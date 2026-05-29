@@ -5,9 +5,7 @@
 //#include "InternetManager.h"
 
 #include <fstream>
-#ifdef _WIN32
 #include <direct.h>
-#endif
 //#include "BetaSupport.h"
 
 using namespace Sexy;
@@ -539,9 +537,7 @@ void SexyApp::InitPropertiesHook()
 	}
 
 	mProdName = GetString("ProdName", mProdName);
-#if !defined(__IPHONEOS__) && (!defined(__ANDROID__) || defined(__TERMUX__))
 	mIsWindowed = GetBoolean("DefaultWindowed", mIsWindowed);
-#endif
 
 	std::string aNewTitle = GetString("Title", "");
 	if (aNewTitle.length() > 0)
@@ -571,9 +567,9 @@ void SexyApp::Init()
 
 	SEHCatcher::mSubmitHost = "www.popcap.com";
 #endif
-	printf("%s", StrFormat("[SexyAppFramework] - Product: %s\n", mProdName.c_str()).c_str());
-	printf("%s", StrFormat("[SexyAppFramework] - BuildNum: %d\n", mBuildNum).c_str());
-	printf("%s", StrFormat("[SexyAppFramework] - BuildDate: %s\n", mBuildDate.c_str()).c_str());
+	printf(StrFormat("[SexyAppFramework] - Product: %s\n", mProdName.c_str()).c_str());
+	printf(StrFormat("[SexyAppFramework] - BuildNum: %d\n", mBuildNum).c_str());
+	printf(StrFormat("[SexyAppFramework] - BuildDate: %s\n", mBuildDate.c_str()).c_str());
 
 	SexyAppBase::Init();
 

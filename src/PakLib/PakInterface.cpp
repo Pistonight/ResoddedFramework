@@ -3,13 +3,8 @@
 #include <vector>
 #include <cinttypes>
 
-#ifdef _WIN32
+#if __clang__
 #define stricmp _stricmp
-#define strnicmp _strnicmp
-#else
-#include <strings.h>
-#define stricmp strcasecmp
-#define strnicmp strncasecmp
 #endif
 
 enum
@@ -45,13 +40,7 @@ static void FixFileName(const char *theFileName, char *theUpperName)
 	if ((theFileName[0] != 0) && (theFileName[1] == ':'))
 	{
 		char aDir[256];
-		std::string aWorkingDir;
-		try {
-			aWorkingDir = std::filesystem::current_path().string();
-		} catch (...) {
-			aWorkingDir = "";
-		}
-		if (aWorkingDir.empty()) return;
+		std::string aWorkingDir = std::filesystem::current_path().string();
 		std::snprintf(aDir, sizeof(aDir), "%s", aWorkingDir.c_str());
 		int aLen = strlen(aDir);
 		aDir[aLen++] = '/';
