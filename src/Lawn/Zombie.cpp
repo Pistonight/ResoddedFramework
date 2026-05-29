@@ -1299,9 +1299,15 @@ void Zombie::BungeeDropZombie(Zombie *theDroppedZombie, int theGridX, int theGri
 //0x524A70
 void Zombie::PickRandomSpeed()
 {
+
 	if (mZombiePhase == ZombiePhase::PHASE_DOLPHIN_WALKING_IN_POOL)
 	{
 		mVelX = 0.3f;
+	}
+	else if (mZombiePhase == PHASE_SNORKEL_WALKING_IN_POOL) 
+	{
+		mVelX = 0.2f;
+		UpdateAnimSpeed();
 	}
 	else if (mZombiePhase == ZombiePhase::PHASE_DIGGER_WALKING)
 	{
@@ -2190,7 +2196,7 @@ void Zombie::UpdateZombieSnorkel()
 		if (aBodyReanim->mLoopCount > 0)
 		{
 			mZombiePhase = ZombiePhase::PHASE_SNORKEL_WALKING_IN_POOL;
-			PlayZombieReanim("anim_swim", ReanimLoopType::REANIM_LOOP_FULL_LAST_FRAME, 0, 0.0f);
+			PlayZombieReanim("anim_swim", ReanimLoopType::REANIM_LOOP_FULL_LAST_FRAME, 0, 12.0f);
 			PickRandomSpeed();
 		}
 	}
