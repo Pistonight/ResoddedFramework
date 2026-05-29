@@ -1,16 +1,6 @@
 # CmakeLists.txt
 project(SexyAppFramework)
 
-find_package(SDL3 CONFIG REQUIRED)
-find_package(ZLIB REQUIRED)
-find_package(OpenAL CONFIG REQUIRED)
-find_package(Ogg CONFIG REQUIRED)
-find_package(Vorbis CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
-find_package(Freetype REQUIRED)
-find_package(cpptrace CONFIG REQUIRED)
-find_package(CURL CONFIG REQUIRED)
-
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
@@ -45,6 +35,18 @@ set(SEXY_CRASH_HANDLER "Enable the use of the crash handler" ON)
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
+find_package(SDL3 CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(Ogg CONFIG REQUIRED)
+find_package(Vorbis CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(Freetype REQUIRED)
+find_package(CURL CONFIG REQUIRED)
+if(SEXY_CRASH_HANDLER)
+    find_package(cpptrace CONFIG REQUIRED)
+endif()
+
 target_link_libraries(${PROJECT_NAME} PUBLIC 
     SDL3::SDL3
     ZLIB::ZLIB
@@ -54,7 +56,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     Freetype::Freetype
     Vorbis::vorbisfile
     Vorbis::vorbis
-    cpptrace::cpptrace
+    $<$<BOOL:${SEXY_CRASH_HANDLER}>:cpptrace::cpptrace>
     CURL::libcurl
     ImageLib
     PakLib
@@ -65,16 +67,55 @@ else()
     set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty/x86")
 endif()
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
-    bass.lib
-    avcodec.lib
-    avdevice.lib
-    avformat.lib
-    avutil.lib
-    swresample.lib
-    swscale.lib
-)
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        bass.lib
+        avcodec.lib
+        avdevice.lib
+        avformat.lib
+        avutil.lib
+        swresample.lib
+        swscale.lib
+    )
 
+    target_link_directories(${PROJECT_NAME} PUBLIC
+        ${THIRDPARTY_DIR}
+    )
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(AVCODEC REQUIRED libavcodec)
+    pkg_check_modules(AVDEVICE REQUIRED libavdevice)
+    pkg_check_modules(AVFORMAT REQUIRED libavformat)
+    pkg_check_modules(AVUTIL REQUIRED libavutil)
+    pkg_check_modules(SWRESAMPLE REQUIRED libswresample)
+    pkg_check_modules(SWSCALE REQUIRED libswscale)
+
+    target_include_directories(${PROJECT_NAME} PUBLIC
+        ${AVCODEC_INCLUDE_DIRS}
+        ${AVDEVICE_INCLUDE_DIRS}
+        ${AVFORMAT_INCLUDE_DIRS}
+        ${AVUTIL_INCLUDE_DIRS}
+        ${SWRESAMPLE_INCLUDE_DIRS}
+        ${SWSCALE_INCLUDE_DIRS}
+    )
+
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        ${AVCODEC_LIBRARIES}
+        ${AVDEVICE_LIBRARIES}
+        ${AVFORMAT_LIBRARIES}
+        ${AVUTIL_LIBRARIES}
+        ${SWRESAMPLE_LIBRARIES}
+        ${SWSCALE_LIBRARIES}
+    )
+
+    find_library(BASS_LIBRARY NAMES bass)
+    if(BASS_LIBRARY)
+        target_link_libraries(${PROJECT_NAME} PUBLIC ${BASS_LIBRARY})
+    else()
+        message(WARNING "BASS library not found by CMake! Falling back to linking dynamically to 'bass'.")
+        target_link_libraries(${PROJECT_NAME} PUBLIC bass)
+    endif()
+endif()
 target_link_directories(${PROJECT_NAME} PUBLIC
     ${THIRDPARTY_DIR}
 )

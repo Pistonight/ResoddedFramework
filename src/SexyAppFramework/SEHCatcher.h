@@ -28,14 +28,14 @@ class SEHCatcher
 	static bool mAllowSubmit;
 
   protected:
-#if WIN32
+#ifdef _WIN32
 	static LPTOP_LEVEL_EXCEPTION_FILTER mPreviousFilter;
 #endif
 
 
   public:
 	static void SEHWindowProc();
-#if WIN32
+#ifdef _WIN32
 	static long __stdcall UnhandledExceptionFilter(LPEXCEPTION_POINTERS lpExceptPtr);
 	static void DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP);
 #endif

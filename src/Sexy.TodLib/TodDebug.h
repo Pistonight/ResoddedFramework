@@ -1,7 +1,7 @@
 #ifndef __TODDEBUG_H__
 #define __TODDEBUG_H__
 
-#if WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #endif
 
@@ -34,12 +34,12 @@ void TodTraceMemory();
 void TodTraceAndLog(const char *theFormat, ...);
 void TodTraceWithoutSpamming(const char *theFormat, ...);
 void TodHesitationTrace(...);
-#if WIN32
+#ifdef _WIN32
 void TodReportError(LPEXCEPTION_POINTERS exceptioninfo, const char *theMessage);
 #endif
 void TodAssertFailed(const char *theCondition, const char *theFile, int theLine, const char *theMsg = "", ...);
 /*inline*/ void TodErrorMessageBox(const char *theMessage, const char *theTitle);
-#if WIN32
+#ifdef _WIN32
 long __stdcall TodUnhandledExceptionFilter(LPEXCEPTION_POINTERS exceptioninfo);
 #endif
 

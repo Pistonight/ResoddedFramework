@@ -377,6 +377,8 @@ ZombatarWidget::~ZombatarWidget()
 void ZombatarWidget::ChangePage(ZombatarPage thePage)
 {
 	mSubPage = 0;
+	mMaxSubPages = 0;
+
 
 	switch (mPage)
 	{

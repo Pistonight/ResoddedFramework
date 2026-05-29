@@ -42,7 +42,7 @@
 #include "../PakLib/PakInterface.h"
 #include <string>
 
-#if WIN32
+#ifdef _WIN32
 
 #include <math.h>
 #include <regstr.h>
@@ -76,7 +76,7 @@ SEHCatcher Sexy::gSEHCatcher;
 
 #endif
 
-#if WIN32
+#ifdef _WIN32
 
 HMODULE gVersionDLL = NULL;
 
@@ -139,7 +139,7 @@ SexyAppBase::SexyAppBase()
 {
 	gSexyAppBase = this;
 
-#if WIN32
+#ifdef _WIN32
 	gVersionDLL = LoadLibraryA("version.dll");
 #endif
 
@@ -320,7 +320,7 @@ SexyAppBase::SexyAppBase()
 	mWidgetManager = new WidgetManager(this);
 	mResourceManager = new ResourceManager(this);
 
-	#if WIN32
+	#ifdef _WIN32
 	mCopyMutex = NULL;
 	#endif
 	
@@ -480,7 +480,7 @@ SexyAppBase::~SexyAppBase()
 			SDL_DestroyCursor(mCachedCursors[i]);
 	SDL_Quit();
 
-#if WIN32
+#ifdef _WIN32
 	if (mCopyMutex != NULL)
 		::CloseHandle(mCopyMutex);
 	FreeLibrary(gVersionDLL);
@@ -1100,7 +1100,7 @@ bool SexyAppBase::OpenURL(const std::string &theURL, bool shutdownOnOpen)
 
 std::string SexyAppBase::GetProductVersionDLL(const std::string &thePath)
 {
-	#if WIN32
+	#ifdef _WIN32
 	// Dynamically Load Version.dll
 	typedef DWORD(APIENTRY * GetFileVersionInfoSizeFunc)(LPSTR lptstrFilename, LPDWORD lpdwHandle);
 	typedef BOOL(APIENTRY * GetFileVersionInfoFunc)(LPSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData);
@@ -1150,7 +1150,7 @@ std::string SexyAppBase::GetProductVersionDLL(const std::string &thePath)
 void SexyAppBase::WaitForLoadingThread()
 {
 	while ((mLoadingThreadStarted) && (!mLoadingThreadCompleted))
-		Sleep(20);
+		SDL_Delay(20);
 }
 
 void SexyAppBase::SetCursorImage(int theCursorNum, Image *theImage)
@@ -2140,7 +2140,7 @@ void SexyAppBase::Shutdown()
 		// Blah
 		while (mCursorThreadRunning)
 		{
-			Sleep(10);
+			SDL_Delay(10);
 		}
 
 		if (mMusicInterface != NULL)
@@ -2676,7 +2676,11 @@ void SexyAppBase::LogScreenSaverError(const std::string &theError)
 	FILE *aFile = fopen("ScrError.txt", aFlag);
 	if (aFile != NULL)
 	{
-		fprintf(aFile, "%s %s %u\n", theError.c_str(), _strtime(aBuf), SDL_GetTicks());
+#ifdef _WIN32
+		fprintf(aFile, "%s %s %lu\n", theError.c_str(), _strtime(aBuf), (unsigned long)SDL_GetTicks());
+#else
+		fprintf(aFile, "%s %lu\n", theError.c_str(), (unsigned long)SDL_GetTicks());
+#endif
 		fclose(aFile);
 	}
 }
@@ -2697,7 +2701,9 @@ void SexyAppBase::EndPopup()
 	if (mWidgetManager->mDownButtons)
 	{
 		mWidgetManager->DoMouseUps();
+#ifdef _WIN32
 		ReleaseCapture();
+#endif
 	}
 }
 
@@ -2780,6 +2786,7 @@ void SexyAppBase::SafeDeleteWidget(Widget *theWidget)
 	mSafeDeleteList.push_back(aWidgetSafeDeleteInfo);
 }
 
+#ifdef _WIN32
 static intptr_t CALLBACK MarkerListDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -3102,6 +3109,7 @@ static int DemoJumpToTime()
 	return ret;*/
 	return 0;
 }
+#endif
 
 static void ToggleDemoSoundVolume()
 {
@@ -4254,7 +4262,7 @@ void SexyAppBase::LoadingThreadProcStub(void *theArg)
 
 	aSexyApp->LoadingThreadProc();
 
-	printf("[SexyAppFramework] - Resource Loading Time: %d\n", (SDL_GetTicks() - aSexyApp->mTimeLoaded));
+	printf("[SexyAppFramework] - Resource Loading Time: %d\n", (int)(SDL_GetTicks() - aSexyApp->mTimeLoaded));
 
 	aSexyApp->mLoadingThreadCompleted = true;
 }
@@ -4725,7 +4733,7 @@ bool SexyAppBase::Process(bool allowSleep)
 
 					// Wait till next processing cycle
 					++mSleepCount;
-					Sleep(aTimeToNextFrame);
+					SDL_Delay(aTimeToNextFrame);
 
 					aCumSleepTime += aTimeToNextFrame;
 				}
@@ -4746,7 +4754,7 @@ bool SexyAppBase::Process(bool allowSleep)
 				if (!allowSleep)
 					return false;
 
-				Sleep(aLoadingYieldSleepTime);
+				SDL_Delay(aLoadingYieldSleepTime);
 			}
 		}
 	}
@@ -4865,7 +4873,7 @@ bool SexyAppBase::UpdateAppStep(bool *updated)
 		{
 			if (mStepMode == 2)
 			{
-				Sleep(mFrameTime);
+				SDL_Delay(mFrameTime);
 				mUpdateAppState = UPDATESTATE_PROCESS_DONE; // skip actual update until next step
 			}
 			else
@@ -5159,6 +5167,7 @@ void SexyAppBase::SetDouble(const std::string &theId, double theValue)
 
 void SexyAppBase::DoParseCmdLine()
 {
+#ifdef _WIN32
 	char *aCmdLine = GetCommandLineA();
 	char *aCmdLinePtr = aCmdLine;
 	if (aCmdLinePtr[0] == '"')
@@ -5174,7 +5183,7 @@ void SexyAppBase::DoParseCmdLine()
 		if (aCmdLinePtr != NULL)
 			ParseCmdLine(aCmdLinePtr + 1);
 	}
-
+#endif
 	mCmdLineParsed = true;
 }
 
@@ -5223,6 +5232,8 @@ void SexyAppBase::ParseCmdLine(const std::string &theCmdLine)
 	}
 }
 
+#ifdef _WIN32
+
 static int GetMaxDemoFileNum(const std::string &theDemoPrefix, int theMaxToKeep, bool doErase)
 {
 	WIN32_FIND_DATAA aData;
@@ -5253,6 +5264,8 @@ static int GetMaxDemoFileNum(const std::string &theDemoPrefix, int theMaxToKeep,
 	--anItr;
 	return (*anItr);
 }
+
+#endif
 
 void SexyAppBase::HandleCmdLineParam(const std::string &theParamName, const std::string &theParamValue)
 {
@@ -5413,14 +5426,22 @@ void SexyAppBase::Init()
 	}
 
 	// Change directory
-	if (!ChangeDirHook(mChangeDirTo.c_str()))
-		std::filesystem::current_path(mChangeDirTo);
+	if (!mChangeDirTo.empty() && !ChangeDirHook(mChangeDirTo.c_str()))
+	{
+		try
+		{
+			std::filesystem::current_path(mChangeDirTo);
+		}
+		catch (...)
+		{
+		}
+	}
 
 	gPakInterface->AddPakFile("main.pak");
 
 	if (mOnlyAllowOneCopyToRun)
 	{
-		#if WIN32
+		#ifdef _WIN32
 		mCopyMutex = CreateMutex(NULL, TRUE, (mProdName + "_OnlyAllowOneCopyToRun_Mutex").c_str());
 		if (::GetLastError() == ERROR_ALREADY_EXISTS)
 			HandleGameAlreadyRunning();

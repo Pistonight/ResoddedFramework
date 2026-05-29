@@ -39,7 +39,7 @@ class SWHelper
 		unsigned int a, r, g, b;
 	};
 
-	typedef __int64 signed64;
+	typedef int64_t signed64;
 
   public:
 	// For drawing

@@ -3,7 +3,7 @@
 #include "Debug.h"
 #include <filesystem>
 #include <chrono>
-#if WIN32
+#ifdef _WIN32
 #include <direct.h>
 #include <io.h>
 #include <sys/types.h>
@@ -264,7 +264,14 @@ SexyString Sexy::CommaSeperate(int theValue)
 
 std::string Sexy::GetCurDir()
 {
-	return std::filesystem::current_path().string();
+	try
+	{
+		return std::filesystem::current_path().string();
+	}
+	catch (...)
+	{
+		return "";
+	}
 }
 
 std::string Sexy::GetFullPath(const std::string &theRelPath)
@@ -373,7 +380,7 @@ std::string Sexy::GetPathFrom(const std::string &theRelPath, const std::string &
 
 bool Sexy::AllowAllAccess(const std::string &theFileName)
 {
-#if WIN32
+#ifdef _WIN32
 
 	HMODULE aLib = LoadLibraryA("advapi32.dll");
 	if (aLib == NULL)

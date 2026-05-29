@@ -9,7 +9,7 @@ bool (*gAppHasUsedCheatKeys)();
 SexyString (*gGetCurrentLevelName)();
 
 //0x44E8F0
-int main()
+int main(int argc, char **argv)
 {
 	TodStringListSetColors(gLawnStringFormats, gLawnStringFormatCount);
 	gGetCurrentLevelName = LawnGetCurrentLevelName;

@@ -185,7 +185,7 @@ class SexyAppBase : public ButtonListener, public DialogListener
 	bool mSkipSignatureChecks;
 
 	bool mOnlyAllowOneCopyToRun;
-	#if WIN32
+	#ifdef _WIN32
 	HANDLE mCopyMutex;
 	#endif
 	CritSect mCritSect;

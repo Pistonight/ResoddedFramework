@@ -86,7 +86,7 @@ void TodAssertFailed(const char *theCondition, const char *theFile, int theLine,
 		}
 
 		gInAssert = true;
-#if WIN32
+#ifdef _WIN32
 		LPEXCEPTION_POINTERS exp;
 
 		__try
@@ -241,7 +241,7 @@ void TodTraceWithoutSpamming(const char *theFormat, ...)
 #endif
 }
 
-#if WIN32
+#ifdef _WIN32
 void TodReportError(LPEXCEPTION_POINTERS exceptioninfo, const char *theMessage)
 {
 	Sexy::SEHCatcher::UnhandledExceptionFilter(exceptioninfo);
@@ -289,7 +289,7 @@ void TodAssertInitForApp()
 
 	std::time_t aclock = std::time(nullptr);
 	TodLog("[TodLib] - Started %s\n", std::asctime(std::localtime(&aclock)));
-#if WIN32
+#ifdef _WIN32
 	SetUnhandledExceptionFilter(TodUnhandledExceptionFilter);
 #endif
 }

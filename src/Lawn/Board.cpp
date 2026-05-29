@@ -122,7 +122,7 @@ Board::Board(LawnApp *theApp)
 	mIntervalDrawTime = 0;
 	mIntervalDrawCountStart = 0;
 	mPreloadTime = 0;
-	mGameID = _time32(nullptr);
+	mGameID = time(nullptr);
 	mMinFPS = 1000.0f;
 	mGravesCleared = 0;
 	mPlantsPlaced = 0;

@@ -6,6 +6,15 @@
 
 #include "memmgr.h"
 
+#ifndef _MAX_PATH
+#ifdef PATH_MAX
+#define _MAX_PATH PATH_MAX
+#else
+#define _MAX_PATH 4096
+#endif
+#endif
+
+
 extern bool gInAssert = false;
 extern bool gSexyDumpLeakedMem = false;
 

@@ -127,10 +127,12 @@ static unsigned int gTodVertexReservoirUsed = 0;
 
 static int FixedFloor(int x)
 {
-	if (x > 0)
-		return x & 0xFFFF0000;
-	else
-		return (x & 0xFFFF0000) - 0x10000;
+	int r = x & 0xFFFF0000;
+
+	if (x < 0 && (x & 0xFFFF))
+		r -= 0x10000;
+
+	return r;
 }
 
 //0x4459B0

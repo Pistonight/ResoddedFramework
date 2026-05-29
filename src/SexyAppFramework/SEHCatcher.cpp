@@ -20,7 +20,7 @@
 
 using namespace Sexy;
 
-#if WIN32
+#ifdef _WIN32
 LPTOP_LEVEL_EXCEPTION_FILTER SEHCatcher::mPreviousFilter;
 #endif
 SexyAppBase *SEHCatcher::mApp = NULL;
@@ -42,7 +42,7 @@ std::string SEHCatcher::mSubmitErrorMessage = "Failed to redirect to issue page.
 
 static bool gUseDefaultFonts = true;
 
-#if WIN32
+#ifdef _WIN32
 struct
 {
 	DWORD dwExceptionCode;
@@ -82,18 +82,18 @@ struct
 
 SEHCatcher::SEHCatcher()
 {
-#if WIN32
+#ifdef _WIN32
 	mPreviousFilter = SetUnhandledExceptionFilter(UnhandledExceptionFilter);
 #endif
 }
 
 SEHCatcher::~SEHCatcher()
 {
-#if WIN32
+#ifdef _WIN32
 	SetUnhandledExceptionFilter(mPreviousFilter);
 #endif
 }
-#if WIN32
+#ifdef _WIN32
 long __stdcall SEHCatcher::UnhandledExceptionFilter(LPEXCEPTION_POINTERS lpExceptPtr)
 {
 	if (mApp != NULL)
@@ -114,7 +114,7 @@ std::string GetCallStack()
 	auto trace = cpptrace::generate_trace();
 	size_t startIdx = 0;
 	size_t endIdx = trace.frames.size();
-#if WIN32
+#ifdef _WIN32
 
 	for (size_t i = 0; i < trace.frames.size(); i++)
 	{
@@ -153,7 +153,7 @@ std::string GetCallStack()
 	return aCallStack;
 }
 
-#if WIN32
+#ifdef _WIN32
 void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 {
 	std::string anErrorTitle;
@@ -394,7 +394,7 @@ void SEHCatcher::ShowErrorDialog(const std::string &theErrorTitle, const std::st
 std::string SEHCatcher::GetSysInfo()
 {
 	std::string aDebugDump;
-#if WIN32
+#ifdef _WIN32
 	OSVERSIONINFOA aVersionInfo;
 	aVersionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionExA(&aVersionInfo);
