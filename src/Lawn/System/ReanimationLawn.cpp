@@ -355,6 +355,20 @@ GPUImage *ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		aReanim.mAnimTime = 0.5f;
 		aReanim.Draw(&aMemoryGraphics);
 	}
+	else if (theZombieType == ZombieType::ZOMBIE_BALLOON)
+	{
+
+		Reanimation aReanim;
+		aReanim.ReanimationInitializeType(aPosX, aPosY, aZombieDef.mReanimationType);
+		aReanim.PlayReanim("anim_idle", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 24.0f);
+		Reanimation aPropellerReanim;
+		aPropellerReanim.ReanimationInitializeType(aPosX, aPosY, aZombieDef.mReanimationType);
+		aPropellerReanim.SetFramesForLayer("Propeller");
+		aReanim.Draw(&aMemoryGraphics);
+		aPropellerReanim.Draw(&aMemoryGraphics);
+
+
+	}
 	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_BOSS)
 	{
 		Reanimation aReanim;
