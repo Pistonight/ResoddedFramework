@@ -2231,13 +2231,20 @@ void Zombie::UpdateZombieJackInTheBox()
 			int aPosY = mY + mHeight / 2;
 			if (mMindControlled)
 			{
-				mBoard->KillAllZombiesInRadius(mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, 127);
+				mBoard->KillAllZombiesInRadius(
+					mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true,
+					GetBit(DamageRangeFlags::DAMAGES_GROUND) | GetBit(DamageRangeFlags::DAMAGES_SUBMERGED) |
+						GetBit(DamageRangeFlags::DAMAGES_FLYING) |
+						GetBit(DamageRangeFlags::DAMAGES_DOG) | GetBit(DamageRangeFlags::DAMAGES_OFF_GROUND) |
+						GetBit(DamageRangeFlags::DAMAGES_DYING) | GetBit(DamageRangeFlags::DAMAGES_UNDERGROUND));
 			}
 			else
 			{
+				mBoard->KillAllZombiesInRadius(
+					mRow, aPosX, aPosY, JackInTheBoxZombieRadius, 1, true, GetBit(DamageRangeFlags::DAMAGES_MINDCONTROLLED));
 				mBoard->KillAllPlantsInRadius(aPosX, aPosY, JackInTheBoxPlantRadius);
 			}
-
+			
 			mApp->AddTodParticle(aPosX,
 								 aPosY,
 								 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
