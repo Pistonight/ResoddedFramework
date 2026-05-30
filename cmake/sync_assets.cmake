@@ -10,6 +10,7 @@ set(IGNORE_EXTENSIONS
     ".lib"
     ".so"
     ".dylib"
+    ".gitkeep"
 )
 
 # Collect all source asset files
@@ -60,11 +61,16 @@ endif()
 
 foreach(F ${SRC_FILES})
 
+    get_filename_component(FILENAME "${F}" NAME)
+    if(FILENAME STREQUAL ".gitkeep")
+        continue()
+    endif()
     get_filename_component(
         DEST_DIR
         "${DST}/${F}"
         DIRECTORY
     )
+
 
     file(MAKE_DIRECTORY "${DEST_DIR}")
 

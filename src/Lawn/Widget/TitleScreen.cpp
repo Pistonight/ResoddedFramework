@@ -212,13 +212,14 @@ void TitleScreen::Update()
 		mApp->mMusic->MusicTitleScreenInit();
 		mApp->StartLoadingThread();
 
-		mTitleState = TitleState::TITLESTATE_POPCAP_LOGO;
 		if (mDisplayPartnerLogo)
 		{
+			mTitleState = TitleState::TITLESTATE_PARTNER_LOGO;
 			mTitleStateDuration = 150;
 		}
 		else
 		{
+			mTitleState = TitleState::TITLESTATE_POPCAP_LOGO;
 			mTitleStateDuration = 200;
 		}
 
