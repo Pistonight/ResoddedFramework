@@ -1349,12 +1349,12 @@ void Plant::UpdateSpikeweed()
 		{
 			if (mStateCountdown == 69 || mStateCountdown == 33)
 			{
-				DoRowAreaDamage(20, 33U);
+				DoRowAreaDamage(20, GetBit(DamageFlags::DAMAGE_BYPASSES_SHIELD) | GetBit(DamageFlags::DAMAGE_SPIKE));
 			}
 		}
 		else if (mStateCountdown == 75)
 		{
-			DoRowAreaDamage(20, 33U);
+			DoRowAreaDamage(20, GetBit(DamageFlags::DAMAGE_BYPASSES_SHIELD) | GetBit(DamageFlags::DAMAGE_SPIKE));
 		}
 
 		if (aBodyReanim->mLoopCount > 0)
@@ -1476,7 +1476,7 @@ void Plant::DoSquashDamage()
 			if (GetRectOverlap(aAttackRect, aZombieRect) >
 				(aZombie->mZombieType == ZombieType::ZOMBIE_FOOTBALL ? -20 : 0))
 			{
-				aZombie->TakeDamage(1800, 18U);
+				aZombie->TakeDamage(1800, GetBit(DamageFlags::DAMAGE_HITS_SHIELD_AND_BODY) | GetBit(DamageFlags::DAMAGE_DOESNT_LEAVE_BODY));
 			}
 		}
 	}
@@ -2019,7 +2019,7 @@ void Plant::MagnetShroomAttactItem(Zombie *theZombie)
 	}
 	else if (theZombie->mZombieType == ZombieType::ZOMBIE_POGO)
 	{
-		theZombie->PogoBreak(16U);
+		theZombie->PogoBreak(GetBit(DamageFlags::DAMAGE_DOESNT_LEAVE_BODY));
 		// ZombieDrawPosition aDrawPos;
 		// theZombie->GetDrawPos(aDrawPos);
 		theZombie->GetTrackPosition("Zombie_pogo_stick", aMagnetItem->mPosX, aMagnetItem->mPosY);
@@ -3445,11 +3445,7 @@ void Plant::UpdateShooting()
 		{
 			Reanimation *aHeadBackReanim = mApp->ReanimationTryToGet(mHeadReanimID2);
 			Reanimation *aHeadFrontReanim = mApp->ReanimationTryToGet(mHeadReanimID);
-			if (aHeadFrontReanim->mLoopType == ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD 
-#ifdef DO_FIX_BUGS 
-				&& mLaunchCounter <= 1 
-#endif 
-				)
+			if (aHeadFrontReanim->mLoopType == ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD && mLaunchCounter <= 1)
 			{
 				Fire(nullptr, mRow, PlantWeapon::WEAPON_PRIMARY);
 			}
@@ -4707,13 +4703,13 @@ void Plant::Fire(Zombie *theTargetZombie, int theRow, PlantWeapon thePlantWeapon
 {
 	if (mSeedType == SeedType::SEED_FUMESHROOM)
 	{
-		DoRowAreaDamage(20, 2U);
+		DoRowAreaDamage(20, GetBit(DamageFlags::DAMAGE_HITS_SHIELD_AND_BODY));
 		mApp->PlayFoley(FoleyType::FOLEY_FUME);
 		return;
 	}
 	if (mSeedType == SeedType::SEED_GLOOMSHROOM)
 	{
-		DoRowAreaDamage(20, 2U);
+		DoRowAreaDamage(20, GetBit(DamageFlags::DAMAGE_HITS_SHIELD_AND_BODY));
 		return;
 	}
 	if (mSeedType == SeedType::SEED_STARFRUIT)

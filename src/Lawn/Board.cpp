@@ -10956,7 +10956,7 @@ void Board::KillAllZombiesInRadius(
 				}
 				else
 				{
-					aZombie->TakeDamage(1800, 18U);
+					aZombie->TakeDamage(1800, GetBit(DamageFlags::DAMAGE_HITS_SHIELD_AND_BODY) | GetBit(DamageFlags::DAMAGE_DOESNT_LEAVE_BODY));
 				}
 			}
 		}
