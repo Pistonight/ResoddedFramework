@@ -306,6 +306,7 @@ ZombatarWidget::ZombatarWidget(LawnApp *theApp)
 	mZombie->mPosX = 641;
 	mZombie->mPosY = 350;
 	mZombie->SetupZombatar();
+	mZombie->mZombatar = mZombatar;
 
 	for (int i = 0; i < 18; i++)
 	{
