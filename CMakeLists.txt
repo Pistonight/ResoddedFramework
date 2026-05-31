@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 project(ResoddedFramework LANGUAGES C CXX)
 
 # Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+if(MSVC AND WIN32 AND NOT MSVC_VERSION VERSION_LESS 142)
+    add_link_options($<$<CONFIG:Debug>:/INCREMENTAL>)
+    add_compile_options($<$<CONFIG:Debug>:/ZI>)
 endif()
 
 if (MSVC)

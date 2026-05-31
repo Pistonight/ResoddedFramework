@@ -30,7 +30,6 @@ endforeach()
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
-    WIN32
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
 

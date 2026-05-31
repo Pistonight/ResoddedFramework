@@ -1,4 +1,3 @@
-# CmakeLists.txt
 project(PakLib)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
