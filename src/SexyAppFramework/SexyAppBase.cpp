@@ -1188,8 +1188,16 @@ void SexyAppBase::TakeScreenshot()
 	// Write image
 	ImageLib::Image aSaveImage;
 	aSaveImage.mBits = mRenderer->CaptureFrameBuffer();
-	aSaveImage.mWidth = mRenderer->mWidth;
-	aSaveImage.mHeight = mRenderer->mHeight;
+	if (mHighResolution)
+	{
+		aSaveImage.mWidth = mRenderer->mPresentationRect.mWidth;
+		aSaveImage.mHeight = mRenderer->mPresentationRect.mHeight;
+	}
+	else
+	{
+		aSaveImage.mWidth = mRenderer->mWidth;
+		aSaveImage.mHeight = mRenderer->mHeight;
+	}
 	aSaveImage.mNumChannels = 4;
 	ImageLib::WriteImage(anImageName, &aSaveImage, ".png");
 

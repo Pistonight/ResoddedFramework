@@ -59,7 +59,9 @@ void SDL3Renderer::SetLinearBlend_SDL(SDL_Texture *theTexture, bool linearBlend)
 
 uint32_t *SDL3Renderer::CaptureFrameBuffer()
 {
+	SDL_SetRenderTarget(mBackendRenderer, mTargetTexture);
 	SDL_Surface *surface = SDL_RenderReadPixels(mBackendRenderer, nullptr);
+	SDL_SetRenderTarget(mBackendRenderer, nullptr);
 	if (!surface)
 		return nullptr;
 
