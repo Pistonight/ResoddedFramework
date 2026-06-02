@@ -237,6 +237,7 @@ void TodWriteStringSetFormat(const char *theFormat, TodStringListFormat &theCurr
 				theCurrentFormat.mNewColor = aFormat.mNewColor;
 			theCurrentFormat.mLineSpacingOffset = aFormat.mLineSpacingOffset;
 			theCurrentFormat.mFormatFlags = aFormat.mFormatFlags;
+			theCurrentFormat.mFormatName = aFormat.mFormatName;
 			return;
 		}
 	}
@@ -416,8 +417,7 @@ int TodDrawStringWrappedHelper(Graphics *g,
 				Color aExistingColor = aCurrentFormat.mNewColor;
 				TodWriteStringSetFormat(aFormat, aCurrentFormat);
 				aCurrentFormat.mNewColor = aExistingColor;
-				int aNewAscentOffset =
-					(*aCurrentFormat.mNewFont)->GetAscent() - (*aCurrentFormat.mNewFont)->GetAscentPadding();
+				int aNewAscentOffset = (*aCurrentFormat.mNewFont)->GetAscent() - (*aCurrentFormat.mNewFont)->GetAscentPadding();
 				aLineSpacing = (*aCurrentFormat.mNewFont)->GetLineSpacing() + aCurrentFormat.mLineSpacingOffset;
 				aYOffset += aNewAscentOffset - aOldAscentOffset;
 				continue;
