@@ -262,9 +262,14 @@ class Board : public Widget, public ButtonListener
 	Board(LawnApp *theApp);
 	virtual ~Board();
 
+	/// @brief Dispose of the Board objects manually
 	void DisposeBoard();
+	/// @return Total value of the Sun that is being collected
 	int CountSunBeingCollected();
+	/// @brief Draw all GameObjects to the Board
+	/// @param g Graphics object
 	void DrawGameObjects(Graphics *g);
+	/// @brief Clear the cursor of any object
 	void ClearCursor();
 	/*inline*/ bool AreEnemyZombiesOnScreen();
 	LawnMower *FindLawnMowerInRow(int theRow);
@@ -273,36 +278,67 @@ class Board : public Widget, public ButtonListener
 		return true;
 	}
 	/*inline*/ void SaveGame(const std::string &theFileName);
+	/// @brief Load the game state from the save file
+	/// @return True if it loaded successfully
 	bool LoadGame(const std::string &theFileName);
 	void InitLevel();
+	/// @brief Display an advice if it wasn't displayed before
 	void DisplayAdvice(const SexyString &theAdvice, MessageStyle theMessageStyle, AdviceType theHelpIndex);
+	/// @brief Start the level
 	void StartLevel();
 	Plant *AddPlant(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType = SeedType::SEED_NONE);
 	Projectile *AddProjectile(int theX, int theY, int theRenderOrder, int theRow, ProjectileType theProjectileType);
 	Coin *AddCoin(int theX, int theY, CoinType theCoinType, CoinMotion theCoinMotion);
+	/// @brief Remove the SeedPacket from the Cursor
 	void RefreshSeedPacketFromCursor();
+	/// @return Get the ZombieType that will rise of the grave if we have theZombiePoints available
 	ZombieType PickGraveRisingZombieType(int theZombiePoints);
+	/// @return Get the ZombieType based on theWaveIndex and available theZombiePoints
 	ZombieType PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePicker *theZombiePicker);
+	/// @return	Row Index for theZombieType
 	int PickRowForNewZombie(ZombieType theZombieType);
 	/*inline*/ Zombie *AddZombie(ZombieType theZombieType, int theFromWave);
+	/// @brief Spawn a wave of Zombies
 	void SpawnZombieWave();
+	/// @brief Remove all zombies from the Board
 	void RemoveAllZombies();
+	/// @brief Remove all zombies that are bound to cutscenes
 	void RemoveCutsceneZombies();
+	/// @brief Spawn all final-flag Zombies from the GraveStones
 	void SpawnZombiesFromGraves();
+	/// @brief Determines if a plant can be placed.
+	/// @param theGridX The Grid X Coordinate
+	/// @param theGridY The Grid Y Coordinate
+	/// @param theSeedType The SeedType to check
+	/// @return Reason for planting here (inspect PlantingReason enum)
 	PlantingReason CanPlantAt(int theGridX, int theGridY, SeedType theSeedType);
+	/// @brief On Mouse Movement
 	virtual void MouseMove(int x, int y);
+	/// @brief On Mouse Drag
 	virtual void MouseDrag(int x, int y);
+	/// @brief Handle a mouse down press
 	virtual void MouseDown(int x, int y, int theClickCount);
+	/// @brief Handle a mouse up de-press
 	virtual void MouseUp(int x, int y, int theClickCount);
+	/// @brief Process a keyboard character press
+	/// @param theChar SexyChar that was pressed (UTF-8 friendly)
 	virtual void KeyChar(SexyChar theChar);
 	virtual void KeyUp(KeyCode theKey)
 	{
 		;
 	}
+	/// @brief Process a KeyCode press
+	/// @param theKey KeyCode that has been pressed
 	virtual void KeyDown(KeyCode theKey);
+	/// @brief Update the widget
 	virtual void Update();
+	/// @brief Update the Widgets currently active (MarkDirty + BringToFront)
 	void UpdateLayers();
+	/// @brief Draw the Widget
+	/// @param g Graphics object
 	virtual void Draw(Graphics *g);
+	/// @brief Draw the lawn
+	/// @param g Graphics object
 	void DrawBackdrop(Graphics *g);
 	virtual void ButtonMouseEnter(int theId)
 	{
@@ -317,6 +353,7 @@ class Board : public Widget, public ButtonListener
 		;
 	}
 	/*inline*/ void AddSunMoney(int theAmount);
+	/// @return True if there is enough Sun, False if we can't afford it
 	bool TakeSunMoney(int theAmount);
 	/*inline*/ bool CanTakeSunMoney(int theAmount);
 	/*inline*/ void Pause(bool thePause);
@@ -324,176 +361,363 @@ class Board : public Widget, public ButtonListener
 	{ /* 未发现 */
 		return false;
 	}
+	/// @brief Try to save the current state to the profile's save folder
 	void TryToSaveGame();
 	/*inline*/ bool NeedSaveGame();
 	/*inline*/ bool RowCanHaveZombies(int theRow);
+	/// @brief Delete all arrays that the board has
 	void ProcessDeleteQueue();
+	/// @return True if the player chooses the SeedPackets
 	bool ChooseSeedsOnCurrentLevel();
+	/// @return The max number of plants in the SeedBank
 	int GetNumSeedsInBank();
 	/*inline*/ bool StageIsNight();
 	/*inline*/ bool StageHasPool();
 	/*inline*/ bool StageHas6Rows();
 	/*inline*/ bool StageHasFog();
+	/// @return True if the Stage has GraveStones
 	bool StageHasGraveStones();
 
+	/// @return The translated Grid X
+	/// @param theX The X Coordinate in World-Space
+	/// @param theX The Y Coordinate in World-Space
 	int PixelToGridX(int theX, int theY);
+	/// @return The translated Grid Y
+	/// @param theX The X Coordinate in World-Space
+	/// @param theX The Y Coordinate in World-Space
 	int PixelToGridY(int theX, int theY);
 
+	/// @return The translated World-Space X
+	/// @param theGridX The Grid X Coordinate
+	/// @param theGridX The Grid Y Coordinate
 	int GridToPixelX(int theGridX, int theGridY);
+	/// @return The translated World-Space Y
+	/// @param theGridX The Grid X Coordinate
+	/// @param theGridX The Grid Y Coordinate
 	int GridToPixelY(int theGridX, int theGridY);
 
 	/*inline*/ int PixelToGridXKeepOnBoard(int theX, int theY);
 	/*inline*/ int PixelToGridYKeepOnBoard(int theX, int theY);
+	/// @brief Update every GameObject on the Board
 	void UpdateGameObjects();
+	/// @param x The X coordinate
+	/// @param y The Y coordinate
+	/// @param theHitResult The HitResult to fill with data
+	/// @return	True if the mouse hits something
 	bool MouseHitTest(int x, int y, HitResult *theHitResult);
+	/// @brief Handle a mouse down press with a Plant in Cursor
 	void MouseDownWithPlant(int x, int y, int theClickCount);
+	/// @brief Handle a mouse down press with a tool
 	void MouseDownWithTool(int x, int y, int theClickCount, CursorType theCursorType);
 	inline void MouseDownNormal(int x, int y, int theClickCount)
 	{ /* 未发现 */
 		;
 	}
 	bool CanInteractWithBoardButtons();
+	/// @brief Draw the progress bar
+	/// @param g Graphics object
 	void DrawProgressMeter(Graphics *g);
+	/// @brief Update the Board Tooltip
 	void UpdateToolTip();
 	Plant *GetTopPlantAt(int theGridX, int theGridY, PlantPriority thePriority);
+	/// @brief Get all plants on a specific grid coordinate
+	/// @param theGridX The X grid coordinate
+	/// @param theGridY The Y grid coordinate
+	/// @return PlantsOnLawn pointer
 	void GetPlantsOnLawn(int theGridX, int theGridY, PlantsOnLawn *thePlantOnLawn);
 	/*inline*/ int CountSunFlowers();
+	/// @return The SeedPacket's X coordinate in the SeedBank
+	/// @param theIndex Index in SeedBank
 	int GetSeedPacketPositionX(int theIndex);
+	/// @brief Calculate and place all the GraveStones for the level
+	/// @param theGridX The X grid coordinate
+	/// @param theGridY The Y grid coordinate
+	/// @param theLevelRNG Random Number Generator instance reference
 	void AddGraveStones(int theGridX, int theCount, MTRand &theLevelRNG);
+	/// @return Amount of GraveStones
 	int GetGraveStoneCount();
+	/// @brief Make the Zombies win
+	/// @param theZombie The Zombie that will walk into the house
 	void ZombiesWon(Zombie *theZombie = nullptr);
+	/// @brief Draw the level title
+	/// @param g Graphics object
 	void DrawLevel(Graphics *g);
+	/// @brief Draw the Shovel
+	/// @param g Graphics object
 	void DrawShovel(Graphics *g);
+	/// @brief Update the Zombie Spawning
 	void UpdateZombieSpawning();
+	/// @brief Update the natural sun spawning
 	void UpdateSunSpawning();
 	/*inline*/ void ClearAdvice(AdviceType theHelpIndex);
+	/// @return	True if theRow can have a theZombieType
 	bool RowCanHaveZombieType(int theRow, ZombieType theZombieType);
 	/*inline*/ int NumberZombiesInWave(int theWaveIndex);
+	/// @return The total amount of health that the Zombies from theWaveIndex have
 	int TotalZombiesHealthInWave(int theWaveIndex);
+	/// @brief Draw the debug text based on mDebugTextMode
+	/// @param g Graphics object
 	void DrawDebugText(Graphics *g);
+	/// @brief Draw the CoinBank
+	/// @param g Graphics object
 	void DrawUICoinBank(Graphics *g);
 	/*inline*/ void ShowCoinBank(int theDuration = 1000);
+	/// @brief Start the level fade-out sequence or go to the next stage in LastStand/IZombie/Vasebreaker/Survival
 	void FadeOutLevel();
+	/// @brief Draw the Fade-Out transition
+	/// @param g Graphics object
 	void DrawFadeOut(Graphics *g);
+	/// @brief Draw the ice
+	/// @param g Graphics object
+	/// @param theGridY The row to draw the ice on
 	void DrawIce(Graphics *g, int theGridY);
+	/// @return True if the grid at coordinates theGridX and theGridY is ice
 	bool IsIceAt(int theGridX, int theGridY);
 	/*inline*/ ZombieID ZombieGetID(Zombie *theZombie);
 	/*inline*/ Zombie *ZombieGet(ZombieID theZombieID);
 	/*inline*/ Zombie *ZombieTryToGet(ZombieID theZombieID);
+	/// @brief Draw the debug rectangles on the lawn based on mDebugTextMode
+	/// @param g Graphics object
 	void DrawDebugObjectRects(Graphics *g);
+	/// @brief Update the iced rows on the Board
 	void UpdateIce();
 	/*inline*/ int GetIceZPos(int theRow);
 	/*inline*/ bool CanAddBobSled();
 	/*inline*/ void ShakeBoard(int theShakeAmountX, int theShakeAmountY);
+	/// @brief Count every non-triggered lawnmower
 	int CountUntriggerLawnMowers();
+	/// @return True if we find a new Zombie
+	/// @param theZombie Reference to a Zombie to iterate
 	bool IterateZombies(Zombie *&theZombie);
+
+	/// @return True if we find a new Plant
+	/// @param thePlant Reference to a Plant to iterate
 	bool IteratePlants(Plant *&thePlant);
+
+	
+	/// @return True if we find a new Projectile
+	/// @param theProjectile Reference to a Projectile to iterate
 	bool IterateProjectiles(Projectile *&theProjectile);
+	/// @return True if we find a new Coin
+	/// @param theCoin Reference to a Coin to iterate
 	bool IterateCoins(Coin *&theCoin);
+	/// @return True if we find a new LawnMower
+	/// @param theLawnMower Reference to a LawnMower to iterate
 	bool IterateLawnMowers(LawnMower *&theLawnMower);
+	/// @return True if we find a new Particle System
+	/// @param theParticle Reference to a Particle to iterate
 	bool IterateParticles(TodParticleSystem *&theParticle);
+	/// @return True if we find a new Reanimation
+	/// @param theReanimation Reference to a Reanimation to iterate
 	bool IterateReanimations(Reanimation *&theReanimation);
+	/// @return True if we find a new GridItem
+	/// @param theGridItem Reference to a GridItem to iterate
 	bool IterateGridItems(GridItem *&theGridItem);
 	/*inline*/ Zombie *AddZombieInRow(ZombieType theZombieType, int theRow, int theFromWave);
 	/*inline*/ bool IsPoolSquare(int theGridX, int theGridY);
+	/// @brief Initiates the level's zombie waves
 	void PickZombieWaves();
+	/// @brief Stop all Zombie Sounds on the Board
 	void StopAllZombieSounds();
 	/*inline*/ bool HasLevelAwardDropped();
+	/// @brief Update the progress meter values
 	void UpdateProgressMeter();
+	/// @brief Draw the Bottom UI
+	/// @param g Graphics object
 	void DrawUIBottom(Graphics *g);
+	/// @brief Draw the Top UI
+	/// @param g Graphics object
 	void DrawUITop(Graphics *g);
 	Zombie *ZombieHitTest(int theMouseX, int theMouseY);
+	/// @brief Kill all Plants in a radius
+	/// @param theX The Circle's X Coordinate
+	/// @param theY	The Circle's Y Coordinate
+	/// @param theRadius The Circle's Radius
 	void KillAllPlantsInRadius(int theX, int theY, int theRadius);
 	Plant *GetPumpkinAt(int theGridX, int theGridY);
 	Plant *GetFlowerPotAt(int theGridX, int theGridY);
+	/// @return True if theZombieType can spawn in theLevel
 	static bool CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel);
 	bool IsZombieWaveDistributionOk();
 	void PickBackground();
 	void InitZombieWaves();
 	void InitSurvivalStage();
 	static /*inline*/ int MakeRenderOrder(RenderLayer theRenderLayer, int theRow, int theLayerOffset);
+	/// @brief Update the gameplay (Objects, events, etc)
 	void UpdateGame();
 	void InitZombieWavesForLevel(int theForLevel);
+	/// @return Flags that determine the recommendation of the seed (see NotRecommend)
+	/// @param theSeedType The SeedType to check
 	unsigned int SeedNotRecommendedForLevel(SeedType theSeedType);
+	/// @brief Draw the Top-Right UI
+	/// @param g Graphics object
 	void DrawTopRightUI(Graphics *g);
+	/// @brief Draw the level Fog
+	/// @param g Graphics object
 	void DrawFog(Graphics *g);
+	/// @brief Update the level Fog
 	void UpdateFog();
 	/*inline*/ int LeftFogColumn();
 	static /*inline*/ bool IsZombieTypePoolOnly(ZombieType theZombieType);
+	/// @brief Try to drop a loot piece
+	/// @param thePosX World-Space X coordinate
+	/// @param thePosY World-Space Y coordinate
+	/// @param theDropFactor Rarity multiplier, higher values make drops rarer
 	void DropLootPiece(int thePosX, int thePosY, int theDropFactor);
+	/// @brief Update the End Sequence (Timers, LawnMower Coins)
 	void UpdateLevelEndSequence();
 	LawnMower *GetBottomLawnMower();
+	/// @return True if we can drop loot
 	bool CanDropLoot();
+	/// @return Get the ZombieType introduced in this level or ZombieType::ZOMBIE_INVALID if none
 	ZombieType GetIntroducedZombieType();
+	/// @brief Pick a random GraveStone to be special
 	void PickSpecialGraveStone();
+	/// @return Y Offset for the row
+	/// @param thePosX X position on the row
+	/// @param theRow Row to calculate with
 	float GetPosYBasedOnRow(float thePosX, int theRow);
+	/// @brief Announce a new incoming wave
 	void NextWaveComing();
+	/// @return True if a BungeeZombie is targetting this cell
+	/// @param theGridX The Grid X Coordinate
+	/// @param theGridY The Grid Y Coordinate
 	bool BungeeIsTargetingCell(int theGridX, int theGridY);
 	/*inline*/ int PlantingPixelToGridX(int theX, int theY, SeedType theSeedType);
 	/*inline*/ int PlantingPixelToGridY(int theX, int theY, SeedType theSeedType);
 	Plant *FindUmbrellaPlant(int theGridX, int theGridY);
+	/// @brief Set the tutorial state
+	/// @return theTutorialState The current state (see TutorialState enum)
 	void SetTutorialState(TutorialState theTutorialState);
+	/// @brief Do the Jalapeno Fwoosh on a row
+	/// @param theRow The row to create the effect on
 	void DoFwoosh(int theRow);
+	/// @brief Update the Jalapeno Fwoosh instances
 	void UpdateFwoosh();
 	Plant *SpecialPlantHitTest(int x, int y);
+	/// @brief Update the mouse objects positions
 	void UpdateMousePosition();
 	/*inline*/ Plant *ToolHitTestHelper(HitResult *theHitResult);
 	/*inline*/ Plant *ToolHitTest(int theX, int theY);
+	/// @brief Can the grid coordinate have a GraveStone
+	/// @param theGridX The X grid coordinate
+	/// @param theGridY The Y grid coordinate
+	/// @return True if the grid can have a GraveStone
 	bool CanAddGraveStoneAt(int theGridX, int theGridY);
+	/// @brief Update all GridItems
 	void UpdateGridItems();
 	/*inline*/ GridItem *AddAGraveStone(int theGridX, int theGridY);
+	/// @return Number of Survival Flags completed
 	int GetSurvivalFlagsCompleted();
+	/// @return True if the level can have a progress bar
 	bool HasProgressMeter();
+	/// @brief Update the Board's Cursor
 	void UpdateCursor();
+	/// @brief Update the tutorial state
 	void UpdateTutorial();
+	/// @return SeedType the Cursor holds currently
 	SeedType GetSeedTypeInCursor();
 	/*inline*/ int CountPlantByType(SeedType theSeedType);
+	/// @return True if the SeedType can be planted
+	/// @param theSeedType The SeedType to check
 	bool PlantingRequirementsMet(SeedType theSeedType);
+	/// @return True if the CobCannon has the minimum requirements to be planted
 	bool HasValidCobCannonSpot();
+	/// @return True if theGridX and theGridY are valid CobCannon coordinates
 	bool IsValidCobCannonSpot(int theGridX, int theGridY);
+	/// @return True if theGridX and theGridY can form a set of CobCannonCoordinates
 	bool IsValidCobCannonSpotHelper(int theGridX, int theGridY);
+	/// @brief Shoot the CobCannon if it fits the requirements
 	void MouseDownCobcannonFire(int x, int y, int theClickCount);
+	/// @return std::vector of Zombies that are in the radius
+	/// @param theX The Circle's X Coordinate
+	/// @param theY	The Circle's Y Coordinate
+	/// @param theRadius The Circle's Radius
+	/// @param theRowRange Max row distance it can check
+	/// @param theDamageRangeFlags Damage Flags to filter the Zombies
 	std::vector<Zombie*> GetZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, int theDamageRangeFlags);
+	/// @brief Kill all Zombies found in the radius
+	/// @param theX The Circle's X Coordinate
+	/// @param theY	The Circle's Y Coordinate
+	/// @param theRadius The Circle's Radius
+	/// @param theRowRange Max row distance it can check
+	/// @param theDamageRangeFlags Damage Flags to filter the Zombies
 	void KillAllZombiesInRadius(int theRow, int theX, int theY, int theRadius, int theRowRange, bool theBurn, int theDamageRangeFlags);
 	/*inline*/ int GetSeedBankExtraWidth();
+	/// @return True if the given wave index is a flag wave.
 	bool IsFlagWave(int theWaveNumber);
+	/// @brief Draw the top layer of the door
+	/// @param g Graphics object
 	void DrawHouseDoorTop(Graphics *g);
+	/// @brief Draw the buttom layer of the door
+	/// @param g Graphics object
 	void DrawHouseDoorBottom(Graphics *g);
 	Zombie *GetBossZombie();
+	/// @return Amount of alive Gargantuars
 	int GetLiveGargantuarCount();
+	/// @return True if the level has a ConveyorBelt
 	bool HasConveyorBeltSeedBank();
 	/*inline*/ bool StageHasRoof();
+	/// @brief Spawn the end-flag Zombies from the pool
 	void SpawnZombiesFromPool();
+	/// @brief Spawn all final-flag Zombies from the Sky
 	void SpawnZombiesFromSky();
+	/// @brief Pick-Up a specific GameObjectType tool
 	void PickUpTool(GameObjectType theObjectType);
+	/// @brief Displays the tutorial arrow
 	void TutorialArrowShow(int theX, int theY);
+	/// @brief Remove the tutorial arrow
 	void TutorialArrowRemove();
+	/// @return Total value of the Coins that are being collected
 	int CountCoinsBeingCollected();
+	/// @brief Drop a BungeeZombie with a theZombieType on the Board
+	/// @param theBungeeDropGrid Struct containing weighted arrays for determining the spot
+	/// @param theZombieType The ZombieType that is dropped by the Bungee
 	void BungeeDropZombie(BungeeDropGrid *theBungeeDropGrid, ZombieType theZombieType);
+	/// @brief Setup the Stuct for determining BungeeZombie dropping
+	/// @param theBungeeDropGrid Struct that is getting initialized
 	void SetupBungeeDrop(BungeeDropGrid *theBungeeDropGrid);
 	/*inline*/ void PutZombieInWave(ZombieType theZombieType, int theWaveNumber, ZombiePicker *theZombiePicker);
 	/*inline*/ void PutInMissingZombies(int theWaveNumber, ZombiePicker *theZombiePicker);
 	Rect GetShovelButtonRect();
 	void GetZenButtonRect(GameObjectType theObjectType, Rect &theRect);
 	Plant *NewPlant(int theGridX, int theGridY, SeedType theSeedType, SeedType theImitaterType = SeedType::SEED_NONE);
+	/// @brief Summon Planting Effects at set coordinates, optionally for a specific plant
+	/// @param theGridX The grid X coordinate
+	/// @param theGridY The grid Y coordinate
+	/// @param thePlant [OPTIONAL] Plant pointer for additional offsets
 	void DoPlantingEffects(int theGridX, int theGridY, Plant *thePlant);
+	/// @return True if it's the final Survival Stage
 	bool IsFinalSurvivalStage();
+	/// @brief Save the survival score to the current profile
 	void SurvivalSaveScore();
+	/// @brief Count every non-dying, non-mind-controlled zombie on the Board
 	int CountZombiesOnScreen();
 	/*inline*/ int GetNumWavesPerSurvivalStage();
+	/// @return The level (or Survival/LastStand stage) random number generation seed
 	int GetLevelRandSeed();
+	/// @brief Add a render object for ZombieType::ZOMBIE_BOSS
+	/// @param theRenderList List containing all render items
+	/// @param theCurRenderItem The last index of the render list
+	/// @param theBossZombie Zombie to use to determine RenderItems
 	void AddBossRenderItem(RenderItem *theRenderList, int &theCurRenderItem, Zombie *theBossZombie);
 	/*inline*/ GridItem *GetCraterAt(int theGridX, int theGridY);
 	/*inline*/ GridItem *GetGraveStoneAt(int theGridX, int theGridY);
 	/*inline*/ GridItem *GetLadderAt(int theGridX, int theGridY);
 	/*inline*/ GridItem *AddALadder(int theGridX, int theGridY);
 	/*inline*/ GridItem *AddACrater(int theGridX, int theGridY);
+	/// @brief Initiate the LawnMowers for the current level
 	void InitLawnMowers();
 	/*inline*/ bool IsPlantInCursor();
+	/// @brief Highlight the Plants at mouse coordinates if they fit the requirements
 	void HighlightPlantsForMouse(int theMouseX, int theMouseY);
+	/// @brief Draw the debug rectangles on the lawn based on mDebugTextMode
+	/// @param thePlant The plant for position reference
+	/// @param theSize The amount of fog to remove (In pixels)
 	void ClearFogAroundPlant(Plant *thePlant, int theSize);
 	/*inline*/ void RemoveParticleByType(ParticleEffect theEffectType);
 	/*inline*/ GridItem *GetScaryPotAt(int theGridX, int theGridY);
+	/// @brief Save the puzzle streak to the current profile
 	void PuzzleSaveStreak();
 	/*inline*/ void ClearAdviceImmediately();
 	/*inline*/ bool IsFinalScaryPotterStage();
@@ -502,43 +726,85 @@ class Board : public Widget, public ButtonListener
 									   AdviceType theHelpIndex);
 	GridItem *GetSquirrelAt(int theGridX, int theGridY);
 	GridItem *GetZenToolAt(int theGridX, int theGridY);
+	/// @return True if the Plant is in the Gold Watering Can's range
 	bool IsPlantInGoldWateringCanRange(int theMouseX, int theMouseY, Plant *thePlant);
+	/// @return True if Zombies can walk from the right
 	bool StageHasZombieWalkInFromRight();
+	/// @brief Place a rake on the Board if has one purchased
 	void PlaceRake();
 	GridItem *GetRake();
 	/*inline*/ bool IsScaryPotterDaveTalking();
 	/*inline*/ Zombie *GetWinningZombie();
 	/*inline*/ void ResetFPSStats();
+	/// @return Number of plants that are of type theSeedType and don't have a plant above on the Board
 	int CountEmptyPotsOrLilies(SeedType theSeedType);
 	GridItem *GetGridItemAt(GridItemType theGridItemType, int theGridX, int theGridY);
+	/// @return True if the progress meter can have flags
 	bool ProgressMeterHasFlags();
 	/*inline*/ bool IsLastStandFinalStage();
 	/*inline*/ int GetNumWavesPerFlag();
+	/// @return The SeedType's Cost
+	/// @param theSeedType The SeedType to check
+	/// @param theSeedType The theImitaterType to check incase theSeedType == SeedType::SEED_IMITATER
 	int GetCurrentPlantCost(SeedType theSeedType, SeedType theImitaterType);
 	/*inline*/ bool PlantUsesAcceleratedPricing(SeedType theSeedType);
 	void FreezeEffectsForCutscene(bool theFreeze);
 	void LoadBackgroundImages();
+	/// @brief Can we use this GameObject (see GameObjectType enum)
+	/// @param theGameObject The Type of GameObject to check
 	bool CanUseGameObject(GameObjectType theGameObject);
+	/// @brief Toggle the Mustache Mode
+	/// @param theEnableMustache The state of the mode
 	void SetMustacheMode(bool theEnableMustache);
+	/// @return Amount of Coin Objects of a type
+	/// @param CoinType The CoinType to count
 	int CountCoinByType(CoinType theCoinType);
+	/// @brief Toggle the SuperMower Mode
+	/// @param theEnableSuperMower The state of the mode
 	void SetSuperMowerMode(bool theEnableSuperMower);
+	/// @brief Draw the ZenGarden WheelBarrow button
+	/// @param g Graphics object
+	/// @param theOffsetY Y offset
 	void DrawZenWheelBarrowButton(Graphics *g, int theOffsetY);
+	/// @brief Draw the ZenGarden buttons
+	/// @param g Graphics object
 	void DrawZenButtons(Graphics *g);
 	/*inline*/ void OffsetYForPlanting(int &theY, SeedType theSeedType);
+	/// @brief Toggle the Future Mode
+	/// @param theEnableFuture The state of the mode
 	void SetDanceMode(bool theEnableDance);
+	/// @brief Toggle the Future Mode
+	/// @param theEnableFuture The state of the mode
 	void SetFutureMode(bool theEnableFuture);
+	/// @brief Toggle the Future Mode
+	/// @param theEnableFuture The state of the mode
 	void SetPinataMode(bool theEnablePinata);
+	/// @brief Toggle the Daisy Mode
+	/// @param theEnableDaisy The state of the mode
 	void SetDaisyMode(bool theEnableDaisy);
+	/// @brief Toggle the Suknbir Mode
+	/// @param theEnableSukhbir The state of the mode
 	void SetSukhbirMode(bool theEnableSukhbir);
+	/// @param x The X coordinate
+	/// @param y The Y coordinate
+	/// @param theHitResult The HitResult to fill with data
+	/// @return True if a Plant is present at coordinates
 	bool MouseHitTestPlant(int x, int y, HitResult *theHitResult);
 
 	/*inline*/ Reanimation *CreateRakeReanim(float theRakeX, float theRakeY, int theRenderOrder);
+	/// @brief Save to profile the values changed during gameplay
 	void CompleteEndLevelSequenceForSaving();
+	/// @brief Remove all zombies that can't persist a repick
 	void RemoveZombiesForRepick();
+	/// @return Amount of GraveStones on Board
 	int GetGraveStonesCount();
 	/*inline*/ bool IsSurvivalStageWithRepick();
 	/*inline*/ bool IsLastStandStageWithRepick();
+	/// @brief Process a KeyCode for typing checks
+	/// @param theKey KeyCode that has been pressed
 	void DoTypingCheck(KeyCode theKey);
+	/// @return Number of zombies of a type
+	/// @param theZombieType The type to count
 	int CountZombieByType(ZombieType theZombieType);
 	static /*inline*/ bool IsZombieTypeSpawnedOnly(ZombieType theZombieType);
 };
