@@ -1,14 +1,15 @@
-cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
-
-# Force MSVC to use Static CRT (MT/MTd) to match x64-windows-static vcpkg dependencies
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
+# CMakeLists.txt
+cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 project(ResoddedFramework LANGUAGES C CXX)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if(MSVC AND WIN32 AND NOT MSVC_VERSION VERSION_LESS 142)
     add_link_options($<$<CONFIG:Debug>:/INCREMENTAL>)
     add_compile_options($<$<CONFIG:Debug>:/ZI>)
+endif()
+
+if (MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") # a stupid fix
 endif()
 
 option(GITHUB_ACTIONS "Building in GitHub Actions" OFF)

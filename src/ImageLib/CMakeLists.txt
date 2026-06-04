@@ -1,4 +1,3 @@
-# CmakeLists.txt
 project(ImageLib)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
@@ -13,10 +12,6 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     WIN32
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
-    _LIB
-
-    # Okay, what the hell is this anyway?
-    _VISUALC_
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

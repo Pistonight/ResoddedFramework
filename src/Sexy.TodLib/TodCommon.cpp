@@ -886,13 +886,14 @@ void TodBltMatrix(Graphics *g,
 
 //0x5127C0
 void TodDrawImageCelCenterScaledF(
-	Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol, float theScaleX, float theScaleY)
+	Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol, int theCelRow, float theScaleX, float theScaleY)
 {
 	TOD_ASSERT(theCelCol >= 0 && theCelCol < theImageStrip->mNumCols);
+	TOD_ASSERT(theCelRow >= 0 && theCelRow < theImageStrip->mNumRows);
 
 	int aCelWidth = theImageStrip->GetCelWidth();
 	int aCelHeight = theImageStrip->GetCelHeight();
-	Rect aSrcRect(aCelWidth * theCelCol, 0, aCelWidth, aCelHeight);
+	Rect aSrcRect(aCelWidth * theCelCol, aCelHeight * theCelRow, aCelWidth, aCelHeight);
 	if (theScaleX == 1.0f && theScaleY == 1.0f)
 	{
 		g->DrawImageF(theImageStrip, thePosX, thePosY, aSrcRect);
@@ -928,10 +929,11 @@ void TodDrawImageCelScaledF(Graphics *g,
 							float theScaleY)
 {
 	TOD_ASSERT(theCelCol >= 0 && theCelCol < theImageStrip->mNumCols);
+	TOD_ASSERT(theCelRow >= 0 && theCelRow < theImageStrip->mNumRows);
 
 	int aCelWidth = theImageStrip->GetCelWidth();
 	int aCelHeight = theImageStrip->GetCelHeight();
-	Rect aSrcRect(aCelWidth * theCelCol, 0, aCelWidth, aCelHeight);
+	Rect aSrcRect(aCelWidth * theCelCol, aCelHeight * theCelRow, aCelWidth, aCelHeight);
 	if (theScaleX == 1.0f && theScaleY == 1.0f)
 	{
 		g->DrawImageF(theImageStrip, thePosX, thePosY, aSrcRect);

@@ -1,4 +1,3 @@
-# CmakeLists.txt
 project(PakLib)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
@@ -12,7 +11,6 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     WIN32
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
-    _LIB
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

@@ -1,6 +1,22 @@
 # CmakeLists.txt
 project(SexyAppFramework)
 
+option(SEXY_USE_IMGUI "Enable ImGui" ON)
+option(SEXY_USE_CONTROLLER "Enable the use of a controller" ON)
+option(SEXY_CRASH_HANDLER "Enable the use of the crash handler" ON)
+
+find_package(SDL3 CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+find_package(Ogg CONFIG REQUIRED)
+find_package(Vorbis CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(Freetype REQUIRED)
+if (SEXY_CRASH_HANDLER)
+find_package(cpptrace CONFIG REQUIRED)
+endif()
+find_package(CURL CONFIG REQUIRED)
+
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
@@ -29,23 +45,7 @@ foreach(EXCLUDED_FILE IN LISTS EXCLUDE_FILES)
     list(REMOVE_ITEM SOURCES "${EXCLUDED_FILE}")
 endforeach()
 
-set(SEXY_USE_IMGUI "Enable ImGui" ON)
-set(SEXY_USE_CONTROLLER "Enable the use of a controller" ON)
-set(SEXY_CRASH_HANDLER "Enable the use of the crash handler" ON)
-
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
-
-find_package(SDL3 CONFIG REQUIRED)
-find_package(ZLIB REQUIRED)
-find_package(OpenAL CONFIG REQUIRED)
-find_package(Ogg CONFIG REQUIRED)
-find_package(Vorbis CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
-find_package(Freetype REQUIRED)
-find_package(CURL CONFIG REQUIRED)
-if(SEXY_CRASH_HANDLER)
-    find_package(cpptrace CONFIG REQUIRED)
-endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC 
     SDL3::SDL3
@@ -78,9 +78,6 @@ if(WIN32)
         swscale.lib
     )
 
-    target_link_directories(${PROJECT_NAME} PUBLIC
-        ${THIRDPARTY_DIR}
-    )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(AVCODEC REQUIRED libavcodec)
@@ -116,6 +113,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
         target_link_libraries(${PROJECT_NAME} PUBLIC bass)
     endif()
 endif()
+
 target_link_directories(${PROJECT_NAME} PUBLIC
     ${THIRDPARTY_DIR}
 )
@@ -123,7 +121,6 @@ target_link_directories(${PROJECT_NAME} PUBLIC
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     $<$<CONFIG:Debug>:DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
-    _LIB
 
     # SAF specific
     USE_OGG_LIB

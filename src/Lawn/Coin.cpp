@@ -1038,7 +1038,7 @@ void Coin::Draw(Graphics *g)
 	}
 
 	g->SetColorizeImages(true);
-	TodDrawImageCelCenterScaledF(g, aImage, mPosX + aOffsetX, mPosY + aOffsetY, aImageCelCol, aDrawScale, aDrawScale);
+	TodDrawImageCelCenterScaledF(g, aImage, mPosX + aOffsetX, mPosY + aOffsetY, aImageCelCol, 0, aDrawScale, aDrawScale);
 	g->SetColorizeImages(false);
 }
 

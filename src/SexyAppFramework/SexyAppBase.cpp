@@ -273,9 +273,8 @@ SexyAppBase::SexyAppBase()
 	mMinVidMemory3D = 6;
 	mRecommendedVidMemory3D = 14;
 	mRelaxUpdateBacklogCount = 0;
-	mEnableWindowAspect = false;
-	mWindowAspect.Set(4, 3);
-	mIsWideWindow = false;
+	mHighResolution = false;
+	mScreenFiltering = MODE_LINEAR;
 
 	int i;
 
@@ -1190,8 +1189,16 @@ void SexyAppBase::TakeScreenshot()
 	// Write image
 	ImageLib::Image aSaveImage;
 	aSaveImage.mBits = mRenderer->CaptureFrameBuffer();
-	aSaveImage.mWidth = mRenderer->mWidth;
-	aSaveImage.mHeight = mRenderer->mHeight;
+	if (mHighResolution)
+	{
+		aSaveImage.mWidth = mRenderer->mPresentationRect.mWidth;
+		aSaveImage.mHeight = mRenderer->mPresentationRect.mHeight;
+	}
+	else
+	{
+		aSaveImage.mWidth = mRenderer->mWidth;
+		aSaveImage.mHeight = mRenderer->mHeight;
+	}
 	aSaveImage.mNumChannels = 4;
 	ImageLib::WriteImage(anImageName, &aSaveImage, ".png");
 
@@ -1582,6 +1589,8 @@ void SexyAppBase::WriteToRegistry()
 	RegistryWriteInteger("CustomCursors", mCustomCursorsEnabled ? 1 : 0);
 	RegistryWriteInteger("InProgress", 0);
 	RegistryWriteBoolean("WaitForVSync", mWaitForVSync);
+	RegistryWriteBoolean("HighResolution", mHighResolution);
+	RegistryWriteInteger("ScreenFiltering", (int)mScreenFiltering);
 	RegistryWriteBoolean("Is3D", mIs3D);
 	RegistryWriteInteger("DesiredBackend", mDesiredBackend);
 }
@@ -1895,6 +1904,11 @@ void SexyAppBase::ReadFromRegistry()
 		EnableCustomCursors(anInt != 0);
 
 	RegistryReadBoolean("WaitForVSync", &mWaitForVSync);
+	int aScreenFiltering = (int)MODE_LINEAR;
+
+	RegistryReadInteger("ScreenFiltering", &aScreenFiltering);
+	mScreenFiltering = (OutputFilteringMode)aScreenFiltering;
+	RegistryReadBoolean("HighResolution", &mHighResolution);
 	RegistryReadBoolean("Is3D", &mIs3D);
 	int aBackendInt = 0;
 	RegistryReadInteger("DesiredBackend", &aBackendInt);

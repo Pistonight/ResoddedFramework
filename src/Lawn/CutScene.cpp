@@ -1349,6 +1349,7 @@ void CutScene::ShowShovel()
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BEGHOULED_TWIST ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
+		mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
 		mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZOMBIQUARIUM || mApp->IsIZombieLevel())
 		return;
 
@@ -1620,7 +1621,7 @@ void CutScene::AdvanceCrazyDaveDialog(bool theJustSkipping)
 		int aCost = StoreScreen::GetItemCost(StoreItem::STORE_ITEM_PACKET_UPGRADE);
 		int aNumPackets = mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PACKET_UPGRADE];
 		SexyString aBodyString = TodReplaceNumberString("[UPGRADE_DIALOG_BODY]", "{SLOTS}", aNumPackets + 1);
-		SexyString aAmountString = mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
+		SexyString aAmountString = mApp->GetMoneyString(aCost);
 		Dialog *aDialog = mApp->DoDialog(
 			Dialogs::DIALOG_PURCHASE_PACKET_SLOT, true, aAmountString, aBodyString, "", Dialog::BUTTONS_YES_NO);
 		aDialog->mX += 120;
@@ -1638,7 +1639,7 @@ void CutScene::AdvanceCrazyDaveDialog(bool theJustSkipping)
 			{
 				mApp->CrazyDaveTalkIndex(1510);
 			}
-			else if (aMessageIndex == 1533)
+			else if (aMessageIndex == 1553)
 			{
 				mApp->CrazyDaveTalkIndex(1560);
 			}

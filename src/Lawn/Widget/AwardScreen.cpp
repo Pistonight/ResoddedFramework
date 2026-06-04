@@ -375,7 +375,7 @@ void AwardScreen::Draw(Graphics *g)
 				if (mApp->EarnedGoldTrophy())
 				{
 					DrawBottom(g, "[BEAT_GAME_MESSAGE1]", "[GOLD_SUNFLOWER_TROPHY]", "[BEAT_GAME_MESSAGE2]");
-					TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 330, 80, 1, 0.7f, 0.7f);
+					TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 330, 80, 1, 0, 0.7f, 0.7f);
 				}
 				else
 				{
@@ -468,7 +468,7 @@ void AwardScreen::Draw(Graphics *g)
 			else if (aLevel == 1 && mApp->HasFinishedAdventure())
 			{
 				DrawBottom(g, "[WIN_MESSAGE1]", "[SILVER_SUNFLOWER_TROPHY]", "[WIN_MESSAGE2]");
-				TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 325, 65, 0, 0.7f, 0.7f);
+				TodDrawImageCelCenterScaledF(g, Sexy::IMAGE_SUNFLOWER_TROPHY, 325, 65, 0, 0, 0.7f, 0.7f);
 			}
 			else
 			{

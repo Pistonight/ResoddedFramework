@@ -2898,7 +2898,7 @@ void Plant::UpdateReanim()
 	UpdateReanimColor();
 
 	float aOffsetX = mShakeOffsetX;
-	float aOffsetY = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow);
+	float aOffsetY = PlantDrawHeightOffset(mBoard, this, mSeedType, mPlantCol, mRow) + mShakeOffsetY;
 	float aScaleX = 1.0f, aScaleY = 1.0f;
 	if ((mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_BIG_TIME) &&
 		(mSeedType == SeedType::SEED_WALLNUT || mSeedType == SeedType::SEED_SUNFLOWER ||
@@ -4124,12 +4124,12 @@ void Plant::DrawShadow(Sexy::Graphics *g, float theOffsetX, float theOffsetY)
 	if (aShadowType == 0)
 	{
 		TodDrawImageCelCenterScaledF(
-			g, IMAGE_PLANTSHADOW, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, aScale, aScale);
+			g, IMAGE_PLANTSHADOW, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, 0, aScale, aScale);
 	}
 	else
 	{
 		TodDrawImageCelCenterScaledF(
-			g, IMAGE_PLANTSHADOW2, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, aScale, aScale);
+			g, IMAGE_PLANTSHADOW2, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, 0, aScale, aScale);
 	}
 }
 
@@ -5182,8 +5182,9 @@ void Plant::Die()
 
 	if (!Plant::IsFlying(mSeedType) && IsOnBoard())
 	{
+		Plant* aPumpkin = mBoard->GetPumpkinAt(mPlantCol, mRow);
 		GridItem *aLadder = mBoard->GetLadderAt(mPlantCol, mRow);
-		if (aLadder)
+		if (aLadder && !aPumpkin)
 		{
 			aLadder->GridItemDie();
 		}

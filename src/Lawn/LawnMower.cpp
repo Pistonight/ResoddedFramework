@@ -302,11 +302,11 @@ void LawnMower::Draw(Graphics *g)
 
 		if (aShadowType == 0)
 		{
-			TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW, aShadowX, aShadowY, 0, aScaleX, aScaleY);
+			TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW, aShadowX, aShadowY, 0, 0, aScaleX, aScaleY);
 		}
 		else
 		{
-			TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW2, aShadowX, aShadowY, 0, aScaleX, aScaleY);
+			TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW2, aShadowX, aShadowY, 0, 0, aScaleX, aScaleY);
 		}
 	}
 
