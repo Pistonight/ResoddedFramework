@@ -326,7 +326,7 @@ void GridItem::DrawScaryPot(Graphics *g)
 
 	int aXPos = mBoard->GridToPixelX(mGridX, mGridY) - 5;
 	int aYPos = mBoard->GridToPixelY(mGridX, mGridY) - 15;
-	TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW2, aXPos - 5.0f, aYPos + 72.0f, 0, 1.3f, 1.3f);
+	TodDrawImageCelCenterScaledF(g, IMAGE_PLANTSHADOW2, aXPos - 5.0f, aYPos + 72.0f, 0, 0, 1.3f, 1.3f);
 
 	if (mTransparentCounter > 0)
 	{

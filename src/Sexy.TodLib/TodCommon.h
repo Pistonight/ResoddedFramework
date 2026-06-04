@@ -144,8 +144,7 @@ void TodDrawImageCelScaledF(Graphics *g,
 							int theCelRow,
 							float theScaleX,
 							float theScaleY);
-void TodDrawImageCelCenterScaledF(
-	Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol, float theScaleX, float theScaleY);
+void TodDrawImageCelCenterScaledF(Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol, int theCelRow, float theScaleX, float theScaleY);
 void TodBltMatrix(Graphics *g,
 				  Image *theImage,
 				  const SexyMatrix3 &theTransform,

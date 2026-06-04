@@ -4124,12 +4124,12 @@ void Plant::DrawShadow(Sexy::Graphics *g, float theOffsetX, float theOffsetY)
 	if (aShadowType == 0)
 	{
 		TodDrawImageCelCenterScaledF(
-			g, IMAGE_PLANTSHADOW, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, aScale, aScale);
+			g, IMAGE_PLANTSHADOW, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, 0, aScale, aScale);
 	}
 	else
 	{
 		TodDrawImageCelCenterScaledF(
-			g, IMAGE_PLANTSHADOW2, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, aScale, aScale);
+			g, IMAGE_PLANTSHADOW2, theOffsetX + aShadowOffsetX, theOffsetY + aShadowOffsetY, 0, 0, aScale, aScale);
 	}
 }
 
