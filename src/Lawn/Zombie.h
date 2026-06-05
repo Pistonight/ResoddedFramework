@@ -181,80 +181,260 @@ class Zombie : public GameObject
 	Zombie();
 	~Zombie();
 
+	/// @brief Initialize the Zombie
+	/// @param theRow The Zombie Row
+	/// @param theType The ZombieType
+	/// @param theVariant Is a variant Zombie (Toggle visual alt)
+	/// @param theParentZombie [OPTIONAL] Parent Zombie (Disco, Bobsled Leader)
+	/// @param theFromWave Wave from where the Zombie was spawned
 	void ZombieInitialize(int theRow, ZombieType theType, bool theVariant, Zombie *theParentZombie, int theFromWave);
+
+	/// @brief Update the Zombie's animation
 	void Animate();
+
+	/// @brief Check if prey (Plant or Hypno Zombie) was caught
 	void CheckIfPreyCaught();
+
+	/// @brief Deal eating damage to a Zombie
+	/// @param theZombie The Zombie to deal eating damage
 	void EatZombie(Zombie *theZombie);
+
+	/// @brief Deal eating damage to a Plant
+	/// @param thePlant The Plant to deal eating damage
 	void EatPlant(Plant *thePlant);
+
+	/// @brief Update the Zombie
 	void Update();
+
+	/// @brief Destroy the Zombie without dropping loot, can't be used after this
 	void DieNoLoot();
-	/*inline*/ void DieWithLoot();
+
+	/// @brief Destroy the Zombie and leave loot, can't be used after this
+	void DieWithLoot();
+
+	/// @brief Draw the Zombie
+	/// @param g Graphics object
 	void Draw(Graphics *g);
+
+	/// @brief Draw the sprite-sheet Zombie (Beta 0.1.1.1014)
+	/// @param g Graphics object
+	/// @param theDrawPos Offsets for the limbs
 	void DrawZombie(Graphics *g, const ZombieDrawPosition &theDrawPos);
+
+	/// @brief Draw the parts for the sprite-sheet Zombie (Beta 0.1.1.1014)
+	/// @param g Graphics object
+	/// @param theDrawPos Offsets for the limbs
 	void DrawZombieWithParts(Graphics *g, const ZombieDrawPosition &theDrawPos);
+
+	/// @brief Draw a part for the sprite-sheet Zombie (Beta 0.1.1.1014)
+	/// @param g Graphics object
+	/// @param theImage The sprite-sheet
+	/// @param theFrame The animation frame to use
+	/// @param theRow The row to draw the part on
+	/// @param theDrawPos Offsets for the limbs
 	void DrawZombiePart(Graphics *g, Image *theImage, int theFrame, int theRow, const ZombieDrawPosition &theDrawPos);
-	void DrawBungeeCord(Graphics *g, int theOffsetX, int theOffsetY);
-	void TakeDamage(int theDamage, unsigned int theDamageFlags);
-	/*inline*/ void SetRow(int theRow);
-	float GetPosYBasedOnRow(int theRow);
-	void ApplyChill(bool theIsIceTrap);
-	void UpdateZombieBungee();
-	void BungeeLanding();
-	bool EffectedByDamage(unsigned int theDamageRangeFlags);
-	void PickRandomSpeed();
-	void UpdateZombiePolevaulter();
-	void UpdateZombieDolphinRider();
-	void PickBungeeZombieTarget(int theColumn);
-	int CountBungeesTargetingSunFlowers();
-	Plant *FindPlantTarget(ZombieAttackType theAttackType);
-	void CheckSquish(ZombieAttackType theAttackType);
-	void RiseFromGrave(int theCol, int theRow);
-	void UpdateZombieRiseFromGrave();
-	void UpdateDamageStates(unsigned int theDamageFlags);
-	void UpdateZombiePool();
-	void CheckForPool();
-	void GetDrawPos(ZombieDrawPosition &theDrawPos);
-	void UpdateZombieHighGround();
-	void CheckForHighGround();
-	bool IsOnHighGround();
-	void DropLoot();
-	bool TrySpawnLevelAward();
-	/*inline*/ void StartZombieSound();
-	void StopZombieSound();
-	void UpdateZombieJackInTheBox();
+
+	/// @brief Draw the head for the sprite-sheet Zombie (Beta 0.1.1.1014)
+	/// @param g Graphics object
+	/// @param theDrawPos Offsets for the limbs
+	/// @param theFrame The animation frame to use
 	void DrawZombieHead(Graphics *g, const ZombieDrawPosition &theDrawPos, int theFrame);
+
+	/// @brief Get the drawing offsets for the sprite-sheet Zombie (Beta 0.1.1.1014)
+	/// @param theDrawPos The Offset object to edit
+	void GetDrawPos(ZombieDrawPosition &theDrawPos);
+
+	/// @brief Draw the BungeeCord for the BungeeZombie
+	/// @param g Graphics object
+	/// @param theOffsetX The X offset
+	/// @param theOffsetY The Y offset
+	void DrawBungeeCord(Graphics *g, int theOffsetX, int theOffsetY);
+
+	/// @brief Deal damage to the Zombie
+	/// @param theDamage Damage to deal
+	/// @param theDamageFlags The damage flags
+	void TakeDamage(int theDamage, unsigned int theDamageFlags);
+
+	/// @brief Change the row of the Zombie
+	/// @param theRow The row to switch to
+	void SetRow(int theRow);
+
+	/// @brief Calculate the Y position of the Zombie based on the row
+	/// @param theRow The row for reference
+	/// @return The resulted Y position
+	float GetPosYBasedOnRow(int theRow);
+
+	/// @brief Apply the chill effect onto the Zombie
+	/// @param theIsIceTrap Should the Zombie freeze in place
+	void ApplyChill(bool theIsIceTrap);
+
+	/// @brief Update the BungeeZombie
+	void UpdateZombieBungee();
+
+	/// @brief Land the BungeeZombie
+	void BungeeLanding();
+	
+	/// @brief Is the Zombie affected by these damage flags
+	/// @param theDamageFlags The damage flags
+	bool EffectedByDamage(unsigned int theDamageRangeFlags);
+
+	/// @brief Pick a random speed for the Zombie
+	void PickRandomSpeed();
+
+	/// @brief Update the PolevaulterZombie
+	void UpdateZombiePolevaulter();
+
+	/// @brief Update the DolphinRiderZombie
+	void UpdateZombieDolphinRider();
+
+	/// @brief Pick a random target for the BungeeZombie
+	/// @param theColumn The column the BungeeZombie can pick from
+	void PickBungeeZombieTarget(int theColumn);
+
+	/// @brief Get the amount of Sunflowers that are targeted by BungeeZombies
+	/// @return The amount of targeted Sunflowers
+	int CountBungeesTargetingSunFlowers();
+
+	/// @brief Get a Plant that gets affected by an attack
+	/// @param theAttackType The attack to be checked against the Plant
+	/// @return The Plant that can get affected by the attack type or nullptr if it doesn't exist
+	Plant *FindPlantTarget(ZombieAttackType theAttackType);
+
+	/// @brief Squish Plants that are affected by the attack
+	/// @param theAttackType The attack to be checked against the Plant
+	void CheckSquish(ZombieAttackType theAttackType);
+
+	/// @brief Make the Zombie rise from a Grave
+	/// @param theCol The column from where to rise
+	/// @param theRow The row from where to rise
+	void RiseFromGrave(int theCol, int theRow);
+
+	/// @brief Update the grave rising
+	void UpdateZombieRiseFromGrave();
+
+	/// @brief Update the state based on the damage flags
+	void UpdateDamageStates(unsigned int theDamageFlags);
+
+	/// @brief Update the Pool state
+	void UpdateZombiePool();
+
+	/// @brief Check if the Zombie has entered or exited the Pool
+	void CheckForPool();
+
+	/// @brief Update the HighGround state
+	void UpdateZombieHighGround();
+
+	/// @brief Check if the Zombie has entered or exited the HighGround
+	void CheckForHighGround();
+
+	/// @brief Is the Zombie positioned on the HighGround
+	/// @return True if it's on HighGround
+	bool IsOnHighGround();
+
+	/// @brief Drop the Zombie's loot
+	void DropLoot();
+
+	/// @brief Attempt to spawn the Level Award
+	bool TrySpawnLevelAward();
+
+	/// @brief Start making Zombie sounds
+	void StartZombieSound();
+
+	/// @brief Stop making Zombie sounds
+	void StopZombieSound();
+
+	/// @brief Update the JackInABoxZombie
+	void UpdateZombieJackInTheBox();
+
+	/// @brief Update the Zombie's position
 	void UpdateZombiePosition();
+
+	/// @brief Get the Zombie's Collision Hitbox
+	/// @return World-Space Rect
 	Rect GetZombieRect();
+
+	/// @brief Get the Zombie's Attack Hitbox
+	/// @return World-Space Rect
 	Rect GetZombieAttackRect();
+
+	/// @brief Update the Zombie's walking
 	void UpdateZombieWalking();
+
+	/// @brief Update the BobsledZombie
 	void UpdateZombieBobsled();
+
+	/// @brief Crash the Bobsled
 	void BobsledCrash();
+
+	/// @brief Check if it's standing on a Spikeweed
+	/// @return Spikeweed or nullptr if there is none
 	Plant *IsStandingOnSpikeweed();
+
+	/// @brief Check the step the Zombie took
 	void CheckForZombieStep();
+
+	/// @brief Setup the Zombatar accessories
 	void SetupZombatar();
+
+	/// @brief Update the Zombatar accessories
 	void UpdateZombatar(Zombatar &aZombatar);
+
+	/// @brief Reset the Zombatar accessories
 	void ResetZombatar();
-	void CountExpectedMowers()
-	{
-		;
-	}
-	/*inline*/ void OverrideParticleColor(TodParticleSystem *aParticle);
-	/*inline*/ void OverrideParticleScale(TodParticleSystem *aParticle);
+
+	/// @brief Override the colors of the particles to match the Zombie's color
+	/// @param aParticle The particle system to update
+	void OverrideParticleColor(TodParticleSystem *aParticle);
+	
+	/// @brief Override the scale of the particles to match the Zombie's scale
+	/// @param aParticle The particle system to update
+	void OverrideParticleScale(TodParticleSystem *aParticle);
+
+	/// @brief Override the scale of the particles to match the Zombie's scale
+	/// @param aParticle The particle system to update
 	void PoolSplash(bool theInToPoolSound);
+
+	/// @brief Update the Flying Zombies
 	void UpdateZombieFlyer();
+
+	/// @brief Update the Pogo Zombie
 	void UpdateZombiePogo();
+
+	/// @brief Update the NewspaperZombie
 	void UpdateZombieNewspaper();
+
+	/// @brief Land the Flying Zombie
+	/// @param theDamageFlags The damage flags that caused the landing
 	void LandFlyer(unsigned int theDamageFlags);
+
+	/// @brief Update the DiggerZombie
 	void UpdateZombieDigger();
+
+	/// @brief Is the Zombie walking backwards
+	/// @return True if the Zombie is walking backwards
 	bool IsWalkingBackwards();
+
+	/// @brief Attach a particle system to the Zombie
+	/// @param thePosX The X position relative to the Zombie
+	/// @param thePosY The Y positon relative to the Zombie
+	/// @param theEffect The particle effect to use
+	/// @return Particle System
 	TodParticleSystem *AddAttachedParticle(int thePosX, int thePosY, ParticleEffect theEffect);
+
 	void PogoBreak(unsigned int theDamageFlags);
+
 	void UpdateZombieFalling();
+
 	void UpdateZombieDancer();
+
 	ZombieID SummonBackupDancer(int theRow, int thePosX);
+
 	void SummonBackupDancers();
+
 	int GetDancerFrame();
+
 	void BungeeStealTarget();
+
 	void BungeeLiftTarget();
 	void UpdateYuckyFace();
 	void DrawIceTrap(Graphics *g, const ZombieDrawPosition &theDrawPos, bool theFront);

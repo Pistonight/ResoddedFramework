@@ -45,7 +45,7 @@ class Coin : public GameObject
 	Coin();
 	~Coin();
 
-	/// @brief Test to see if the Coin got hit
+	/// @brief Initialize the Coin
 	/// @param theX The Coin X coordinate
 	/// @param theY The Coin Y coordinate
 	/// @param theCoinType The CoinType to use (see CoinType enum)
