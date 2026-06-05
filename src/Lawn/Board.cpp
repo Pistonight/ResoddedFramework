@@ -6225,7 +6225,7 @@ void Board::Update()
 					if (aDistSq >= 40000.0f) // 200px proximity radius
 						continue;
 
-					aCoin->GamepadCursorOver(0);
+					aCoin->GamepadCursorOver();
 				}
 			}
 		}
