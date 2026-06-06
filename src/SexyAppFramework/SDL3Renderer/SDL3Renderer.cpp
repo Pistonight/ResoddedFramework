@@ -971,6 +971,8 @@ void SDL3Renderer::BltRawTexture(void *theTexture, int theTexWidth, int theTexHe
 
 bool SDL3Renderer::TestSDL3()
 {
+	printf("[SexyAppFramework] - Testing SDL_Renderer compatibility\n");
+
 	int aNumRenderers = SDL_GetNumRenderDrivers();
 	return aNumRenderers > 0;
 }

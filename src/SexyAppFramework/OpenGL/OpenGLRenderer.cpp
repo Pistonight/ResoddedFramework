@@ -62,6 +62,9 @@ void main() {
 }
 )glsl";
 
+
+static const int gGLVersions[][2] = {{4, 6}, {4, 5}, {4, 4}, {4, 3}, {4, 2}, {4, 1}, {4, 0}, {3, 3}, {3, 2}, {3, 1}, {3, 0}};
+
 int OpenGLRenderer::gGLTextureCount = 0;
 uint64_t OpenGLRenderer::gGLUsedMemoryCount = 0;
 
@@ -250,10 +253,45 @@ bool OpenGLRenderer::PreDraw()
 	return true;
 }
 
+bool TryVersion(SDL_Window *window, int major, int minor)
+{
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor);
+
+	SDL_GLContext aContext = SDL_GL_CreateContext(window);
+
+	if (aContext)
+	{
+		SDL_GL_DestroyContext(aContext);
+		return true;
+	}
+
+	return false;
+}
+
+
 bool OpenGLRenderer::InitGLContext()
 {
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	int aWorkingMajor = 4;
+	int aWorkingMinor = 4;
+	bool aFoundAWorkingVersion = false;
+	for (auto &aVersion : gGLVersions)
+	{
+		if (TryVersion(mApp->mWindow->mInternalWindow, aVersion[0], aVersion[1]))
+		{
+			aWorkingMajor = aVersion[0];
+			aWorkingMinor = aVersion[1];
+			printf("[SexyAppFramework] - OpenGL Maximum Supported Version: %d.%d\n", aWorkingMajor, aWorkingMinor);
+
+			aFoundAWorkingVersion = true;
+			break;
+		}
+	}
+	if (!aFoundAWorkingVersion)
+		return false;
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, aWorkingMajor);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, aWorkingMinor);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
@@ -1329,6 +1367,25 @@ void OpenGLRenderer::BltRawTexture(void *theTexture,
 
 bool OpenGLRenderer::TestOpenGL(SDL_Window *theWindow)
 {
+	printf("[SexyAppFramework] - Testing OpenGL compatibility\n");
+
+	int aWorkingMajor = 4;
+	int aWorkingMinor = 4;
+	bool aFoundAWorkingVersion = false;
+	for (auto &aVersion : gGLVersions)
+	{
+		if (TryVersion(theWindow, aVersion[0], aVersion[1]))
+		{
+			aWorkingMajor = aVersion[0];
+			aWorkingMinor = aVersion[1];
+			aFoundAWorkingVersion = true;
+			break;
+		}
+	}
+	if (!aFoundAWorkingVersion)
+		return false;
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, aWorkingMajor);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, aWorkingMinor);
 	SDL_GLContext theContext = SDL_GL_CreateContext(theWindow);
 	if (!theContext)
 	{
