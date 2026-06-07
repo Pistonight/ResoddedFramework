@@ -60,11 +60,11 @@ class LawnScrollbar : public Widget
 };
 
 
-/*inline*/ bool ModInRange(int theNumber, int theMod, int theRange = 0);
-/*inline*/ bool GridInRange(int x1, int y1, int x2, int y2, int theRangeX = 1, int theRangeY = 1);
+bool ModInRange(int theNumber, int theMod, int theRange = 0);
+bool GridInRange(int x1, int y1, int x2, int y2, int theRangeX = 1, int theRangeY = 1);
 
-/*inline*/ void TileImageHorizontally(Graphics *g, Image *theImage, int theX, int theY, int theWidth);
-/*inline*/ void TileImageVertically(Graphics *g, Image *theImage, int theX, int theY, int theHeight);
+void TileImageHorizontally(Graphics *g, Image *theImage, int theX, int theY, int theWidth);
+void TileImageVertically(Graphics *g, Image *theImage, int theX, int theY, int theHeight);
 
 Checkbox *MakeNewCheckbox(int theId, CheckboxListener *theListener, bool theDefault);
 LawnEditWidget *CreateEditWidget(int theId, EditListener *theListener, Dialog *theDialog);

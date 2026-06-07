@@ -44,7 +44,7 @@ class ReanimatorCache
 	GPUImage *MakeCachedPlantFrame(SeedType theSeedType, DrawVariation theDrawVariation);
 	GPUImage *MakeCachedMowerFrame(LawnMowerType theMowerType);
 	GPUImage *MakeCachedZombieFrame(ZombieType theZombieType);
-	/*inline*/ void GetPlantImageSize(
+	void GetPlantImageSize(
 		SeedType theSeedType, int &theOffsetX, int &theOffsetY, int &theWidth, int &theHeight);
 	void DrawReanimatorFrame(Graphics *g,
 							 float thePosX,

@@ -111,7 +111,7 @@ class GameSelector : public Widget, public ButtonListener
 	void AddTrophySparkle();
 	void ClickedAdventure();
 	void UpdateTooltip();
-	/*inline*/ bool ShouldDoZenTuturialBeforeAdventure();
+	bool ShouldDoZenTuturialBeforeAdventure();
 	void AddPreviewProfiles();
 	void SlideTo(int theX, int theY);
 };

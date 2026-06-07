@@ -135,8 +135,8 @@ class FoleyParams
 	unsigned int mFoleyFlags;
 };
 
-/*inline*/ void TodFoleyInitialize(FoleyParams *theFoleyParamArray, int theFoleyParamArraySize);
-/*inline*/ void TodFoleyDispose();
+void TodFoleyInitialize(FoleyParams *theFoleyParamArray, int theFoleyParamArraySize);
+void TodFoleyDispose();
 FoleyParams *LookupFoley(FoleyType theFoleyType);
 
 extern int gFoleyParamArraySize;
@@ -154,8 +154,8 @@ class TodSoundInstance : public OpenALSoundInstance
 	{
 	}
 
-	/*inline*/ int GetSoundPosition();
-	/*inline*/ void SetSoundPosition(int thePosition);
+	int GetSoundPosition();
+	void SetSoundPosition(int thePosition);
 };
 
 class FoleyInstance
@@ -193,7 +193,7 @@ class TodFoley
 	void GamePause(bool theEnteringPause);
 	void PlayFoleyPitch(FoleyType theFoleyType, float thePitch);
 	void CancelPausedFoley();
-	/*inline*/ void ApplyMusicVolume(FoleyInstance *theFoleyInstance);
+	void ApplyMusicVolume(FoleyInstance *theFoleyInstance);
 	void RehookupSoundWithMusicVolume();
 };
 

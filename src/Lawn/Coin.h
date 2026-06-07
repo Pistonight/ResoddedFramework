@@ -91,10 +91,10 @@ class Coin : public GameObject
 	/// @return The color
 	Color GetColor();
 	/// @brief Is the Coin considered Money
-	/// @return True if the Coin is Money
+	/// @return True if the Coin is Money, false otherwise
 	bool IsMoney();
 	/// @brief Is the Coin a Sun Type
-	/// @return True if the Coin is a sun
+	/// @return True if the Coin is a sun, false otherwise
 	bool IsSun();
 	/// @brief Get the scale that the Sun CoinType should be at
 	/// @return The scale
@@ -103,10 +103,10 @@ class Coin : public GameObject
 	/// @return The SeedType determined by the current adventure level
 	SeedType GetFinalSeedPacketType();
 	/// @brief Is the Coin the Level Award
-	/// @return True if it's the Level Award
+	/// @return True if it's the Level Award, false otherwise
 	bool IsLevelAward();
 	/// @brief Should a bouncy arrow appear next to the Coin (Is Present or your first Coin)
-	/// @return True if the Coin needs an arrow
+	/// @return True if the Coin needs an arrow, false otherwise
 	bool CoinGetsBouncyArrow();
 	/// @brief Create Coins from the current position and spread them apart in a circle and auto-collect
 	/// @param theCoinType The CoinType to create
@@ -122,7 +122,7 @@ class Coin : public GameObject
 	/// @brief Attempt to auto collect itself if the Level Award has been picked up
 	void TryAutoCollectAfterLevelAward();
 	/// @brief Is the Coin actually a present with advice
-	/// @return True if the Coin is of a Present Type
+	/// @return True if the Coin is of a Present Type, false otherwise
 	bool IsPresentWithAdvice();
 #if SEXY_USE_CONTROLLER
 	/// @brief Handle the Gamepad Cursor overlapping the coin
@@ -134,7 +134,7 @@ class Coin : public GameObject
 	void PlayGroundSound();
 
 	/// @brief Is the CoinType considered Money
-	/// @return True if it's any type of Money
+	/// @return True if it's any type of Money, false otherwise
 	static bool IsMoney(CoinType theType);
 };
 

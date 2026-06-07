@@ -74,22 +74,22 @@ class SeedChooserScreen : public Widget
 	SeedChooserScreen();
 	~SeedChooserScreen();
 
-	static /*inline*/ int PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray *theArray,
+	static int PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray *theArray,
 																	int theCount,
 																	MTRand &theLevelRNG);
 	void CrazyDavePickSeeds();
 	bool Has7Rows();
 	void GetSeedPositionInChooser(int theIndex, int &x, int &y);
-	/*inline*/ void GetSeedPositionInBank(int theIndex, int &x, int &y);
-	/*inline*/ unsigned int SeedNotRecommendedToPick(SeedType theSeedType);
-	/*inline*/ bool SeedNotAllowedToPick(SeedType theSeedType);
-	/*inline*/ bool SeedNotAllowedDuringTrial(SeedType theSeedType);
+	void GetSeedPositionInBank(int theIndex, int &x, int &y);
+	unsigned int SeedNotRecommendedToPick(SeedType theSeedType);
+	bool SeedNotAllowedToPick(SeedType theSeedType);
+	bool SeedNotAllowedDuringTrial(SeedType theSeedType);
 	virtual void Draw(Graphics *g);
 	void UpdateViewLawn();
 	void LandFlyingSeed(ChosenSeed &theChosenSeed);
 	void UpdateCursor();
 	virtual void Update();
-	/*inline*/ bool DisplayRepickWarningDialog(const SexyString &theMessage);
+	bool DisplayRepickWarningDialog(const SexyString &theMessage);
 	bool FlyersAreComming();
 	bool FlyProtectionCurrentlyPlanted();
 	bool CheckSeedUpgrade(SeedType theSeedTypeTo, SeedType theSeedTypeFrom);
@@ -98,16 +98,16 @@ class SeedChooserScreen : public Widget
 	virtual void ButtonDepress(int theId);
 	SeedType SeedHitTest(int x, int y);
 	SeedType FindSeedInBank(int theIndexInBank);
-	/*inline*/ void EnableStartButton(bool theEnabled);
+	void EnableStartButton(bool theEnabled);
 	void ClickedSeedInBank(ChosenSeed &theChosenSeed);
 	void ClickedSeedInChooser(ChosenSeed &theChosenSeed);
 	void ShowToolTip();
-	/*inline*/ void RemoveToolTip();
-	/*inline*/ void CancelLawnView();
+	void RemoveToolTip();
+	void CancelLawnView();
 	virtual void MouseUp(int x, int y, int theClickCount);
 	void UpdateImitaterButton();
 	virtual void MouseDown(int x, int y, int theClickCount);
-	/*inline*/ bool PickedPlantType(SeedType theSeedType);
+	bool PickedPlantType(SeedType theSeedType);
 	void CloseSeedChooser();
 	virtual void KeyDown(KeyCode theKey);
 	virtual void KeyChar(SexyChar theChar);

@@ -328,7 +328,7 @@ class Zombie : public GameObject
 	void CheckForHighGround();
 
 	/// @brief Is the Zombie positioned on the HighGround
-	/// @return True if it's on HighGround
+	/// @return True if it's on HighGround, false otherwise
 	bool IsOnHighGround();
 
 	/// @brief Drop the Zombie's loot
@@ -411,7 +411,7 @@ class Zombie : public GameObject
 	void UpdateZombieDigger();
 
 	/// @brief Is the Zombie walking backwards
-	/// @return True if the Zombie is walking backwards
+	/// @return True if the Zombie is walking backwards, false otherwise
 	bool IsWalkingBackwards();
 
 	/// @brief Attach a particle system to the Zombie
@@ -1052,7 +1052,7 @@ class Zombie : public GameObject
 
 	/// @brief Checks whether the given ZombieType is a Zombotany (plant-Zombie hybrid) type
 	/// @param theZombieType The ZombieType to check
-	/// @return True if the type is a Zombotany variant
+	/// @return True if the type is a Zombotany variant, false otherwise
 	static bool IsZombotany(ZombieType theZombieType);
 };
 

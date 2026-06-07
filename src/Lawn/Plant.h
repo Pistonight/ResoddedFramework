@@ -244,7 +244,7 @@ class Plant : public GameObject
 	/// @brief Try to find a zombie to aim at and shoot him
 	/// @param theRow The row to shoot in
 	/// @param thePlantWeapon [OPTIONAL] The weapon to use (see PlantWeapon enum)
-	/// @return True if target was found
+	/// @return True if target was found, false otherwise
 	bool FindTargetAndFire(int theRow, PlantWeapon thePlantWeapon = PlantWeapon::WEAPON_PRIMARY);
 
 	/// @brief Launch a Treepeater shot
@@ -332,7 +332,7 @@ class Plant : public GameObject
 	void UpdateSquash();
 
 	/// @brief Is the Plant's state not on the Ground?
-	/// @return True if it's not on the ground
+	/// @return True if it's not on the ground, false otherwise
 	bool NotOnGround();
 
 	/// @brief Do Squash damage to all Zombies in the landing spot
@@ -367,7 +367,7 @@ class Plant : public GameObject
 	void GetPeaHeadOffset(int &theOffsetX, int &theOffsetY);
 
 	/// @brief Can the Plant make sun
-	/// @return True if the Plant is a sun producer
+	/// @return True if the Plant is a sun producer, false otherwise
 	bool MakesSun();
 
 	/// @brief Draw the SeedPacket preview
@@ -387,7 +387,7 @@ class Plant : public GameObject
 	void KillAllPlantsNearDoom();
 
 	/// @brief Is the Plant on the stage's high-ground?
-	/// @return True if it's on the high-ground
+	/// @return True if it's on the high-ground, false otherwise
 	bool IsOnHighGround();
 
 	/// @brief Update the Torchwood
@@ -498,11 +498,11 @@ class Plant : public GameObject
 	void UpdateReanimColor();
 
 	/// @brief Can the plant be upgraded to another one
-	/// @return True if it can be upgraded
+	/// @return True if it can be upgraded, false otherwise
 	bool IsUpgradableTo(SeedType theUpgradedType);
 
 	/// @brief Can the Plant form an upgrade
-	/// @return True if it can form an upgrade
+	/// @return True if it can form an upgrade, false otherwise
 	bool IsPartOfUpgradableTo(SeedType theUpgradedType);
 
 	/// @brief Update the CobCannon
@@ -515,7 +515,7 @@ class Plant : public GameObject
 	void UpdateGoldMagnetShroom();
 
 	/// @brief Is the Plant currently on the Board
-	/// @return True if it belongs to the Board
+	/// @return True if it belongs to the Board, false otherwise
 	bool IsOnBoard();
 
 	/// @brief Remove all visual effects applied to the Plant
@@ -553,7 +553,7 @@ class Plant : public GameObject
 	void SpikeRockTakeDamage();
 
 	/// @brief Is the Plant spiky?
-	/// @return True if the Plant is spiky
+	/// @return True if the Plant is spiky, false otherwise
 	bool IsSpiky();
 
 	/// @brief Preload a Plant's assets
@@ -581,11 +581,11 @@ class Plant : public GameObject
 	void GoldMagnetFindTargets();
 
 	/// @brief Is a GoldMagnet about to attract coins
-	/// @return True if a GoldMagnet is about to attract coins
+	/// @return True if a GoldMagnet is about to attract coins, false otherwise
 	bool IsAGoldMagnetAboutToSuck();
 
 	/// @brief Should it draw the magnet items ontop
-	/// @return True if it has an attracted item
+	/// @return True if it has an attracted item, false otherwise
 	bool DrawMagnetItemsOnTop();
 };
 /// @brief Get the Plant's height offset on a grid

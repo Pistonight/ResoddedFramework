@@ -95,7 +95,7 @@ class Challenge
 
 	/// @brief Check if any valid match exists on the Beghouled board
 	/// @param theBoardState The current Beghouled board state
-	/// @return True if at least one valid match exists on the board
+	/// @return True if at least one valid match exists on the board, false otherwise
 	bool BeghouledBoardHasMatch(BeghouledBoardState *theBoardState);
 
 	/// @brief Get the seed type at a given Beghouled grid position
@@ -137,7 +137,7 @@ class Challenge
 	/// @brief Handle mouse movement for challenge-specific interactions
 	/// @param x The screen X coordinate
 	/// @param y The screen Y coordinate
-	/// @return True if the mouse movement was handled by the challenge
+	/// @return True if the mouse movement was handled by the challenge, false otherwise
 	bool MouseMove(int x, int y);
 
 	/// @brief Handle mouse down events for challenge-specific interactions
@@ -145,13 +145,13 @@ class Challenge
 	/// @param y The screen Y coordinate
 	/// @param theClickCount The number of clicks
 	/// @param theHitResult The hit test result
-	/// @return True if the mouse down was handled by the challenge
+	/// @return True if the mouse down was handled by the challenge, false otherwise
 	bool MouseDown(int x, int y, int theClickCount, HitResult *theHitResult);
 
 	/// @brief Handle mouse up events for Beghouled drag cancellation
 	/// @param x The screen X coordinate
 	/// @param y The screen Y coordinate
-	/// @return False (mouse up not fully handled)
+	/// @return False (mouse up not fully handled), true otherwise
 	bool MouseUp(int x, int y);
 
 	/// @brief Clear challenge-specific cursor state
@@ -180,7 +180,7 @@ class Challenge
 	void UpdateBeghouled();
 	/// @brief Update a Beghouled plant position with animation
 	/// @param thePlant The plant to update
-	/// @return True if the plant is still moving
+	/// @return True if the plant is still moving, false otherwise
 	bool UpdateBeghouledPlant(Plant *thePlant);
 
 	/// @brief Make plants fall into empty squares in the Beghouled grid
@@ -238,12 +238,12 @@ class Challenge
 	/// @param theToX The destination grid X coordinate
 	/// @param theToY The destination grid Y coordinate
 	/// @param theBoardState The current Beghouled board state
-	/// @return True if the move is valid and produces a match
+	/// @return True if the move is valid and produces a match, false otherwise
 	bool BeghouledIsValidMove(int theFromX, int theFromY, int theToX, int theToY, BeghouledBoardState *theBoardState);
 
 	/// @brief Check if there is at least one valid move available on the Beghouled board
 	/// @param theBoardState The current Beghouled board state
-	/// @return True if at least one valid move exists
+	/// @return True if at least one valid move exists, false otherwise
 	bool BeghouledCheckForPossibleMoves(BeghouledBoardState *theBoardState);
 
 	/// @brief Check if the Beghouled board has no possible moves and needs reshuffling
@@ -274,14 +274,14 @@ class Challenge
 	/// @brief Update tooltip display for challenge-specific UI elements
 	/// @param theX The screen X coordinate
 	/// @param theY The screen Y coordinate
-	/// @return True if a tooltip was shown
+	/// @return True if a tooltip was shown, false otherwise
 	bool UpdateToolTip(int theX, int theY);
 
 	/// @brief Handle zombie spawning logic for the Whack-a-Zombie challenge
 	void WhackAZombieSpawning();
 
 	/// @brief Determine if zombie spawning should be updated this frame
-	/// @return True if zombie spawning should be updated
+	/// @return True if zombie spawning should be updated, false otherwise
 	bool UpdateZombieSpawning();
 
 	/// @brief Clear a set number of craters from the Beghouled board
@@ -386,7 +386,7 @@ class Challenge
 	void BeghouledShuffle();
 
 	/// @brief Check if any craters remain on the Beghouled board
-	/// @return True if at least one crater can be cleared
+	/// @return True if at least one crater can be cleared, false otherwise
 	bool BeghouledCanClearCrater();
 
 	/// @brief Update the crater button activation state based on available craters
@@ -433,7 +433,7 @@ class Challenge
 	void ScaryPotterJackExplode(int thePosX, int thePosY);
 
 	/// @brief Check if all scary pots have been cleared and no zombies remain
-	/// @return True if the Scary Potter challenge is complete
+	/// @return True if the Scary Potter challenge is complete, false otherwise
 	bool ScaryPotterIsCompleted();
 
 	/// @brief Change the type of existing scary pots (e.g., reveal leaf/zombie pots)
@@ -462,7 +462,7 @@ class Challenge
 
 	/// @brief Check if a seed type is a zombie seed usable in I-Zombie/Zombiquarium
 	/// @param theSeedType The seed type to check
-	/// @return True if the seed represents a zombie type
+	/// @return True if the seed represents a zombie type, false otherwise
 	static bool IsZombieSeedType(SeedType theSeedType);
 
 	/// @brief Handle mouse down in I-Zombie mode (place zombie on click)
@@ -548,7 +548,7 @@ class Challenge
 
 	/// @brief Handle a zombie eating a brain in I-Zombie mode
 	/// @param theZombie The zombie eating the brain
-	/// @return True if the zombie ate a brain
+	/// @return True if the zombie ate a brain, false otherwise
 	bool IZombieEatBrain(Zombie *theZombie);
 
 	GridItem *IZombieGetBrainTarget(Zombie *theZombie);
@@ -600,14 +600,14 @@ class Challenge
 	/// @param theY The screen Y coordinate
 	/// @param theGridX Output grid X coordinate
 	/// @param theGridY Output grid Y coordinate
-	/// @return True if the coordinates map to a valid grid square
+	/// @return True if the coordinates map to a valid grid square, false otherwise
 	bool BeghouledTwistSquareFromMouse(int theX, int theY, int &theGridX, int &theGridY);
 
 	/// @brief Check if a 2x2 grid twist move at the given position is valid
 	/// @param theGridX The X grid coordinate of the top-left cell
 	/// @param theGridY The Y grid coordinate of the top-left cell
 	/// @param theBoardState The current Beghouled board state
-	/// @return True if the move is within bounds and all four cells contain plants
+	/// @return True if the move is within bounds and all four cells contain plants, false otherwise
 	bool BeghouledTwistValidMove(int theGridX, int theGridY, BeghouledBoardState *theBoardState);
 
 	/// @brief Handle mouse down for Beghouled Twist mode
@@ -619,14 +619,14 @@ class Challenge
 	/// @param theGridX The X grid coordinate of the top-left cell
 	/// @param theGridY The Y grid coordinate of the top-left cell
 	/// @param theBoardState The current Beghouled board state
-	/// @return True if the twist would result in a valid match
+	/// @return True if the twist would result in a valid match, false otherwise
 	bool BeghouledTwistMoveCausesMatch(int theGridX, int theGridY, BeghouledBoardState *theBoardState);
 
 	/// @brief Flash plants when a twist move would create a match
 	/// @param theBoardState The current Beghouled board state
 	/// @param theGridX The grid X coordinate
 	/// @param theGridY The grid Y coordinate
-	/// @return True if a match would be created
+	/// @return True if a match would be created, false otherwise
 	bool BeghouledTwistFlashMatch(BeghouledBoardState *theBoardState, int theGridX, int theGridY);
 
 	/// @brief Cancel all active match flashing on Beghouled plants
@@ -654,7 +654,7 @@ class Challenge
 	void PuzzlePhaseComplete(int theGridX, int theGridY);
 
 	/// @brief Check if the current puzzle stage awards a prize (every N stages)
-	/// @return True if this stage should award a prize instead of clearing
+	/// @return True if this stage should award a prize instead of clearing, false otherwise
 	bool PuzzleIsAwardStage();
 
 	/// @brief Place a zombie on the board in I-Zombie mode
@@ -681,7 +681,7 @@ class Challenge
 	/// @brief Check if the mouse cursor is hovering over the Tree of Wisdom
 	/// @param theX The screen X coordinate
 	/// @param theY The screen Y coordinate
-	/// @return True if the cursor is over the tree
+	/// @return True if the cursor is over the tree, false otherwise
 	bool TreeOfWisdomMouseOn(int theX, int theY);
 
 	/// @brief Get the current size of the Tree of Wisdom from player records
@@ -717,7 +717,7 @@ class Challenge
 	/// @param theX The screen X coordinate
 	/// @param theY The screen Y coordinate
 	/// @param theHitResult Output hit result structure
-	/// @return True if the tree was hit
+	/// @return True if the tree was hit, false otherwise
 	bool TreeOfWisdomHitTest(int theX, int theY, HitResult *theHitResult);
 
 	/// @brief Trigger tree babbling state with random dialogue
@@ -730,7 +730,7 @@ class Challenge
 	void TreeOfWisdomSayRepeat();
 
 	/// @brief Check if the Tree of Wisdom can be fed fertilizer
-	/// @return True if the tree can currently be fed
+	/// @return True if the tree can currently be fed, false otherwise
 	bool TreeOfWisdomCanFeed();
 
 	GridItem *GetPortalLeftRight(int theGridX, int theGridY, bool theToLeft = true);

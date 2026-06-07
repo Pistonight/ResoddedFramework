@@ -39,7 +39,7 @@ class ChallengeScreen : public Widget, public ButtonListener
 	virtual ~ChallengeScreen();
 	void SetUnlockChallengeIndex(ChallengePage thePage, bool theIsIZombie = false);
 	int MoreTrophiesNeeded(int theChallengeIndex);
-	/*inline*/ bool ShowPageButtons();
+	bool ShowPageButtons();
 	void UpdateButtons();
 	int AccomplishmentsNeeded(int theChallengeIndex);
 	void DrawButton(Graphics *g, int theChallengeIndex);
@@ -55,8 +55,8 @@ class ChallengeScreen : public Widget, public ButtonListener
 		;
 	}
 
-	/*inline*/ bool IsScaryPotterLevel(GameMode theGameMode);
-	/*inline*/ bool IsIZombieLevel(GameMode theGameMode);
+	bool IsScaryPotterLevel(GameMode theGameMode);
+	bool IsIZombieLevel(GameMode theGameMode);
 };
 
 class ChallengeDefinition

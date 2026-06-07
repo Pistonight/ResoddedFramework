@@ -30,7 +30,7 @@ class ProfileMgr
 	bool DeleteProfile(const SexyString &theName);
 
   protected:
-	/*inline*/ void DeleteProfile(ProfileMap::iterator theProfile);
+	void DeleteProfile(ProfileMap::iterator theProfile);
 
   public:
 	ProfileMgr()
@@ -42,7 +42,7 @@ class ProfileMgr
 		;
 	}
 
-	/*inline*/ void Clear();
+	void Clear();
 	void Load();
 	void Save();
 	inline int GetNumProfiles() const

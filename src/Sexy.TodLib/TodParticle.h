@@ -229,7 +229,7 @@ class TodParticleHolder
 										   float theY,
 										   int theRenderOrder,
 										   ParticleEffect theParticleEffect);
-	/*inline*/ bool IsOverLoaded();
+	bool IsOverLoaded();
 };
 
 class ParticleRenderParams
@@ -321,14 +321,14 @@ class TodParticleEmitter
 							 float theParticleTimeValue,
 							 int theFieldIndex);
 	void UpdateSystemField(ParticleField *theParticleField, float theParticleTimeValue, int theFieldIndex);
-	/*inline*/ float SystemTrackEvaluate(FloatParameterTrack &theTrack, ParticleSystemTracks theSystemTrack);
-	static /*inline*/ float ParticleTrackEvaluate(FloatParameterTrack &theTrack,
+	float SystemTrackEvaluate(FloatParameterTrack &theTrack, ParticleSystemTracks theSystemTrack);
+	static float ParticleTrackEvaluate(FloatParameterTrack &theTrack,
 												  TodParticle *theParticle,
 												  ParticleTracks theParticleTrack);
 	void DeleteParticle(TodParticle *theParticle);
 	void DeleteNonCrossFading();
 };
-/*inline*/ float CrossFadeLerp(float theFrom, float theTo, bool theFromIsSet, bool theToIsSet, float theFraction);
+float CrossFadeLerp(float theFrom, float theTo, bool theFromIsSet, bool theToIsSet, float theFraction);
 void RenderParticle(Graphics *g,
 					TodParticle *theParticle,
 					const Color &theColor,

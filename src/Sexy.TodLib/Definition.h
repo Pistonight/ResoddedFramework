@@ -198,10 +198,10 @@ bool DefinitionLoadXML(const SexyString &theFilename, DefMap *theDefMap, void *t
 void DefinitionFreeArrayField(DefinitionArrayDef *theArray, DefMap *theDefMap);
 void DefinitionFreeMap(DefMap *theDefMap, void *theDefinition);
 
-/*inline*/ bool FloatTrackIsSet(const FloatParameterTrack &theTrack);
-/*inline*/ void FloatTrackSetDefault(FloatParameterTrack &theTrack, float theValue);
+bool FloatTrackIsSet(const FloatParameterTrack &theTrack);
+void FloatTrackSetDefault(FloatParameterTrack &theTrack, float theValue);
 float FloatTrackEvaluate(FloatParameterTrack &theTrack, float theTimeValue, float theInterp);
 float FloatTrackEvaluateFromLastTime(FloatParameterTrack &theTrack, float theTimeValue, float theInterp);
-/*inline*/ bool FloatTrackIsConstantZero(FloatParameterTrack &theTrack);
+bool FloatTrackIsConstantZero(FloatParameterTrack &theTrack);
 
 #endif

@@ -114,17 +114,17 @@ class Projectile : public GameObject
 	void ConvertToPea(int theGridX);
 	/// @brief Does the Projectile deal Splash-Damage
 	/// @param theZombie The Zombie to check
-	/// @return True if the Projectile can deal Splash-Damage to the Zombie
+	/// @return True if the Projectile can deal Splash-Damage to the Zombie, false otherwise
 	bool IsSplashDamage(Zombie *theZombie);
 	/// @brief Play the impact sound of hitting the Zombie
 	/// @param theZombie The Zombie to determine the correct sound
 	void PlayImpactSound(Zombie *theZombie);
 	/// @brief Is the Zombie able to be hit by the Splash-Damage
 	/// @param theZombie The Zombie to check
-	/// @return True if the Zombie is in range
+	/// @return True if the Zombie is in range, false otherwise
 	bool IsZombieHitBySplash(Zombie *theZombie);
 	/// @brief Is the Pea Projectile about to hit a Torchwood
-	/// @return True if the Projectile is in the Torchwood's range
+	/// @return True if the Projectile is in the Torchwood's range, false otherwise
 	bool PeaAboutToHitTorchwood();
 };
 

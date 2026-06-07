@@ -33,7 +33,7 @@ class ReanimationWidget : public Widget
 	ReanimationWidget();
 	virtual ~ReanimationWidget();
 
-	/*inline*/ void Dispose();
+	void Dispose();
 	virtual void Draw(Graphics *);
 	virtual void Update();
 	void AddReanimation(float x, float y, ReanimationType theReanimationType);

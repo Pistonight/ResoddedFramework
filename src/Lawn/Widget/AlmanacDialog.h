@@ -65,7 +65,7 @@ class AlmanacDialog : public LawnDialog
 	virtual void Draw(Graphics *g);
 	void GetSeedPosition(SeedType theSeedType, int &x, int &y);
 	SeedType SeedHitTest(int x, int y);
-	/*inline*/ bool ZombieHasSilhouette(ZombieType theZombieType);
+	bool ZombieHasSilhouette(ZombieType theZombieType);
 	bool ZombieIsShown(ZombieType theZombieType);
 	bool ZombieHasDescription(ZombieType theZombieType);
 	void GetZombiePosition(ZombieType theZombieType, int &x, int &y);
@@ -78,12 +78,12 @@ class AlmanacDialog : public LawnDialog
 
 	virtual void MouseWheel(int theDelta);
 	static ZombieType GetZombieType(int theIndex);
-	/*inline*/ void ShowPlant(SeedType theSeedType);
-	/*inline*/ void ShowZombie(ZombieType theZombieType);
+	void ShowPlant(SeedType theSeedType);
+	void ShowZombie(ZombieType theZombieType);
 };
 extern bool gZombieDefeated[NUM_ZOMBIE_TYPES];
 
-/*inline*/ void AlmanacInitForPlayer();
-/*inline*/ void AlmanacPlayerDefeatedZombie(ZombieType theZombieType);
+void AlmanacInitForPlayer();
+void AlmanacPlayerDefeatedZombie(ZombieType theZombieType);
 
 #endif

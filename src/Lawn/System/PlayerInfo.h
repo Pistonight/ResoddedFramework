@@ -127,7 +127,7 @@ class PlayerInfo
 	PlayerInfo();
 
 	void Reset();
-	/*inline*/ void AddCoins(int theAmount);
+	void AddCoins(int theAmount);
 	void SyncSummary(ProfileSyncer &theSync);
 	void SyncDetails(ProfileSyncer &theSync);
 	void DeleteUserFiles();

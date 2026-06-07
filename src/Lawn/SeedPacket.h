@@ -58,7 +58,7 @@ class SeedPacket : public GameObject
 	/// @brief Flash the Packet if it can be used
 	void FlashIfReady();
 	/// @brief Is the Packet pickable
-	/// @return True if it can be picked up
+	/// @return True if it can be picked up, false otherwise
 	bool CanPickUp();
 	/// @brief Set the SeedType of the Packet
 	/// @param theSeedType The Type of the Packet
@@ -100,7 +100,7 @@ class SeedBank : public GameObject
 	/// @brief Is the point overlapping the SeedBank
 	/// @param theX The mouse click X coordinate
 	/// @param theY The mouse click Y coordinate
-	/// @return True if the point is in the SeedBank
+	/// @return True if the point is in the SeedBank, false otherwise
 	bool ContainsPoint(int theX, int theY);
 	/// @brief Add a new Seed to the SeedBank
 	/// @param theSeedType The SeedType to add to the SeedBank

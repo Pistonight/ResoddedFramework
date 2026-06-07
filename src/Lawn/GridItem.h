@@ -99,7 +99,7 @@ class GridItem
 	/// @param g Graphics object
 	void DrawStinky(Sexy::Graphics *g);
 	/// @brief Is the Portal GridType opened
-	/// @return True if the GridType is a portal and it's in the opened state
+	/// @return True if the GridType is a portal and it's in the opened state, false otherwise
 	bool IsOpenPortal();
 };
 

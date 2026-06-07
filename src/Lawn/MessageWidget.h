@@ -50,7 +50,7 @@ class MessageWidget
 	void ClearLabel();
 
 	/// @brief Is the Message being displayed at the moment
-	/// @return True if the duration != 0, aka it's being displayed at the moment
+	/// @return True if the duration != 0, aka it's being displayed at the moment, false otherwise
 	inline bool IsBeingDisplayed()
 	{
 		return mDuration != 0;

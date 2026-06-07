@@ -67,16 +67,16 @@ class GameButton
 	GameButton(int theId);
 	~GameButton();
 
-	static /*inline*/ bool HaveButtonImage(Image *theImage, Rect &theRect);
+	static bool HaveButtonImage(Image *theImage, Rect &theRect);
 	void DrawButtonImage(Graphics *g, Image *theImage, Rect &theRect, int theX, int theY);
-	/*inline*/ void SetFont(Font *theFont);
-	/*inline*/ bool IsButtonDown();
+	void SetFont(Font *theFont);
+	bool IsButtonDown();
 	void Draw(Graphics *g);
-	/*inline*/ void SetDisabled(bool theDisabled);
-	/*inline*/ bool IsMouseOver();
+	void SetDisabled(bool theDisabled);
+	bool IsMouseOver();
 	void Update();
-	/*inline*/ void Resize(int theX, int theY, int theWidth, int theHeight);
-	/*inline*/ void SetLabel(const SexyString &theLabel);
+	void Resize(int theX, int theY, int theWidth, int theHeight);
+	void SetLabel(const SexyString &theLabel);
 };
 
 class LawnStoneButton : public DialogButton
@@ -88,7 +88,7 @@ class LawnStoneButton : public DialogButton
 	}
 
 	virtual void Draw(Graphics *g);
-	/*inline*/ void SetLabel(const SexyString &theLabel);
+	void SetLabel(const SexyString &theLabel);
 };
 
 class NewLawnButton : public DialogButton

@@ -39,10 +39,10 @@ void TodReportError(LPEXCEPTION_POINTERS exceptioninfo, const char *theMessage);
 long __stdcall TodUnhandledExceptionFilter(LPEXCEPTION_POINTERS exceptioninfo);
 #endif
 void TodAssertFailed(const char *theCondition, const char *theFile, int theLine, const char *theMsg = "", ...);
-/*inline*/ void TodErrorMessageBox(const char *theMessage, const char *theTitle);
+void TodErrorMessageBox(const char *theMessage, const char *theTitle);
 
-/*inline*/ void *TodMalloc(int theSize);
-/*inline*/ void TodFree(void *theBlock);
+void *TodMalloc(int theSize);
+void TodFree(void *theBlock);
 void TodAssertInitForApp();
 
 extern void (*gBetaSubmitFunc)();

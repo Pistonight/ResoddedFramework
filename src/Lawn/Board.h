@@ -276,7 +276,7 @@ class Board : public Widget, public ButtonListener
 	void ClearCursor();
 
 	/// @brief Does the Board have any Zombies (That aren't MindControlled)
-	/// @return True if there are any non-MindControlled Zombies
+	/// @return True if there are any non-MindControlled Zombies, false otherwise
 	bool AreEnemyZombiesOnScreen();
 
 	/// @brief Get the lower in the row
@@ -289,7 +289,7 @@ class Board : public Widget, public ButtonListener
 	void SaveGame(const std::string &theFileName);
 
 	/// @brief Load the game state from the save file
-	/// @return True if it loaded successfully
+	/// @return True if it loaded successfully, false otherwise
 	bool LoadGame(const std::string &theFileName);
 
 	void InitLevel();
@@ -387,12 +387,12 @@ class Board : public Widget, public ButtonListener
 
 	/// @brief Try to take an amount of Sun from the Bank
 	/// @param theAmount The amount of Sun to get
-	/// @return True if there is enough Sun
+	/// @return True if there is enough Sun, false otherwise
 	bool TakeSunMoney(int theAmount);
 
 	/// @brief Can we take an amount of Sun from the Bank
 	/// @param theAmount The amount of Sun to get
-	/// @return True if there is enough Sun
+	/// @return True if there is enough Sun, false otherwise
 	bool CanTakeSunMoney(int theAmount);
 
 	/// @brief Pause the gameplay
@@ -403,41 +403,41 @@ class Board : public Widget, public ButtonListener
 	void TryToSaveGame();
 
 	/// @brief Can we save the game
-	/// @return True if the game can be saved
+	/// @return True if the game can be saved, false otherwise
 	bool NeedSaveGame();
 
 	/// @brief Can the row have Zombies
 	/// @param theRow The row to check
-	/// @return True if the row can have Zombies
+	/// @return True if the row can have Zombies, false otherwise
 	bool RowCanHaveZombies(int theRow);
 
 	/// @brief Delete all arrays that the board has
 	void ProcessDeleteQueue();
 
-	/// @return True if the player chooses the SeedPackets
+	/// @return True if the player chooses the SeedPackets, false otherwise
 	bool ChooseSeedsOnCurrentLevel();
 
 	/// @return The max number of plants in the SeedBank
 	int GetNumSeedsInBank();
 
 	/// @brief Is the stage during the Night
-	/// @return True if the stage is during the Night
+	/// @return True if the stage is during the Night, false otherwise
 	bool StageIsNight();
 
 	/// @brief Does the stage have a Pool
-	/// @return True if the stage has a Pool
+	/// @return True if the stage has a Pool, false otherwise
 	bool StageHasPool();
 
 	/// @brief Does the stage have 6 Rows
-	/// @return True if the stage has 6 Rows
+	/// @return True if the stage has 6 Rows, false otherwise
 	bool StageHas6Rows();
 
 	/// @brief Does the stage have Fog
-	/// @return True if the stage has Fog
+	/// @return True if the stage has Fog, false otherwise
 	bool StageHasFog();
 
 	/// @brief Does the stage have GraveStones
-	/// @return True if the Stage has GraveStones
+	/// @return True if the Stage has GraveStones, false otherwise
 	bool StageHasGraveStones();
 
 	/// @return The translated Grid X
@@ -588,7 +588,7 @@ class Board : public Widget, public ButtonListener
 	void DrawIce(Graphics *g, int theGridY);
 
 	/// @brief Is the grid space covered in Ice
-	/// @return True if the grid at coordinates theGridX and theGridY is ice
+	/// @return True if the grid at coordinates theGridX and theGridY is ice, false otherwise
 	bool IsIceAt(int theGridX, int theGridY);
 
 	/// @brief Get the ID of a Zombie
@@ -619,7 +619,7 @@ class Board : public Widget, public ButtonListener
 	int GetIceZPos(int theRow);
 
 	/// @brief Can we spawn a BobsledZombie
-	/// @return True if the requirments are met
+	/// @return True if the requirments are met, false otherwise
 	bool CanAddBobSled();
 
 	/// @brief Shake the board on the X and Y axis
@@ -630,35 +630,35 @@ class Board : public Widget, public ButtonListener
 	/// @brief Count every non-triggered lawnmower
 	int CountUntriggerLawnMowers();
 
-	/// @return True if we find a new Zombie
+	/// @return True if we find a new Zombie, false otherwise
 	/// @param theZombie Reference to a Zombie to iterate
 	bool IterateZombies(Zombie *&theZombie);
 
-	/// @return True if we find a new Plant
+	/// @return True if we find a new Plant, false otherwise
 	/// @param thePlant Reference to a Plant to iterate
 	bool IteratePlants(Plant *&thePlant);
 	
-	/// @return True if we find a new Projectile
+	/// @return True if we find a new Projectile, false otherwise
 	/// @param theProjectile Reference to a Projectile to iterate
 	bool IterateProjectiles(Projectile *&theProjectile);
 
-	/// @return True if we find a new Coin
+	/// @return True if we find a new Coin, false otherwise
 	/// @param theCoin Reference to a Coin to iterate
 	bool IterateCoins(Coin *&theCoin);
 
-	/// @return True if we find a new LawnMower
+	/// @return True if we find a new LawnMower, false otherwise
 	/// @param theLawnMower Reference to a LawnMower to iterate
 	bool IterateLawnMowers(LawnMower *&theLawnMower);
 
-	/// @return True if we find a new Particle System
+	/// @return True if we find a new Particle System, false otherwise
 	/// @param theParticle Reference to a Particle to iterate
 	bool IterateParticles(TodParticleSystem *&theParticle);
 
-	/// @return True if we find a new Reanimation
+	/// @return True if we find a new Reanimation, false otherwise
 	/// @param theReanimation Reference to a Reanimation to iterate
 	bool IterateReanimations(Reanimation *&theReanimation);
 
-	/// @return True if we find a new GridItem
+	/// @return True if we find a new GridItem, false otherwise
 	/// @param theGridItem Reference to a GridItem to iterate
 	bool IterateGridItems(GridItem *&theGridItem);
 
@@ -670,7 +670,7 @@ class Board : public Widget, public ButtonListener
 	Zombie *AddZombieInRow(ZombieType theZombieType, int theRow, int theFromWave);
 
 	/// @brief Is the grid space inside the Pool
-	/// @return True if the grid at coordinates are in a Pool Square
+	/// @return True if the grid at coordinates are in a Pool Square, false otherwise
 	bool IsPoolSquare(int theGridX, int theGridY);
 
 	/// @brief Initiates the level's zombie waves
@@ -722,7 +722,7 @@ class Board : public Widget, public ButtonListener
 	/// @return UmbrellaLeaf or nullptr if it doesn't exist
 	Plant *FindUmbrellaPlant(int theGridX, int theGridY);
 
-	/// @return True if theZombieType can spawn in theLevel
+	/// @return True if theZombieType can spawn in theLevel, false otherwise
 	static bool CanZombieSpawnOnLevel(ZombieType theZombieType, int theLevel);
 
 	bool IsZombieWaveDistributionOk();
@@ -770,7 +770,7 @@ class Board : public Widget, public ButtonListener
 
 	/// @brief Is the specified ZombieType Pool-Only
 	/// @param theZombieType The ZombieType to check
-	/// @return True if the ZombieType can only appear in the Pool
+	/// @return True if the ZombieType can only appear in the Pool, false otherwise
 	static bool IsZombieTypePoolOnly(ZombieType theZombieType);
 
 	/// @brief Try to drop a loot piece
@@ -786,7 +786,7 @@ class Board : public Widget, public ButtonListener
 	/// @return The LawnMower or nullptr if it doesn't exist
 	LawnMower *GetBottomLawnMower();
 
-	/// @return True if we can drop loot
+	/// @return True if we can drop loot, false otherwise
 	bool CanDropLoot();
 
 	/// @return Get the ZombieType introduced in this level or ZombieType::ZOMBIE_INVALID if none
@@ -803,7 +803,7 @@ class Board : public Widget, public ButtonListener
 	/// @brief Announce a new incoming wave
 	void NextWaveComing();
 
-	/// @return True if a BungeeZombie is targetting this cell
+	/// @return True if a BungeeZombie is targetting this cell, false otherwise
 	/// @param theGridX The Grid X Coordinate
 	/// @param theGridY The Grid Y Coordinate
 	bool BungeeIsTargetingCell(int theGridX, int theGridY);
@@ -852,7 +852,7 @@ class Board : public Widget, public ButtonListener
 	/// @brief Can the grid coordinate have a GraveStone
 	/// @param theGridX The X grid coordinate
 	/// @param theGridY The Y grid coordinate
-	/// @return True if the grid can have a GraveStone
+	/// @return True if the grid can have a GraveStone, false otherwise
 	bool CanAddGraveStoneAt(int theGridX, int theGridY);
 
 	/// @brief Update all GridItems
@@ -867,7 +867,7 @@ class Board : public Widget, public ButtonListener
 	/// @return Number of Survival Flags completed
 	int GetSurvivalFlagsCompleted();
 
-	/// @return True if the level can have a progress bar
+	/// @return True if the level can have a progress bar, false otherwise
 	bool HasProgressMeter();
 
 	/// @brief Update the Board's Cursor
@@ -881,17 +881,17 @@ class Board : public Widget, public ButtonListener
 
 	int CountPlantByType(SeedType theSeedType);
 
-	/// @return True if the SeedType can be planted
+	/// @return True if the SeedType can be planted, false otherwise
 	/// @param theSeedType The SeedType to check
 	bool PlantingRequirementsMet(SeedType theSeedType);
 
-	/// @return True if the CobCannon has the minimum requirements to be planted
+	/// @return True if the CobCannon has the minimum requirements to be planted, false otherwise
 	bool HasValidCobCannonSpot();
 
-	/// @return True if theGridX and theGridY are valid CobCannon coordinates
+	/// @return True if theGridX and theGridY are valid CobCannon coordinates, false otherwise
 	bool IsValidCobCannonSpot(int theGridX, int theGridY);
 
-	/// @return True if theGridX and theGridY can form a set of CobCannonCoordinates
+	/// @return True if theGridX and theGridY can form a set of CobCannon Coordinates, false otherwise
 	bool IsValidCobCannonSpotHelper(int theGridX, int theGridY);
 
 	/// @brief Shoot the CobCannon if it fits the requirements
@@ -917,7 +917,7 @@ class Board : public Widget, public ButtonListener
 	/// @return The width in pixels
 	int GetSeedBankExtraWidth();
 
-	/// @return True if the given wave index is a flag wave.
+	/// @return True if the given wave index is a flag wave, false otherwise
 	bool IsFlagWave(int theWaveNumber);
 
 	/// @brief Draw the top layer of the door
@@ -937,11 +937,11 @@ class Board : public Widget, public ButtonListener
 	int GetLiveGargantuarCount();
 
 	/// @brief Is the SeedBank a ConveyorBelt
-	/// @return True if the level has a ConveyorBelt
+	/// @return True if the level has a ConveyorBelt, false otherwise
 	bool HasConveyorBeltSeedBank();
 
 	/// @brief Does the stage have a roof
-	/// @return True if the stage has a roof
+	/// @return True if the stage has a roof, false otherwise
 	bool StageHasRoof();
 
 	/// @brief Spawn the end-flag Zombies from the pool
@@ -1004,7 +1004,7 @@ class Board : public Widget, public ButtonListener
 	/// @param thePlant [OPTIONAL] Plant pointer for additional offsets
 	void DoPlantingEffects(int theGridX, int theGridY, Plant *thePlant);
 
-	/// @return True if it's the final Survival Stage
+	/// @return True if it's the final Survival Stage, false otherwise, false otherwise
 	bool IsFinalSurvivalStage();
 
 	/// @brief Save the survival score to the current profile
@@ -1060,7 +1060,7 @@ class Board : public Widget, public ButtonListener
 	void InitLawnMowers();
 
 	/// @brief Is a Plant currently in the Cursor
-	/// @return True if we have a Plant
+	/// @return True if we have a Plant, false otherwise
 	bool IsPlantInCursor();
 
 	/// @brief Highlight the Plants at mouse coordinates if they fit the requirements
@@ -1085,7 +1085,7 @@ class Board : public Widget, public ButtonListener
 	void ClearAdviceImmediately();
 
 	/// @return Is the current Vasebreaker Stage the final one
-	/// @return True if it's the final Vasebreaker Stage
+	/// @return True if it's the final Vasebreaker Stage, false otherwise
 	bool IsFinalScaryPotterStage();
 
 	/// @brief Force the display of an advice
@@ -1108,10 +1108,14 @@ class Board : public Widget, public ButtonListener
 	/// @return ZenTool or nullptr if it doesn't exist
 	GridItem *GetZenToolAt(int theGridX, int theGridY);
 
-	/// @return True if the Plant is in the Gold Watering Can's range
+	/// @brief Is the Plant in the Gold Wantering Can's Range
+	/// @param theMouseX The X coordinate
+	/// @param theMouseY The Y coordinate
+	/// @param thePlant The Plant to check
+	/// @return True if the Plant is in the Gold Watering Can's range, false otherwise
 	bool IsPlantInGoldWateringCanRange(int theMouseX, int theMouseY, Plant *thePlant);
 
-	/// @return True if Zombies can walk from the right
+	/// @return True if Zombies can walk from the right, false otherwise
 	bool StageHasZombieWalkInFromRight();
 
 	/// @brief Place a rake on the Board if has one purchased
@@ -1122,7 +1126,7 @@ class Board : public Widget, public ButtonListener
 	GridItem *GetRake();
 
 	/// @brief Did Crazy Dave finish talking in Vasebreaker
-	/// @return True if CrazyDave is talking during a Vasebreaker level
+	/// @return True if CrazyDave is talking during a Vasebreaker level, false otherwise
 	bool IsScaryPotterDaveTalking();
 
 	/// @brief Get the Zombie that had entered the house
@@ -1144,11 +1148,11 @@ class Board : public Widget, public ButtonListener
 	GridItem *GetGridItemAt(GridItemType theGridItemType, int theGridX, int theGridY);
 
 	/// @brief Does the progress meter can have flags
-	/// @return True if the progress meter can have flags
+	/// @return True if the progress meter can have flags, false otherwise
 	bool ProgressMeterHasFlags();
 
 	/// @brief Is the current stage the final LastStand stage
-	/// @return True if the stage is the final LastStand stage
+	/// @return True if the stage is the final LastStand stage, false otherwise
 	bool IsLastStandFinalStage();
 
 	/// @brief Get the number of spawn waves per flag
@@ -1162,7 +1166,7 @@ class Board : public Widget, public ButtonListener
 
 	/// @brief Does the Plant's price increase dynamically
 	/// @param theSeedType The SeedType to check
-	/// @return True if the Plant's price increase
+	/// @return True if the Plant's price increase, false otherwise
 	bool PlantUsesAcceleratedPricing(SeedType theSeedType);
 
 	/// @brief Freeze the effects and animation on the Board for animations
@@ -1221,7 +1225,7 @@ class Board : public Widget, public ButtonListener
 	/// @param x The X coordinate
 	/// @param y The Y coordinate
 	/// @param theHitResult The HitResult to fill with data
-	/// @return True if a Plant is present at coordinates
+	/// @return True if a Plant is present at coordinates, false otherwise
 	bool MouseHitTestPlant(int x, int y, HitResult *theHitResult);
 
 	Reanimation *CreateRakeReanim(float theRakeX, float theRakeY, int theRenderOrder);
@@ -1237,11 +1241,11 @@ class Board : public Widget, public ButtonListener
 	int GetGraveStonesCount();
 
 	/// @brief Can we repick after the Survival Stage
-	/// @return True if we can repick our seeds
+	/// @return True if we can repick our seeds, false otherwise
 	bool IsSurvivalStageWithRepick();
 
 	/// @brief Can we repick/replant after the LastStand Stage
-	/// @return True if we can repick/replant our seeds
+	/// @return True if we can repick/replant our seeds, false otherwise
 	bool IsLastStandStageWithRepick();
 
 	/// @brief Process a KeyCode for typing checks
@@ -1254,7 +1258,7 @@ class Board : public Widget, public ButtonListener
 
 	/// @brief Is the specified ZombieType spawned only
 	/// @param theZombieType The ZombieType to check
-	/// @return True if the ZombieType can only be spawned by other Zombies
+	/// @return True if the ZombieType can only be spawned by other Zombies, false otherwise
 	static bool IsZombieTypeSpawnedOnly(ZombieType theZombieType);
 };
 extern bool gShownMoreSunTutorial;
@@ -1270,7 +1274,7 @@ int GetRectOverlap(const Rect &rect1, const Rect &rect2);
 /// @param theCircleY The circle's Y coordinate
 /// @param theRadius The circle's radius
 /// @param theRect The Rectangle
-/// @return The maximum overlap between the 2 Rectangles
+/// @return True if the Rectangle and The Circle overlap, false otherwise
 bool GetCircleRectOverlap(int theCircleX, int theCircleY, int theRadius, const Rect &theRect);
 
 /// @brief Setup the Board's flags for the Player

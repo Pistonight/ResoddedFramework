@@ -47,7 +47,7 @@ class AwardScreen : public Widget
 	AwardScreen(LawnApp *theApp, AwardType theAwardType);
 	virtual ~AwardScreen();
 
-	/*inline*/ bool IsPaperNote();
+	bool IsPaperNote();
 	virtual void Resize(int theX, int theY, int theWidth, int theHeight)
 	{
 		Widget::Resize(theX, theY, theWidth, theHeight);

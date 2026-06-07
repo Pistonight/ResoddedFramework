@@ -149,7 +149,7 @@ class LawnApp : public SexyApp
 	virtual ~LawnApp();
 
 	/// @brief Close the Options Dialog
-	/// @return True if it exists
+	/// @return True if it exists, false otherwise
 	bool KillNewOptionsDialog();
 
 	/// @brief Handle the gaining of the window's focus
@@ -187,12 +187,12 @@ class LawnApp : public SexyApp
 	/// @brief Try to open an URL in the web browser
 	/// @param theURL The URL to access
 	/// @param shutdownOnOpen Should we shutdown on opening
-	/// @return True if we opened the URL
+	/// @return True if we opened the URL, false otherwise
 	virtual bool OpenURL(const std::string &theURL, bool shutdownOnOpen);
 
 	/// @brief Handle the pressing of a debug key
 	/// @param theKey The key pressed
-	/// @return True if the key press did something
+	/// @return True if the key press did something, false otherwise
 	virtual bool DebugKeyDown(int theKey);
 
 	/// @brief Handle the parsing of a command parameter
@@ -280,7 +280,7 @@ class LawnApp : public SexyApp
 	void StartPlaying();
 
 	/// @brief Try to load a game from the savefile
-	/// @return True if it loaded successfully
+	/// @return True if it loaded successfully, false otherwise
 	bool TryLoadGame();
 
 	/// @brief Create a brand new game
@@ -327,7 +327,7 @@ class LawnApp : public SexyApp
 	void DoRegisterError();
 
 	/// @brief Can open the Registering Dialog (Unimplemented)
-	/// @return True if we can register
+	/// @return True if we can register, false otherwise
 	bool CanDoRegisterDialog();
 
 	/// @brief Write the PlayerInfo to Disk
@@ -402,7 +402,7 @@ class LawnApp : public SexyApp
 
 	/// @brief Destroy the dialog
 	/// @param theDialogId The ID of the dialog (determines the behavior on closing and opening)
-	/// @return True if it was destroyed succesfully
+	/// @return True if it was destroyed succesfully, false otherwise
 	virtual bool KillDialog(int theDialogId);
 
 	/// @brief Handle the opening of a modal dialog
@@ -415,11 +415,11 @@ class LawnApp : public SexyApp
 	virtual void PreDisplayHook();
 
 	/// @brief Execute extra code before changing the working directory
-	/// @return True if we abort the changing of the working directory
+	/// @return True if we abort the changing of the working directory, false otherwise
 	virtual bool ChangeDirHook(const char *theIntendedPath);
 
 	/// @brief Do we need to register the game (Unimplemented)
-	/// @return True if the game needs to be registered
+	/// @return True if the game needs to be registered, false otherwise
 	virtual bool NeedRegister();
 
 	/// @brief Update the registering info (Unimplemented)
@@ -440,23 +440,23 @@ class LawnApp : public SexyApp
 	virtual bool UpdateApp();
 
 	/// @brief Are we playing Adventure Mode
-	/// @return True if the GameMode is Adventure
+	/// @return True if the GameMode is Adventure, false otherwise
 	bool IsAdventureMode();
 
 	/// @brief Are we playing a Survival Mode
-	/// @return True if the GameMode is a Survival Mode
+	/// @return True if the GameMode is a Survival Mode, false otherwise
 	bool IsSurvivalMode();
 
 	/// @brief Are we playing a Continuous Challenge
-	/// @return True if the GameMode is a Continuous Challenge
+	/// @return True if the GameMode is a Continuous Challenge, false otherwise
 	bool IsContinuousChallenge();
 
 	/// @brief Are we playing a Art Challenge
-	/// @return True if the GameMode is a Art Challenge
+	/// @return True if the GameMode is a Art Challenge, false otherwise
 	bool IsArtChallenge();
 
 	/// @brief Do we need to pause the game
-	/// @return True if we need to pause the game
+	/// @return True if we need to pause the game, false otherwise
 	bool NeedPauseGame();
 
 	/// @brief Show an error that came from the ResourceManager
@@ -587,54 +587,54 @@ class LawnApp : public SexyApp
 
 	/// @brief Check if we have a SeedType
 	/// @param theSeedType The SeedType to check
-	/// @return True if we have the SeedType
+	/// @return True if we have the SeedType, false otherwise
 	bool HasSeedType(SeedType theSeedType);
 
 	/// @brief Check if we have a SeedType
 	/// @param theSeedType The SeedType to check
-	/// @return True if we have the SeedType
+	/// @return True if we have the SeedType, false otherwise
 	bool SeedTypeAvailable(SeedType theSeedType);
 
 	/// @brief End the Level
 	void EndLevel();
 
 	/// @brief Are we playing an Ice Demo
-	/// @return True if the game is an Ice Demo
+	/// @return True if the game is an Ice Demo, false otherwise
 	inline bool IsIceDemo()
 	{
 		return false;
 	}
 
 	/// @brief Is the current level CanYouDigIt
-	/// @return True if the GameMode is CanYouDigIt
+	/// @return True if the GameMode is CanYouDigIt, false otherwise
 	bool IsShovelLevel();
 
 	/// @brief Is the current level a WallnutBowling
-	/// @return True if the GameMode is a WallnutBowling
+	/// @return True if the GameMode is a WallnutBowling, false otherwise
 	bool IsWallnutBowlingLevel();
 
 	/// @brief Is the current level a x-10
-	/// @return True if the GameMode is a x-10
+	/// @return True if the GameMode is a x-10, false otherwise
 	bool IsMiniBossLevel();
 
 	/// @brief Is the current level a SlotMachine level
-	/// @return True if the GameMode is a SlotMachine level
+	/// @return True if the GameMode is a SlotMachine level, false otherwise
 	bool IsSlotMachineLevel();
 
 	/// @brief Is the current level a LittleTrouble level
-	/// @return True if the GameMode is a LittleTrouble level
+	/// @return True if the GameMode is a LittleTrouble level, false otherwise
 	bool IsLittleTroubleLevel();
 
 	/// @brief Is the current level a StormyNight level
-	/// @return True if the GameMode is a StormyNight level
+	/// @return True if the GameMode is a StormyNight level, false otherwise
 	bool IsStormyNightLevel();
 
 	/// @brief Is the current level a FinalBoss level
-	/// @return True if the GameMode is a FinalBoss level
+	/// @return True if the GameMode is a FinalBoss level, false otherwise
 	bool IsFinalBossLevel();
 
 	/// @brief Is the current level a BungeeBlitz level
-	/// @return True if the GameMode is a BungeeBlitz level
+	/// @return True if the GameMode is a BungeeBlitz level, false otherwise
 	bool IsBungeeBlitzLevel();
 	
 	/// @brief Get the SeedType awarded in a level
@@ -648,20 +648,20 @@ class LawnApp : public SexyApp
 	SexyString GetCrazyDaveText(int theMessageIndex);
 
 	/// @brief Can we show the Almanac
-	/// @return True if we have the Almanac
+	/// @return True if we have the Almanac, false otherwise
 	bool CanShowAlmanac();
 
 	/// @brief Is the savefile's level a light level
-	/// @return True if we are on a night level
+	/// @return True if we are on a night level, false otherwise
 	bool IsNight();
 
 	/// @brief Can we show the Store
-	/// @return True if we have the Store
+	/// @return True if we have the Store, false otherwise
 	bool CanShowStore();
 
 	/// @brief Did we beat the Challenge
 	/// @param theGameMode The GameMode to check
-	/// @return True if we have beaten the Challenge
+	/// @return True if we have beaten the Challenge, false otherwise
 	bool HasBeatenChallenge(GameMode theGameMode);
 
 	/// @brief Get a PottedPlant in the ZenGarden from a specific index
@@ -671,29 +671,29 @@ class LawnApp : public SexyApp
 
 	/// @brief Is the GameMode a Survival Normal
 	/// @param theGameMode The GameMode to check
-	/// @return True if the GameMode is a Survival Normal
+	/// @return True if the GameMode is a Survival Normal, false otherwise
 	static bool IsSurvivalNormal(GameMode theGameMode);
 
 	/// @brief Is the GameMode a Survival Hard
 	/// @param theGameMode The GameMode to check
-	/// @return True if the GameMode is a Survival Hard
+	/// @return True if the GameMode is a Survival Hard, false otherwise
 	static bool IsSurvivalHard(GameMode theGameMode);
 
 	/// @brief Is the GameMode a Survival Endless
 	/// @param theGameMode The GameMode to check
-	/// @return True if the GameMode is a Survival Endless
+	/// @return True if the GameMode is a Survival Endless, false otherwise
 	static bool IsSurvivalEndless(GameMode theGameMode);
 
 	/// @brief Have we finished Adventure Mode
-	/// @return True if we finished Adventure atleast once
+	/// @return True if we finished Adventure atleast once, false otherwise
 	bool HasFinishedAdventure();
 
 	/// @brief Is the first time we play Adventure Mode
-	/// @return True if this is our first playthrough of Adventure Mode
+	/// @return True if this is our first playthrough of Adventure Mode, false otherwise
 	bool IsFirstTimeAdventureMode();
 
-	/// @brief
-	/// @return 
+	/// @brief Can we spawn the YetiZombie
+	/// @return True if we meet the spawning conditions, false otherwise
 	bool CanSpawnYetis();
 
 	/// @brief Make Crazy Dave enter from the left
@@ -759,7 +759,7 @@ class LawnApp : public SexyApp
 	int GetNumTrophies(ChallengePage thePage);
 
 	/// @brief Have we earned the Gold Sunflower Trophy
-	/// @return True if we met the requirements to earn it
+	/// @return True if we met the requirements to earn it, false otherwise
 	bool EarnedGoldTrophy();
 
 	/// @brief Is the game registered
@@ -784,41 +784,41 @@ class LawnApp : public SexyApp
 	}
 
 	/// @brief Is the current level a Vasebreaker
-	/// @return True if we are playing a Vasebreaker level
+	/// @return True if we are playing a Vasebreaker level, false otherwise
 	bool IsScaryPotterLevel();
 
 	/// @brief Is the GameMode an Endless IZombie
 	/// @param theGameMode The GameMode to check
-	/// @return True if the GameMode is an Endless IZombie
+	/// @return True if the GameMode is an Endless IZombie, false otherwise
 	static bool IsEndlessIZombie(GameMode theGameMode);
 
 	/// @brief Is the GameMode an Endless Vasebreaker
 	/// @param theGameMode The GameMode to check
-	/// @return True if the GameMode is an Endless Vasebreaker
+	/// @return True if the GameMode is an Endless Vasebreaker, false otherwise
 	static bool IsEndlessScaryPotter(GameMode theGameMode);
 
 	/// @brief Is the current level a Squirrel Level
-	/// @return True if we are playing the Squirrel Level
+	/// @return True if we are playing the Squirrel Level, false otherwise
 	bool IsSquirrelLevel();
 
 	/// @brief Is the current level an IZombie
-	/// @return True if we are playing an IZombie level
+	/// @return True if we are playing an IZombie level, false otherwise
 	bool IsIZombieLevel();
 
 	/// @brief Is the current level a WhackAZombie
-	/// @return True if we are playing a WhackAZombie level
+	/// @return True if we are playing a WhackAZombie level, false otherwise
 	bool IsWhackAZombieLevel();
 
 	/// @brief Is the current level a Puzzle
-	/// @return True if we are playing a Puzzle Level
+	/// @return True if we are playing a Puzzle Level, false otherwise
 	bool IsPuzzleMode();
 
 	/// @brief Is the current level a Challenge
-	/// @return True if we are playing a Challenge Level
+	/// @return True if we are playing a Challenge Level, false otherwise
 	bool IsChallengeMode();
 
 	/// @brief Can we show the Zen Garden
-	/// @return True if we have the Zen Garden unlocked
+	/// @return True if we have the Zen Garden unlocked, false otherwise
 	bool CanShowZenGarden();
 
 	/// @brief Get the String version of some Money
@@ -826,7 +826,7 @@ class LawnApp : public SexyApp
 	static SexyString GetMoneyString(int theAmount);
 
 	/// @brief Advance to Crazy Dave's next message
-	/// @return True if Crazy Dave's text continued
+	/// @return True if Crazy Dave's text continued, false otherwise
 	bool AdvanceCrazyDaveText();
 
 	/// @brief End Crazy Dave's handing animation
@@ -846,7 +846,7 @@ class LawnApp : public SexyApp
 	void BetaAddFile(std::list<std::string> &theUploadFileList, std::string theFileName, std::string theShortName);
 
 	/// @brief Can we Pause the game
-	/// @return True if we can Pause
+	/// @return True if we can Pause, false otherwise
 	bool CanPauseNow();
 
 	/// @brief Get the trophy count needed to unlock the Gold Sunflower Trophy
@@ -873,7 +873,7 @@ class LawnApp : public SexyApp
 	void CrazyDaveStopSound();
 
 	/// @brief Is the current game TrailStage locked
-	/// @return True if we are TrialLocked
+	/// @return True if we are TrialLocked, false otherwise
 	bool IsTrialStageLocked();
 
 	/// @brief End the Zen Garden tutorial
@@ -883,19 +883,19 @@ class LawnApp : public SexyApp
 	bool UpdatePlayerProfileForFinishingLevel();
 
 	/// @brief Does a SaveFile exists for adventure
-	/// @return True if we have one
+	/// @return True if we have one, false otherwise
 	bool SaveFileExists();
 
 	/// @brief Can we use PinataMode
-	/// @return True if we met the requirements
+	/// @return True if we met the requirements, false otherwise
 	bool CanDoPinataMode();
 
 	/// @brief Can we use DanceMode
-	/// @return True if we met the requirements
+	/// @return True if we met the requirements, false otherwise
 	bool CanDoDanceMode();
 
 	/// @brief Can we use DaisyMode
-	/// @return True if we met the requirements
+	/// @return True if we met the requirements, false otherwise
 	bool CanDoDaisyMode();
 
 	/// @brief Change screen settings
@@ -917,11 +917,11 @@ class LawnApp : public SexyApp
 SexyString LawnGetCurrentLevelName();
 
 /// @brief Did the game request to shutdown
-/// @return True if we have requested a shutdown
+/// @return True if we have requested a shutdown, false otherwise
 bool LawnGetCloseRequest();
 
 /// @brief Did we use Cheat Keys
-/// @return True if we used any Cheat Keys
+/// @return True if we used any Cheat Keys, false otherwise
 bool LawnHasUsedCheatKeys();
 
 /// @brief External function that calls the BetaSubmit
