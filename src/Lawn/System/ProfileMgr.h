@@ -36,11 +36,11 @@ class ProfileMgr
 	ProfileMgr()
 	{
 		Clear();
-	} //0x46A6E0
+	}
 	virtual ~ProfileMgr()
 	{
 		;
-	} //0x46A780
+	}
 
 	/*inline*/ void Clear();
 	void Load();

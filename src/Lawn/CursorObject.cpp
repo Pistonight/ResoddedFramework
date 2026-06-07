@@ -7,7 +7,6 @@
 #include "../Sexy.TodLib/Reanimator.h"
 #include "../SexyAppFramework/WidgetManager.h"
 
-//0x438640
 CursorObject::CursorObject()
 {
 	mType = SeedType::SEED_NONE;
@@ -36,7 +35,6 @@ CursorObject::CursorObject()
 	mHeight = 80;
 }
 
-//0x438780
 void CursorObject::Update()
 {
 	if (mApp->mGameScene != GameScenes::SCENE_PLAYING && !mBoard->mCutScene->IsInShovelTutorial())
@@ -73,7 +71,6 @@ void CursorObject::Die()
 	mApp->RemoveReanimation(mReanimCursorID);
 }
 
-//0x438820
 void CursorObject::Draw(Graphics *g)
 {
 	switch (mCursorType)
@@ -222,7 +219,6 @@ void CursorObject::Draw(Graphics *g)
 	}
 }
 
-//0x438D50
 CursorPreview::CursorPreview()
 {
 	mX = 0;
@@ -234,7 +230,6 @@ CursorPreview::CursorPreview()
 	mHeight = 80;
 }
 
-//0x438DA0
 void CursorPreview::Update()
 {
 	if (mApp->mGameScene != GameScenes::SCENE_PLAYING && !mBoard->mCutScene->IsInShovelTutorial())
@@ -276,7 +271,6 @@ void CursorPreview::Update()
 	mVisible = false;
 }
 
-//0x438EB0
 void CursorPreview::Draw(Graphics *g)
 {
 	SeedType aSeedType = mBoard->GetSeedTypeInCursor();

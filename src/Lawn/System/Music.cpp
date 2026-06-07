@@ -9,7 +9,6 @@
 
 using namespace Sexy;
 
-//0x45A260
 Music::Music()
 {
 	mApp = (LawnApp *)gSexyAppBase;
@@ -32,9 +31,8 @@ Music::Music()
 	mFadeOutDuration = 0;
 }
 
-MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES]; //0x6A9ED0
+MusicFileData gMusicFileData[MusicFile::NUM_MUSIC_FILES];
 
-//0x45A2C0
 bool Music::TodLoadMusic(MusicFile theMusicFile, const std::string &theFileName)
 {
 	HMUSIC aHMusic = NULL;
@@ -94,7 +92,6 @@ bool Music::TodLoadMusic(MusicFile theMusicFile, const std::string &theFileName)
 	return true;
 }
 
-//0x45A6C0
 void Music::SetupMusicFileForTune(MusicFile theMusicFile, MusicTune theMusicTune)
 {
 	int aTrackCount = 0;
@@ -229,14 +226,12 @@ void Music::LoadSong(MusicFile theMusicFile, const std::string &theFileName)
 	}
 }
 
-//0x45A8A0
 void Music::MusicTitleScreenInit()
 {
 	LoadSong(MusicFile::MUSIC_FILE_MAIN_MUSIC, "sounds/mainmusic.mo3");
 	MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 }
 
-//0x45A980
 void Music::MusicInit()
 {
 #ifdef _DEBUG
@@ -256,7 +251,6 @@ void Music::MusicInit()
 #endif
 }
 
-//0x45AAC0
 void Music::MusicLoadCreditsSong()
 {
 #ifndef _DEBUG
@@ -267,7 +261,6 @@ void Music::MusicLoadCreditsSong()
 #endif
 }
 
-//0x45ABB0
 void Music::StopAllMusic()
 {
 	if (mMusicInterface != nullptr)
@@ -294,7 +287,6 @@ void Music::StopAllMusic()
 	mFadeOutCounter = 0;
 }
 
-//0x45AC20
 HMUSIC Music::GetBassMusicHandle(MusicFile theMusicFile)
 {
 	BassMusicInterface *aBass = (BassMusicInterface *)mMusicInterface;
@@ -303,7 +295,6 @@ HMUSIC Music::GetBassMusicHandle(MusicFile theMusicFile)
 	return anItr->second.mHMusic;
 }
 
-//0x45AC70
 void Music::PlayFromOffset(MusicFile theMusicFile, int theOffset, double theVolume)
 {
 	BassMusicInterface *aBass = (BassMusicInterface *)mMusicInterface;
@@ -331,7 +322,6 @@ void Music::PlayFromOffset(MusicFile theMusicFile, int theOffset, double theVolu
 	}
 }
 
-//0x45ADB0
 void Music::PlayMusic(MusicTune theMusicTune, int theOffset, int theDrumsOffset)
 {
 	if (mMusicDisabled)
@@ -502,7 +492,6 @@ unsigned long Music::GetMusicPosition(MusicFile theMusicFile)
 	return ((BassMusicInterface *)mMusicInterface)->GetMusicPosition((int)theMusicFile);
 }
 
-//0x45B1B0
 void Music::MusicResyncChannel(MusicFile theMusicFileToMatch, MusicFile theMusicFileToSync)
 {
 	unsigned int aPosToMatch = GetMusicOrder(theMusicFileToMatch);
@@ -537,7 +526,6 @@ void Music::MusicResync()
 	}
 }
 
-//0x45B240
 void Music::StartBurst()
 {
 	if (mApp->mGameMode == GameMode::GAMEMODE_INTRO) //Intro doesn't have burst
@@ -558,7 +546,6 @@ void Music::FadeOut(int theFadeOutDuration)
 	}
 }
 
-//0x45B260
 void Music::UpdateMusicBurst()
 {
 	if (mApp->mBoard == nullptr)
@@ -855,7 +842,6 @@ void Music::UpdateBurstAudio()
 	}
 }
 
-//0x45B670
 void Music::MusicUpdate()
 {
 	if (mFadeOutCounter > 0)
@@ -878,7 +864,6 @@ void Music::MusicUpdate()
 	}
 }
 
-//0x45B750
 void Music::MakeSureMusicIsPlaying(MusicTune theMusicTune)
 {
 	if (mCurMusicTune != theMusicTune)
@@ -888,7 +873,6 @@ void Music::MakeSureMusicIsPlaying(MusicTune theMusicTune)
 	}
 }
 
-//0x45B770
 void Music::StartGameMusic()
 {
 	TOD_ASSERT(mApp->mBoard);
@@ -921,7 +905,6 @@ void Music::StartGameMusic()
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_DAY_GRASSWALK);
 }
 
-//0x45B930
 void Music::GameMusicPause(bool thePause)
 {
 	if (thePause)

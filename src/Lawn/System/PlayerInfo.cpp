@@ -16,7 +16,6 @@ PlayerInfo::PlayerInfo()
 	Reset();
 }
 
-//0x468310
 void PlayerInfo::SyncSummary(ProfileSyncer &theSync)
 {
 	theSync.SyncString("name", mName);
@@ -24,7 +23,6 @@ void PlayerInfo::SyncSummary(ProfileSyncer &theSync)
 	theSync.SyncUnsignedLong("id", mId);
 }
 
-//0x468390
 void PlayerInfo::SyncDetails(ProfileSyncer &theSync)
 {
 	if (theSync.mReading)
@@ -71,7 +69,6 @@ void PlayerInfo::SyncDetails(ProfileSyncer &theSync)
 	TOD_ASSERT(mNumZombatars <= MAX_NUM_ZOMBATARS);
 }
 
-//0x469400
 void PlayerInfo::LoadDetails()
 {
 	try
@@ -102,7 +99,6 @@ void PlayerInfo::LoadDetails()
 	}
 }
 
-//0x4695F0
 void PlayerInfo::SaveDetails()
 {
 	MkDir(GetAppDataFolder() + "profiles");
@@ -114,7 +110,6 @@ void PlayerInfo::SaveDetails()
 		outFile << aSync.mJSON.dump(4);
 }
 
-//0x469810
 void PlayerInfo::DeleteUserFiles()
 {
 	std::string aFilename = GetAppDataFolder() + StrFormat("profiles/user%d.json", mId);
@@ -131,7 +126,6 @@ void PlayerInfo::DeleteUserFiles()
 	}
 }
 
-//0x469940
 void PlayerInfo::Reset()
 {
 	mLevel = 1;
@@ -188,7 +182,6 @@ void PlayerInfo::ResetChallengeRecord(GameMode theGameMode)
 	mChallengeRecords[aGameMode] = 0;
 }
 
-//0x469A00
 void PottedPlant::InitializePottedPlant(SeedType theSeedType)
 {
 	memset(this, 0, sizeof(PottedPlant));

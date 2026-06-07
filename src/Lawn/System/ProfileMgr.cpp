@@ -11,7 +11,6 @@
 using namespace Sexy;
 static int gProfileVersion = 14;
 
-//0x46A7C0
 PlayerInfo *ProfileMgr::GetAnyProfile()
 {
 	if (mProfileMap.size() == 0)
@@ -23,7 +22,6 @@ PlayerInfo *ProfileMgr::GetAnyProfile()
 	return aPlayerInfo;
 }
 
-//0x46A7F0
 void ProfileMgr::Clear()
 {
 	mProfileMap.clear();
@@ -31,7 +29,6 @@ void ProfileMgr::Clear()
 	mNextProfileUseSeq = 1U;
 }
 
-//0x46A830
 void ProfileMgr::SyncState(ProfileSyncer &theSync)
 {
 	if (theSync.mReading)
@@ -76,7 +73,6 @@ void ProfileMgr::SyncState(ProfileSyncer &theSync)
 	}
 }
 
-//0x46ABC0
 void ProfileMgr::Load()
 {
 
@@ -108,7 +104,6 @@ void ProfileMgr::Load()
 	}
 }
 
-//0x46AD80
 void ProfileMgr::Save()
 {
 
@@ -127,7 +122,6 @@ void ProfileMgr::DeleteProfile(ProfileMap::iterator theProfile)
 	mProfileMap.erase(theProfile);
 }
 
-//0x46AF70
 bool ProfileMgr::DeleteProfile(const SexyString &theName)
 {
 	auto anItr = mProfileMap.find(theName);
@@ -138,7 +132,6 @@ bool ProfileMgr::DeleteProfile(const SexyString &theName)
 	return true;
 }
 
-//0x46AFF0
 bool ProfileMgr::RenameProfile(const SexyString &theOldName, const SexyString &theNewName)
 {
 	auto anOldItr = mProfileMap.find(theOldName);
@@ -169,7 +162,6 @@ bool ProfileMgr::RenameProfile(const SexyString &theOldName, const SexyString &t
 	}
 }
 
-//0x46B1C0
 void ProfileMgr::DeleteOldestProfile()
 {
 	if (mProfileMap.size() == 0)
@@ -182,7 +174,6 @@ void ProfileMgr::DeleteOldestProfile()
 	DeleteProfile(anOldest);
 }
 
-//0x46B290
 PlayerInfo *ProfileMgr::GetProfile(const SexyString &theName)
 {
 	auto anItr = mProfileMap.find(theName);
@@ -196,7 +187,6 @@ PlayerInfo *ProfileMgr::GetProfile(const SexyString &theName)
 	return nullptr;
 }
 
-//0x46B310
 PlayerInfo *ProfileMgr::AddProfile(const SexyString &theName)
 {
 	auto aRet = mProfileMap.emplace(theName, PlayerInfo());

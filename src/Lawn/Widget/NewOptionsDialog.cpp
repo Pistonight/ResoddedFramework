@@ -17,7 +17,6 @@
 
 using namespace Sexy;
 
-//0x45C050
 NewOptionsDialog::NewOptionsDialog(LawnApp *theApp, bool theFromGameSelector)
 	: Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, "Options", "", "", Dialog::BUTTONS_NONE)
 {
@@ -95,7 +94,6 @@ NewOptionsDialog::NewOptionsDialog(LawnApp *theApp, bool theFromGameSelector)
 	}
 }
 
-//0x45C760��0x45C780
 NewOptionsDialog::~NewOptionsDialog()
 {
 	delete mMusicVolumeSlider;
@@ -107,13 +105,11 @@ NewOptionsDialog::~NewOptionsDialog()
 	delete mSettingsButton;
 }
 
-//0x45C880
 int NewOptionsDialog::GetPreferredHeight(int theWidth)
 {
 	return IMAGE_OPTIONS_MENUBACK->mWidth;
 }
 
-//0x45C890
 void NewOptionsDialog::AddedToManager(Sexy::WidgetManager *theWidgetManager)
 {
 	Dialog::AddedToManager(theWidgetManager);
@@ -126,7 +122,6 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager *theWidgetManager)
 	AddWidget(mSettingsButton);
 }
 
-//0x45C930
 void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager *theWidgetManager)
 {
 	Dialog::RemovedFromManager(theWidgetManager);
@@ -139,7 +134,6 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager *theWidgetManager)
 	RemoveWidget(mSettingsButton);
 }
 
-//0x45C9D0
 void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 {
 	Dialog::Resize(theX, theY, theWidth, theHeight);
@@ -164,7 +158,6 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 	}
 }
 
-//0x45CB50
 void NewOptionsDialog::Draw(Sexy::Graphics *g)
 {
 	g->DrawImage(IMAGE_OPTIONS_MENUBACK, 0, 0);
@@ -214,7 +207,6 @@ void NewOptionsDialog::Update()
 	#endif
 }
 
-//0x45CF50
 void NewOptionsDialog::SliderVal(int theId, double theVal)
 {
 	switch (theId)
@@ -235,13 +227,11 @@ void NewOptionsDialog::SliderVal(int theId, double theVal)
 	}
 }
 
-//0x45CFF0
 void NewOptionsDialog::CheckboxChecked(int theId, bool checked)
 {
 
 }
 
-//0x45D290
 void NewOptionsDialog::KeyDown(Sexy::KeyCode theKey)
 {
 	if (mApp->mBoard)
@@ -259,13 +249,11 @@ void NewOptionsDialog::KeyDown(Sexy::KeyCode theKey)
 	}
 }
 
-//0x45D2F0
 void NewOptionsDialog::ButtonPress(int theId)
 {
 	mApp->PlaySample(SOUND_GRAVEBUTTON);
 }
 
-//0x45D310
 void NewOptionsDialog::ButtonDepress(int theId)
 {
 	Dialog::ButtonDepress(theId);

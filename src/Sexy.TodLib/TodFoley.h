@@ -139,10 +139,10 @@ class FoleyParams
 /*inline*/ void TodFoleyDispose();
 FoleyParams *LookupFoley(FoleyType theFoleyType);
 
-extern int gFoleyParamArraySize;	  //[0x6A9F04]
-extern FoleyParams *gFoleyParamArray; //[0x6A9F00]
+extern int gFoleyParamArraySize;
+extern FoleyParams *gFoleyParamArray;
 
-extern FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY]; //0x69FAD0
+extern FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY];
 
 class TodSoundInstance : public OpenALSoundInstance
 {

@@ -11,7 +11,6 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include "../../SexyAppFramework/ImageFont.h"
 
-//0x456A80
 LawnDialog::LawnDialog(LawnApp *theApp,
 					   int theId,
 					   bool isModal,
@@ -61,7 +60,6 @@ LawnDialog::LawnDialog(LawnApp *theApp,
 	CalcSize(0, 0);
 }
 
-//0x456E80 & 0x456EA0
 LawnDialog::~LawnDialog()
 {
 	if (mReanimation)
@@ -87,7 +85,6 @@ int LawnDialog::GetTop()
 	return mContentInsets.mTop + mBackgroundInsets.mTop + 99;
 }
 
-//0x456F30
 void LawnDialog::CalcSize(int theExtraX, int theExtraY)
 {
 	int aWidth =
@@ -143,7 +140,6 @@ void LawnDialog::CalcSize(int theExtraX, int theExtraY)
 	Resize(mX, mY, aWidth, aHeight);
 }
 
-//0x457160
 void LawnDialog::AddedToManager(WidgetManager *theWidgetManager)
 {
 	Dialog::AddedToManager(theWidgetManager);
@@ -154,7 +150,6 @@ void LawnDialog::AddedToManager(WidgetManager *theWidgetManager)
 		AddWidget(mLawnNoButton);
 }
 
-//0x4571B0
 void LawnDialog::RemovedFromManager(WidgetManager *theWidgetManager)
 {
 	Dialog::RemovedFromManager(theWidgetManager);
@@ -171,7 +166,6 @@ void LawnDialog::RemovedFromManager(WidgetManager *theWidgetManager)
 	}
 }
 
-//0x457230
 void LawnDialog::SetButtonDelay(int theDelay)
 {
 	mButtonDelay = theDelay;
@@ -181,7 +175,6 @@ void LawnDialog::SetButtonDelay(int theDelay)
 		mLawnNoButton->SetDisabled(true);
 }
 
-//0x457280
 void LawnDialog::Update()
 {
 	Dialog::Update();
@@ -195,13 +188,11 @@ void LawnDialog::Update()
 	MarkDirty();
 }
 
-//0x4572E0
 void LawnDialog::ButtonPress(int theId)
 {
 	mApp->PlaySample(Sexy::SOUND_GRAVEBUTTON);
 }
 
-//0x457300
 void LawnDialog::ButtonDepress(int theId)
 {
 	if (mUpdateCnt > mButtonDelay)
@@ -210,13 +201,11 @@ void LawnDialog::ButtonDepress(int theId)
 	}
 }
 
-//0x457320
 void LawnDialog::CheckboxChecked(int theId, bool theChecked)
 {
 	mApp->PlaySample(Sexy::SOUND_BUTTONCLICK);
 }
 
-//0x457340
 void LawnDialog::KeyDown(KeyCode theKey)
 {
 	if (mId == DIALOG_PAUSED && mApp->mBoard)
@@ -237,7 +226,6 @@ void LawnDialog::KeyDown(KeyCode theKey)
 	}
 }
 
-//0x4573D0
 void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 {
 	Dialog::Resize(theX, theY, theWidth, theHeight);
@@ -306,7 +294,6 @@ void LawnDialog::Resize(int theX, int theY, int theWidth, int theHeight)
 	}
 }
 
-//0x4575A0
 void LawnDialog::Draw(Graphics *g)
 {
 	if (!mDrawStandardBack)
@@ -400,7 +387,6 @@ void LawnDialog::Draw(Graphics *g)
 	WriteWordWrapped(g, aRect, mDialogLines, mLinesFont->GetLineSpacing() + mLineSpacingOffset, mTextAlign);
 }
 
-//0x4579A0
 ReanimationWidget::ReanimationWidget()
 {
 	mApp = (LawnApp *)gSexyAppBase;
@@ -413,7 +399,6 @@ ReanimationWidget::ReanimationWidget()
 	mHasAlpha = true;
 }
 
-//0x4579F0、0x457A10
 ReanimationWidget::~ReanimationWidget()
 {
 	Dispose();
@@ -428,7 +413,6 @@ void ReanimationWidget::Dispose()
 	}
 }
 
-//0x457A80
 void ReanimationWidget::AddReanimation(float x, float y, ReanimationType theReanimationType)
 {
 	TOD_ASSERT(mReanim == nullptr);
@@ -444,14 +428,12 @@ void ReanimationWidget::AddReanimation(float x, float y, ReanimationType theRean
 	Resize(x, y, 10, 10);
 }
 
-//0x457B80
 void ReanimationWidget::Draw(Graphics *g)
 {
 	if (mReanim)
 		mReanim->Draw(g);
 }
 
-//0x457BA0
 void ReanimationWidget::Update()
 {
 	if (mReanim)
@@ -461,7 +443,6 @@ void ReanimationWidget::Update()
 	}
 }
 
-//0x457BC0
 GameOverDialog::GameOverDialog(const SexyString &theMessage, bool theShowChallengeName)
 	: LawnDialog(
 		  gLawnApp, Dialogs::DIALOG_GAME_OVER, true, "[GAME_OVER]", theMessage, "", Dialog::BUTTONS_FOOTER)
@@ -493,7 +474,6 @@ GameOverDialog::~GameOverDialog()
 	delete mMenuButton;
 }
 
-//0x457E50
 void GameOverDialog::ButtonDepress(int theId)
 {
 	if (theId == 1)
@@ -524,7 +504,6 @@ void GameOverDialog::ButtonDepress(int theId)
 	}
 }
 
-//0x457F20
 void GameOverDialog::AddedToManager(WidgetManager *theWidgetManager)
 {
 	LawnDialog::AddedToManager(theWidgetManager);
@@ -534,7 +513,6 @@ void GameOverDialog::AddedToManager(WidgetManager *theWidgetManager)
 	}
 }
 
-//0x457F80
 void GameOverDialog::RemovedFromManager(WidgetManager *theWidgetManager)
 {
 	LawnDialog::RemovedFromManager(theWidgetManager);
@@ -544,7 +522,6 @@ void GameOverDialog::RemovedFromManager(WidgetManager *theWidgetManager)
 	}
 }
 
-//0x457FB0
 void GameOverDialog::MouseDrag(int x, int y)
 {
 	LawnDialog::MouseDrag(x, y);

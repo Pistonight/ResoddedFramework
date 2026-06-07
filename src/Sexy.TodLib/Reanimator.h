@@ -60,8 +60,8 @@ class ReanimatorDefinition
 	{
 	}
 };
-extern int gReanimatorDefCount;					  //[0x6A9EE4]
-extern ReanimatorDefinition *gReanimatorDefArray; //[0x6A9EE8]
+extern int gReanimatorDefCount;
+extern ReanimatorDefinition *gReanimatorDefArray;
 
 class ReanimationParams
 {
@@ -70,8 +70,8 @@ class ReanimationParams
 	const char *mReanimFileName;
 	int mReanimParamFlags;
 };
-extern int gReanimationParamArraySize;			  //[0x6A9EEC]
-extern ReanimationParams *gReanimationParamArray; //[0x6A9EF0]
+extern int gReanimationParamArraySize;
+extern ReanimationParams *gReanimationParamArray;
 
 /*inline*/ void ReanimationFillInMissingData(float &thePrev, float &theValue);
 /*inline*/ void ReanimationFillInMissingData(void *&thePrev, void *&theValue);
@@ -81,7 +81,7 @@ void _cdecl ReanimatorEnsureDefinitionLoaded(ReanimationType theReanimType, bool
 void ReanimatorLoadDefinitions(ReanimationParams *theReanimationParamArray, int theReanimationParamArraySize);
 void ReanimatorFreeDefinitions();
 
-extern ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS]; //0x6A1340
+extern ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS];
 
 enum
 {

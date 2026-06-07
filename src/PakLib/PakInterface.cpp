@@ -223,7 +223,6 @@ bool PakInterface::AddPakFile(const std::string &theFileName)
 	return true;
 }
 
-//0x5D85C0
 PFILE *PakInterface::FOpen(const char *theFileName, const char *anAccess)
 {
 	if (std::filesystem::exists(theFileName))
@@ -255,7 +254,6 @@ PFILE *PakInterface::FOpen(const char *theFileName, const char *anAccess)
 	return nullptr;
 }
 
-//0x5D8780
 int PakInterface::FClose(PFILE *theFile)
 {
 	if (theFile->mFP != nullptr)
@@ -264,7 +262,6 @@ int PakInterface::FClose(PFILE *theFile)
 	return 0;
 }
 
-//0x5D87B0
 int PakInterface::FSeek(PFILE *theFile, long theOffset, int theOrigin)
 {
 	if (theFile->mFP != nullptr)
@@ -284,7 +281,6 @@ int PakInterface::FSeek(PFILE *theFile, long theOffset, int theOrigin)
 	return 0;
 }
 
-//0x5D8830
 long PakInterface::FTell(PFILE *theFile)
 {
 	if (theFile->mFP != nullptr)
@@ -294,7 +290,6 @@ long PakInterface::FTell(PFILE *theFile)
 	return 0;
 }
 
-//0x5D8850
 size_t PakInterface::FRead(void *thePtr, int theElemSize, int theCount, PFILE *theFile)
 {
 	if (theFile->mFP != nullptr)

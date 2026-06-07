@@ -4,11 +4,11 @@
 #include "../PakLib/PakInterface.h"
 #include "../SexyAppFramework/Font.h"
 
-int gTodStringFormatCount;				//[0x69DE4C]
-TodStringListFormat *gTodStringFormats; //[0x69DA34]
+int gTodStringFormatCount;
+TodStringListFormat *gTodStringFormats;
 
 int gLawnStringFormatCount = 12;
-TodStringListFormat gLawnStringFormats[14] = { //0x6A5010
+TodStringListFormat gLawnStringFormats[14] = {
 	{"NORMAL", nullptr, Color(40, 50, 90, 255), 0, 0U},
 	{"FLAVOR", nullptr, Color(143, 67, 27, 255), 0, 1U},
 	{"KEYWORD", nullptr, Color(143, 67, 27, 255), 0, 0U},
@@ -48,7 +48,6 @@ void TodStringListSetColors(TodStringListFormat *theFormats, int theCount)
 	gTodStringFormatCount = theCount;
 }
 
-//0x518E40
 bool TodStringListReadName(const char *&thePtr, std::string &theName)
 {
 	const char *aNameStart = strchr(thePtr, '[');
@@ -85,7 +84,6 @@ bool TodStringListReadName(const char *&thePtr, std::string &theName)
 	}
 }
 
-//0x518F60
 void TodStringRemoveReturnChars(std::string &theString)
 {
 	for (int i = 0; i < theString.size();)
@@ -97,7 +95,6 @@ void TodStringRemoveReturnChars(std::string &theString)
 	}
 }
 
-//0x518FB0
 bool TodStringListReadValue(const char *&thePtr, std::string &theValue)
 {
 	const char *aValueEnd = strchr(thePtr, '[');
@@ -108,7 +105,6 @@ bool TodStringListReadValue(const char *&thePtr, std::string &theValue)
 	return true;
 }
 
-//0x519080
 bool TodStringListReadItems(const char *theFileText)
 {
 	const char *aPtr = theFileText;
@@ -129,7 +125,6 @@ bool TodStringListReadItems(const char *theFileText)
 	}
 }
 
-//0x519240
 bool TodStringListReadFile(const char *theFileName)
 {
 	PFILE *pFile = p_fopen(theFileName, "rb");
@@ -161,14 +156,12 @@ bool TodStringListReadFile(const char *theFileName)
 	return aSuccess;
 }
 
-//0x519390
 void TodStringListLoad(const char *theFileName)
 {
 	if (!TodStringListReadFile(theFileName))
 		TodErrorMessageBox(Sexy::StrFormat("Failed to load string list file '%s'", theFileName).c_str(), "Error");
 }
 
-//0x519410
 SexyString TodStringListFind(const SexyString &theName)
 {
 	std::string aNameString = Sexy::SexyStringToString(theName);
@@ -183,7 +176,6 @@ SexyString TodStringListFind(const SexyString &theName)
 	}
 }
 
-//0x519520
 SexyString TodStringTranslate(const SexyString &theString)
 {
 	if (theString.size() >= 3 && theString[0] == '[')
@@ -194,7 +186,6 @@ SexyString TodStringTranslate(const SexyString &theString)
 	return theString;
 }
 
-//0x5195D0
 SexyString TodStringTranslate(const SexyChar *theString)
 {
 	if (theString != nullptr)
@@ -212,7 +203,6 @@ SexyString TodStringTranslate(const SexyChar *theString)
 		return "";
 }
 
-//0x5196C0
 bool TodStringListExists(const SexyString &theString)
 {
 	if (theString.size() >= 3 && theString[0] == '[')
@@ -223,7 +213,6 @@ bool TodStringListExists(const SexyString &theString)
 	return false;
 }
 
-//0x5197B0
 void TodWriteStringSetFormat(const char *theFormat, TodStringListFormat &theCurrentFormat)
 {
 	for (int i = 0; i < gTodStringFormatCount; i++)
@@ -249,7 +238,6 @@ bool CharIsSpaceInFormat(SexyChar theChar, const TodStringListFormat &theCurrent
 		   (TestBit(theCurrentFormat.mFormatFlags, TodStringFormatFlag::TOD_FORMAT_IGNORE_NEWLINES) && theChar == '\n');
 }
 
-//0x519870
 int TodWriteString(Graphics *g,
 				   const SexyString &theString,
 				   int theX,
@@ -372,7 +360,6 @@ int TodWriteWordWrappedHelper(Graphics *g,
 		g, theString, theX, theY, theCurrentFormat, theWidth, theJustification, drawString, theOffset, theLength);
 }
 
-//0x519B50
 int TodDrawStringWrappedHelper(Graphics *g,
 							   const SexyString &theText,
 							   const Rect &theRect,
@@ -531,7 +518,6 @@ int TodDrawStringWrappedHelper(Graphics *g,
 	return (*aCurrentFormat.mNewFont)->GetDescent() + aYOffset - aLineSpacing;
 }
 
-//0x51A040
 void TodDrawStringWrapped(Graphics *g,
 						  const SexyString &theText,
 						  const Rect &theRect,

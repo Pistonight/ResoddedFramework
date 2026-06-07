@@ -14,7 +14,7 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include <SDL3/SDL_timer.h>
 
-static CreditsTiming gCreditsTiming[] = { //0x6A1AD8
+static CreditsTiming gCreditsTiming[] = {
 	{128.5f, CreditWordType::WORD_AW, 0, CreditBrainType::BRAIN_OFF},
 	{133.0f, CreditWordType::WORD_OH, 0, CreditBrainType::BRAIN_OFF},
 	{136.5f, CreditWordType::WORD_EE, 0, CreditBrainType::BRAIN_OFF},
@@ -283,7 +283,7 @@ static CreditsTiming gCreditsTiming[] = { //0x6A1AD8
 	{1028.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
 	{1029.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
 	{1033.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF}};
-static int gCreditsTimingCount = LENGTH(gCreditsTiming); //0x6A2B98
+static int gCreditsTimingCount = LENGTH(gCreditsTiming);
 
 CreditsOverlay::CreditsOverlay(CreditScreen *theCreditScreen)
 {
@@ -297,7 +297,6 @@ void CreditsOverlay::Draw(Graphics *g)
 	mParent->DrawOverlay(g);
 }
 
-//0x433A70
 CreditScreen::CreditScreen(LawnApp *theApp)
 {
 	mApp = theApp;
@@ -353,7 +352,6 @@ CreditScreen::CreditScreen(LawnApp *theApp)
 	}
 }
 
-//0x433E20、0x433E40
 CreditScreen::~CreditScreen()
 {
 	mApp->SetMusicVolume(mOriginalMusicVolume);
@@ -362,7 +360,6 @@ CreditScreen::~CreditScreen()
 	delete mOverlayWidget;
 }
 
-//0x433EE0
 void CreditScreen::AddedToManager(WidgetManager *theWidgetManager)
 {
 	Widget::AddedToManager(theWidgetManager);
@@ -371,7 +368,6 @@ void CreditScreen::AddedToManager(WidgetManager *theWidgetManager)
 	AddWidget(mOverlayWidget);
 }
 
-//0x433F30
 void CreditScreen::RemovedFromManager(WidgetManager *theWidgetManager)
 {
 	Widget::RemovedFromManager(theWidgetManager);
@@ -380,7 +376,6 @@ void CreditScreen::RemovedFromManager(WidgetManager *theWidgetManager)
 	RemoveWidget(mOverlayWidget);
 }
 
-//0x433F80
 void CreditScreen::PreLoadCredits()
 {
 	mPreloaded = true;
@@ -502,7 +497,6 @@ void CreditScreen::PreLoadCredits()
 	}
 }
 
-//0x434C70
 void CreditScreen::GetTiming(CreditsTiming **theBeforeTiming, CreditsTiming **theAfterTiming, float *theFraction)
 {
 	Reanimation *aCreditsReanim = mApp->ReanimationGet(mCreditsReanimID);
@@ -556,7 +550,6 @@ void CreditScreen::GetTiming(CreditsTiming **theBeforeTiming, CreditsTiming **th
 	}
 }
 
-//0x434D60
 Reanimation *CreditScreen::PlayReanim(int aIndex)
 {
 	Reanimation *aCreditsReanim = mApp->ReanimationTryToGet(mCreditsReanimID);
@@ -605,7 +598,6 @@ Reanimation *CreditScreen::PlayReanim(int aIndex)
 	return aCreditsReanim;
 }
 
-//0x434F20
 void DrawDisco(Graphics *g, float aCenterX, float aCenterY, float theTime)
 {
 	if (!gSexyAppBase->Is3DAccelerated())
@@ -664,7 +656,6 @@ void DrawDisco(Graphics *g, float aCenterX, float aCenterY, float theTime)
 								   g->mLinearBlend);
 }
 
-//0x4351E0
 void CreditScreen::DrawFogEffect(Graphics *g, float theTime)
 {
 	Reanimation *aCreditsReanim = mApp->ReanimationGet(mCreditsReanimID);
@@ -705,7 +696,6 @@ void CreditScreen::DrawFogEffect(Graphics *g, float theTime)
 	}
 }
 
-//0x4354E0
 void CreditScreen::DrawOverlay(Graphics *g)
 {
 	if (mCreditsPhase == CreditsPhase::CREDITS_END)
@@ -718,7 +708,6 @@ void CreditScreen::DrawOverlay(Graphics *g)
 		}
 	}
 }
-//0x435550
 void CreditScreen::DrawFinalCredits(Graphics *g)
 {
 
@@ -758,7 +747,6 @@ void CreditScreen::DrawFinalCredits(Graphics *g)
 	g->ClearClipRect();
 }
 
-//0x435A90
 void DrawReanimToPreload(Graphics *g, ReanimationType theReanimType)
 {
 	Reanimation aReanim;
@@ -767,7 +755,6 @@ void DrawReanimToPreload(Graphics *g, ReanimationType theReanimType)
 	aReanim.Draw(g);
 }
 
-//0x435B60
 void CreditScreen::Draw(Graphics *g)
 {
 	g->SetLinearBlend(true);
@@ -1072,7 +1059,6 @@ Reanimation *CreditScreen::FindSubReanim(Reanimation *theReanim, ReanimationType
 	return nullptr;
 }
 
-//0x436940
 void CreditScreen::UpdateBlink()
 {
 	mBlinkCountdown--;
@@ -1104,7 +1090,6 @@ void CreditScreen::UpdateBlink()
 	}
 }
 
-//0x436A30
 void CreditScreen::Update()
 {
 	Widget::Update();
@@ -1173,7 +1158,6 @@ void CreditScreen::Update()
 	MarkDirty();
 }
 
-//0x436BE0
 void CreditScreen::UpdateMovie()
 {
 	UpdateBlink();
@@ -1534,7 +1518,6 @@ void CreditScreen::UpdateMovie()
 	}
 }
 
-//0x437F20
 void CreditScreen::TurnOffTongues(Reanimation *theReanim, int aParentTrack)
 {
 	if (theReanim->mDefinition == 0)
@@ -1556,7 +1539,6 @@ void CreditScreen::TurnOffTongues(Reanimation *theReanim, int aParentTrack)
 	}
 }
 
-//0x437FC0
 void TodsHackyUnprotectedPerfTimer::SetStartTime(int theTimeMillisecondsAgo)
 {
 	mStart = SDL_GetPerformanceCounter();
@@ -1565,7 +1547,6 @@ void TodsHackyUnprotectedPerfTimer::SetStartTime(int theTimeMillisecondsAgo)
 	mStart -= (uint64_t(theTimeMillisecondsAgo) * aFreq) / 1000;
 }
 
-//0x438010
 void CreditScreen::JumpToFrame(CreditsPhase thePhase, float theFrame)
 {
 	mMainMenuButton->SetVisible(false);
@@ -1763,7 +1744,6 @@ void CreditScreen::KeyChar(SexyChar theChar)
 	}
 }
 
-//0x438430
 void CreditScreen::PauseCredits()
 {
 	if (mCreditsPaused)
@@ -1791,7 +1771,6 @@ void CreditScreen::PauseCredits()
 	((TodsHackyUnprotectedPerfTimer *)&mTimerSinceStart)->SetStartTime(aDurationOnPause);
 }
 
-//0x438530
 void CreditScreen::KeyDown(KeyCode theKey)
 {
 	if (mCreditsPaused)
@@ -1803,7 +1782,6 @@ void CreditScreen::KeyDown(KeyCode theKey)
 	}
 }
 
-//0x438560
 void CreditScreen::ButtonPress(int theId)
 {
 	if (theId == CreditScreen::Credits_Button_MainMenu)
@@ -1816,7 +1794,6 @@ void CreditScreen::ButtonPress(int theId)
 	}
 }
 
-//0x4385A0
 void CreditScreen::ButtonDepress(int theId)
 {
 	if (theId == CreditScreen::Credits_Button_MainMenu)

@@ -4779,7 +4779,6 @@ void Board::ClearCursor()
 	}
 }
 
-//0x412490
 bool Board::CanInteractWithBoardButtons()
 {
 	if (mPaused || mApp->GetDialogCount() > 0)

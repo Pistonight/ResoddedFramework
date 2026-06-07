@@ -11,13 +11,12 @@
 #include "../SexyAppFramework/PerfTimer.h"
 #include "../SexyAppFramework/MemoryImage.h"
 
-int gReanimatorDefCount;				   //[0x6A9EE4]
-ReanimatorDefinition *gReanimatorDefArray; //[0x6A9EE8]
-int gReanimationParamArraySize;			   //[0x6A9EEC]
-ReanimationParams *gReanimationParamArray; //[0x6A9EF0]
+int gReanimatorDefCount;
+ReanimatorDefinition *gReanimatorDefArray;
+int gReanimationParamArraySize;
+ReanimationParams *gReanimationParamArray;
 
 ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
-	//0x6A1340
 	{ReanimationType::REANIM_LOADBAR_SPROUT, "reanim/LoadBar_sprout.reanim", GetBit((int)ReanimFlags::REANIM_NO_ATLAS)},
 	{ReanimationType::REANIM_LOADBAR_ZOMBIEHEAD, "reanim/LoadBar_Zombiehead.reanim", GetBit((int)ReanimFlags::REANIM_NO_ATLAS)},
 	{ReanimationType::REANIM_SODROLL, "reanim/SodRoll.reanim", 0},
@@ -164,7 +163,6 @@ ReanimationParams gLawnReanimationArray[(int)ReanimationType::NUM_REANIMS] = {
 	{ReanimationType::REANIM_ZOMBATAR_HEAD, "reanim/zombatar_zombie_head.reanim", GetBit((int)ReanimFlags::REANIM_NO_ATLAS)},
 };
 
-//0x471540
 ReanimatorTransform::ReanimatorTransform()
 	: mTransX(DEFAULT_FIELD_PLACEHOLDER), mTransY(DEFAULT_FIELD_PLACEHOLDER), mSkewX(DEFAULT_FIELD_PLACEHOLDER),
 	  mSkewY(DEFAULT_FIELD_PLACEHOLDER), mScaleX(DEFAULT_FIELD_PLACEHOLDER), mScaleY(DEFAULT_FIELD_PLACEHOLDER),
@@ -188,7 +186,6 @@ void ReanimationFillInMissingData(void *&thePrev, void *&theValue)
 		thePrev = theValue;
 }
 
-//0x4715F0 : (*def, eax = string& fileName)  //esp -= 0x4
 bool ReanimationLoadDefinition(const SexyString &theFileName, ReanimatorDefinition *theDefinition)
 {
 	if (!DefinitionLoadXML(theFileName, &gReanimatorDefMap, theDefinition))
@@ -231,7 +228,6 @@ bool ReanimationLoadDefinition(const SexyString &theFileName, ReanimatorDefiniti
 	return true;
 }
 
-//0x4717D0
 void ReanimationFreeDefinition(ReanimatorDefinition *theDefinition)
 {
 	if (theDefinition->mReanimAtlas != nullptr)
@@ -258,7 +254,6 @@ void ReanimationFreeDefinition(ReanimatorDefinition *theDefinition)
 	DefinitionFreeMap(&gReanimatorDefMap, theDefinition);
 }
 
-//0x471890
 ReanimatorTrackInstance::ReanimatorTrackInstance()
 {
 	mBlendCounter = 0;
@@ -276,7 +271,6 @@ ReanimatorTrackInstance::ReanimatorTrackInstance()
 	mIgnoreExtraAdditiveColor = false;
 }
 
-//0x471920
 Reanimation::Reanimation()
 {
 	mAnimTime = 0;
@@ -303,7 +297,6 @@ Reanimation::Reanimation()
 	mReanimationType = ReanimationType::REANIM_NONE;
 }
 
-//0x471A20
 Reanimation::~Reanimation()
 {
 	ReanimationDie();
@@ -321,7 +314,6 @@ void Reanimation::ReanimationDelete()
 	}
 }
 
-//0x471A60
 void Reanimation::ReanimationInitializeType(float theX, float theY, ReanimationType theReanimType)
 {
 	TOD_ASSERT(theReanimType >= 0 && theReanimType < gReanimatorDefCount);
@@ -330,7 +322,6 @@ void Reanimation::ReanimationInitializeType(float theX, float theY, ReanimationT
 	ReanimationInitialize(theX, theY, &gReanimatorDefArray[(int)theReanimType]);
 }
 
-//0x471A90
 void ReanimationCreateAtlas(ReanimatorDefinition *theDefinition, ReanimationType theReanimationType)
 {
 	ReanimationParams &aParam = gReanimationParamArray[(int)theReanimationType];
@@ -362,7 +353,6 @@ void ReanimationPreload(ReanimationType theReanimationType)
 	}
 }
 
-//0x471B00
 void Reanimation::ReanimationInitialize(float theX, float theY, ReanimatorDefinition *theDefinition)
 {
 	TOD_ASSERT(mTrackInstances == nullptr);
@@ -390,7 +380,6 @@ void Reanimation::ReanimationInitialize(float theX, float theY, ReanimatorDefini
 		mFrameCount = 0;
 }
 
-//0x471BC0
 void Reanimation::Update()
 {
 	if (mFrameCount == 0 || mDead)
@@ -493,7 +482,6 @@ void Reanimation::Update()
 	}
 }
 
-//0x471E50
 void BlendTransform(ReanimatorTransform *theResult,
 					const ReanimatorTransform &theTransform1,
 					const ReanimatorTransform &theTransform2,
@@ -525,7 +513,6 @@ void BlendTransform(ReanimatorTransform *theResult,
 	theResult->mImage = theTransform1.mImage;
 }
 
-//0x471F90
 void Reanimation::GetCurrentTransform(int theTrackIndex, ReanimatorTransform *theTransformCurrent)
 {
 	ReanimatorFrameTime aFrameTime;
@@ -543,7 +530,6 @@ void Reanimation::GetCurrentTransform(int theTrackIndex, ReanimatorTransform *th
 	}
 }
 
-//0x472020
 void Reanimation::GetTransformAtTime(int theTrackIndex,
 									 ReanimatorTransform *theTransform,
 									 ReanimatorFrameTime *theFrameTime)
@@ -572,7 +558,6 @@ void Reanimation::GetTransformAtTime(int theTrackIndex,
 		theTransform->mFrame = aTransBefore.mFrame;
 }
 
-//0x4720F0
 void Reanimation::MatrixFromTransform(const ReanimatorTransform &theTransform, SexyMatrix3 &theMatrix)
 {
 	float aSkewX = -DEG_TO_RAD(theTransform.mSkewX);
@@ -589,7 +574,6 @@ void Reanimation::MatrixFromTransform(const ReanimatorTransform &theTransform, S
 	theMatrix.m22 = 1.0f;
 }
 
-//0x472190
 void Reanimation::ReanimBltMatrix(Graphics *g,
 								  Image *theImage,
 								  SexyMatrix3 &theTransform,
@@ -630,7 +614,6 @@ void Reanimation::ReanimBltMatrix(Graphics *g,
 		TodBltMatrix(g, theImage, theTransform, theClipRect, theColor, theDrawMode, theSrcRect);
 }
 
-//0x4723B0
 bool Reanimation::DrawTrack(Graphics *g, int theTrackIndex, int theRenderGroup, TodTriangleGroup *theTriangleGroup)
 {
 	ReanimatorTransform aTransform;
@@ -800,7 +783,6 @@ bool Reanimation::DrawTrack(Graphics *g, int theTrackIndex, int theRenderGroup, 
 	return true;
 }
 
-//0x472B70
 Image *Reanimation::GetCurrentTrackImage(const char *theTrackName)
 {
 	int aTrackIndex = FindTrackIndex(theTrackName);
@@ -818,7 +800,6 @@ Image *Reanimation::GetCurrentTrackImage(const char *theTrackName)
 	return aImage;
 }
 
-//0x472C00
 void Reanimation::GetTrackMatrix(int theTrackIndex, SexyTransform2D &theMatrix)
 {
 	ReanimatorTrackInstance *aTrackInstance = &mTrackInstances[theTrackIndex];
@@ -851,7 +832,6 @@ void Reanimation::GetTrackMatrix(int theTrackIndex, SexyTransform2D &theMatrix)
 	SexyMatrix3Translation(theMatrix, aTrackInstance->mShakeX - 0.5f, aTrackInstance->mShakeY - 0.5f);
 }
 
-//0x472D90
 void Reanimation::GetFrameTime(ReanimatorFrameTime *theFrameTime)
 {
 	TOD_ASSERT(mFrameStart + mFrameCount <= mDefinition->mTracks[0].mTransformCount);
@@ -877,7 +857,6 @@ void Reanimation::GetFrameTime(ReanimatorFrameTime *theFrameTime)
 			   theFrameTime->mAnimFrameAfterInt < mDefinition->mTracks[0].mTransformCount);
 }
 
-//0x472E40
 void Reanimation::DrawRenderGroup(Graphics *g, int theRenderGroup)
 {
 	if (mDead)
@@ -905,7 +884,6 @@ void Reanimation::Draw(Graphics *g)
 	DrawRenderGroup(g, RENDER_GROUP_NORMAL);
 }
 
-//0x472F30
 int Reanimation::FindTrackIndex(const char *theTrackName)
 {
 	for (int aTrackIndex = 0; aTrackIndex < mDefinition->mTrackCount; aTrackIndex++)
@@ -921,7 +899,6 @@ ReanimatorTrackInstance *Reanimation::GetTrackInstanceByName(const char *theTrac
 	return &mTrackInstances[FindTrackIndex(theTrackName)];
 }
 
-//0x472F80
 void Reanimation::AttachToAnotherReanimation(Reanimation *theAttachReanim, const char *theTrackName)
 {
 	if (theAttachReanim->mDefinition->mTrackCount <= 0)
@@ -939,7 +916,6 @@ void Reanimation::SetBasePoseFromAnim(const char *theTrackName)
 	mFrameBasePose = aFrameStart;
 }
 
-//0x472FD0
 void Reanimation::GetTrackBasePoseMatrix(int theTrackIndex, SexyTransform2D &theBasePosMatrix)
 {
 	if (mFrameBasePose == NO_BASE_POSE)
@@ -955,7 +931,6 @@ void Reanimation::GetTrackBasePoseMatrix(int theTrackIndex, SexyTransform2D &the
 	MatrixFromTransform(aTransformStart, theBasePosMatrix);
 }
 
-//0x473070
 AttachEffect *Reanimation::AttachParticleToTrack(const char *theTrackName,
 												 TodParticleSystem *theParticleSystem,
 												 float thePosX,
@@ -969,7 +944,6 @@ AttachEffect *Reanimation::AttachParticleToTrack(const char *theTrackName,
 	return AttachParticle(aTrackInstance->mAttachmentID, theParticleSystem, aPosition.x, aPosition.y);
 }
 
-//0x473110
 void Reanimation::GetAttachmentOverlayMatrix(int theTrackIndex, SexyTransform2D &theOverlayMatrix)
 {
 	ReanimatorTransform aTransform;
@@ -985,7 +959,6 @@ void Reanimation::GetAttachmentOverlayMatrix(int theTrackIndex, SexyTransform2D 
 	theOverlayMatrix = aTransformMatrix * aBasePoseMatrixInv;
 }
 
-//0x4731D0
 void Reanimation::GetFramesForLayer(const char *theTrackName, int &theFrameStart, int &theFrameCount)
 {
 	if (mDefinition->mTrackCount == 0)
@@ -1011,7 +984,6 @@ void Reanimation::GetFramesForLayer(const char *theTrackName, int &theFrameStart
 			theFrameCount = j - theFrameStart + 1;
 }
 
-//0x473280
 void Reanimation::SetFramesForLayer(const char *theTrackName)
 {
 	if (mAnimRate >= 0)
@@ -1022,7 +994,6 @@ void Reanimation::SetFramesForLayer(const char *theTrackName)
 	GetFramesForLayer(theTrackName, mFrameStart, mFrameCount);
 }
 
-//0x4732C0
 bool Reanimation::TrackExists(const char *theTrackName)
 {
 	for (int aTrackIndex = 0; aTrackIndex < mDefinition->mTrackCount; aTrackIndex++)
@@ -1031,7 +1002,6 @@ bool Reanimation::TrackExists(const char *theTrackName)
 	return false;
 }
 
-//0x473310
 void Reanimation::StartBlend(int theBlendTime)
 {
 	for (int aTrackIndex = 0; aTrackIndex < mDefinition->mTrackCount; aTrackIndex++)
@@ -1051,7 +1021,6 @@ void Reanimation::StartBlend(int theBlendTime)
 	}
 }
 
-//0x4733F0
 void Reanimation::ReanimationDie()
 {
 	if (!mDead)
@@ -1082,19 +1051,16 @@ void Reanimation::OverrideScale(float theScaleX, float theScaleY)
 	mOverlayMatrix.m11 = theScaleY;
 }
 
-//0x473470
 Image *Reanimation::GetImageOverride(const char *theTrackName)
 {
 	return GetTrackInstanceByName(theTrackName)->mImageOverride;
 }
 
-//0x473490
 void Reanimation::SetImageOverride(const char *theTrackName, Image *theImage)
 {
 	GetTrackInstanceByName(theTrackName)->mImageOverride = theImage;
 }
 
-//0x4734B0
 void Reanimation::SetTruncateDisappearingFrames(const char *theTrackName, bool theTruncateDisappearingFrames)
 {
 	if (theTrackName == nullptr)
@@ -1111,7 +1077,6 @@ void ReanimationHolder::DisposeHolder()
 	mReanimations.DataArrayDispose();
 }
 
-//0x473500
 ReanimationHolder::~ReanimationHolder()
 {
 	DisposeHolder();
@@ -1122,7 +1087,6 @@ void ReanimationHolder::InitializeHolder()
 	mReanimations.DataArrayInitialize(MAX_REANIMATIONS_SIZE, "reanims");
 }
 
-//0x473590
 Reanimation *ReanimationHolder::AllocReanimation(float theX,
 												 float theY,
 												 int theRenderOrder,
@@ -1136,7 +1100,6 @@ Reanimation *ReanimationHolder::AllocReanimation(float theX,
 	return aReanim;
 }
 
-//0x4735E0
 void ReanimatorEnsureDefinitionLoaded(ReanimationType theReanimType, bool theIsPreloading)
 {
 	TOD_ASSERT(theReanimType >= 0 && theReanimType < gReanimatorDefCount);
@@ -1178,7 +1141,6 @@ void ReanimatorEnsureDefinitionLoaded(ReanimationType theReanimType, bool theIsP
 					   gGetCurrentLevelName().c_str());
 }
 
-//0x473750
 void ReanimatorLoadDefinitions(ReanimationParams *theReanimationParamArray, int theReanimationParamArraySize)
 {
 	TodHesitationBracket aHesitation("ReanimatorLoadDefinitions");
@@ -1197,7 +1159,6 @@ void ReanimatorLoadDefinitions(ReanimationParams *theReanimationParamArray, int 
 	}
 }
 
-//0x473870
 void ReanimatorFreeDefinitions()
 {
 	for (int i = 0; i < gReanimatorDefCount; i++)
@@ -1210,7 +1171,6 @@ void ReanimatorFreeDefinitions()
 	gReanimationParamArraySize = 0;
 }
 
-//0x4738D0
 float Reanimation::GetTrackVelocity(const char *theTrackName)
 {
 	ReanimatorFrameTime aFrameTime;
@@ -1224,7 +1184,6 @@ float Reanimation::GetTrackVelocity(const char *theTrackName)
 	return aDis * SECONDS_PER_UPDATE * mAnimRate;
 }
 
-//0x473930
 bool Reanimation::IsTrackShowing(const char *theTrackName)
 {
 	ReanimatorFrameTime aFrameTime;
@@ -1235,7 +1194,6 @@ bool Reanimation::IsTrackShowing(const char *theTrackName)
 	return mDefinition->mTracks[aTrackIndex].mTransforms[aFrameTime.mAnimFrameAfterInt].mFrame >= 0.0f;
 }
 
-//0x473980
 void Reanimation::ShowOnlyTrack(const char *theTrackName)
 {
 	for (int i = 0; i < mDefinition->mTrackCount; i++)
@@ -1245,7 +1203,6 @@ void Reanimation::ShowOnlyTrack(const char *theTrackName)
 	}
 }
 
-//0x4739E0
 void Reanimation::AssignRenderGroupToTrack(const char *theTrackName, int theRenderGroup)
 {
 	for (int i = 0; i < mDefinition->mTrackCount; i++)
@@ -1256,7 +1213,6 @@ void Reanimation::AssignRenderGroupToTrack(const char *theTrackName, int theRend
 		}
 }
 
-//0x473A40
 void Reanimation::AssignRenderGroupToPrefix(const char *theTrackName, int theRenderGroup)
 {
 	size_t aPrifixLength = strlen(theTrackName);
@@ -1269,7 +1225,6 @@ void Reanimation::AssignRenderGroupToPrefix(const char *theTrackName, int theRen
 	}
 }
 
-//0x473AE0
 void Reanimation::PropogateColorToAttachments()
 {
 	for (int i = 0; i < mDefinition->mTrackCount; i++)
@@ -1281,7 +1236,6 @@ void Reanimation::PropogateColorToAttachments()
 								 mExtraOverlayColor);
 }
 
-//0x473B70
 bool Reanimation::ShouldTriggerTimedEvent(float theEventTime)
 {
 	TOD_ASSERT(theEventTime >= 0.0f && theEventTime <= 1.0f);
@@ -1294,7 +1248,6 @@ bool Reanimation::ShouldTriggerTimedEvent(float theEventTime)
 		return theEventTime >= mLastFrameTime || theEventTime < mAnimTime;
 }
 
-//0x473BF0
 void Reanimation::PlayReanim(const char *theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate)
 {
 	if (theBlendTime > 0)
@@ -1364,7 +1317,6 @@ void Reanimation::ParseAttacherTrack(const ReanimatorTransform &theTransform, At
 	}
 }
 
-//0x473EB0
 void Reanimation::AttacherSynchWalkSpeed(int theTrackIndex, Reanimation *theAttachReanim, AttacherInfo &theAttacherInfo)
 {
 	ReanimatorTrack *aTrack = &mDefinition->mTracks[theTrackIndex];
@@ -1426,7 +1378,6 @@ void Reanimation::AttacherSynchWalkSpeed(int theTrackIndex, Reanimation *theAtta
 		aLoops * theAttachReanim->mFrameCount / aPlaceHolderSeconds;
 }
 
-//0x4740B0
 void Reanimation::UpdateAttacherTrack(int theTrackIndex)
 {
 	ReanimatorTrackInstance *aTrackInstance = &mTrackInstances[theTrackIndex];
@@ -1497,7 +1448,6 @@ void Reanimation::UpdateAttacherTrack(int theTrackIndex)
 							 mExtraOverlayColor);
 }
 
-//0x4745B0
 bool Reanimation::IsAnimPlaying(const char *theTrackName)
 {
 	int aFrameStart, aFrameCount;
@@ -1505,7 +1455,6 @@ bool Reanimation::IsAnimPlaying(const char *theTrackName)
 	return mFrameStart == aFrameStart && mFrameCount == aFrameCount;
 }
 
-//0x4745F0
 Reanimation *Reanimation::FindSubReanim(ReanimationType theReanimType)
 {
 	if (mReanimationType == theReanimType)

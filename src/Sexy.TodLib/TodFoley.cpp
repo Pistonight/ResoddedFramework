@@ -3,10 +3,10 @@
 #include "TodCommon.h"
 #include "../SexyAppFramework/SoundManager.h"
 
-int gFoleyParamArraySize;	   //[0x6A9F04]
-FoleyParams *gFoleyParamArray; //[0x6A9F00]
+int gFoleyParamArraySize;
+FoleyParams *gFoleyParamArray;
 
-FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY] = { //0x69FAD0
+FoleyParams gLawnFoleyParamArray[(int)FoleyType::NUM_FOLEY] = {
 	{FoleyType::FOLEY_SUN, 10.0f, {&Sexy::SOUND_POINTS}, 0U},
 	{FoleyType::FOLEY_SPLAT, 10.0f, {&Sexy::SOUND_SPLAT, &Sexy::SOUND_SPLAT2, &Sexy::SOUND_SPLAT3}, 0U},
 	{FoleyType::FOLEY_LAWNMOWER, 10.0f, {&Sexy::SOUND_LAWNMOWER}, 0U},
@@ -178,7 +178,6 @@ FoleyInstance::FoleyInstance()
 	mPauseOffset = 0;
 }
 
-//0x514ED0
 FoleyTypeData::FoleyTypeData()
 {
 	mLastVariationPlayed = -1;
@@ -210,7 +209,6 @@ void TodFoleyDispose()
 	gFoleyParamArraySize = 0;
 }
 
-//0x514F70
 void SoundSystemReleaseFinishedInstances(TodFoley *theSoundSystem)
 {
 	for (int aFoleyType = 0; aFoleyType < gFoleyParamArraySize; aFoleyType++)
@@ -234,7 +232,6 @@ void SoundSystemReleaseFinishedInstances(TodFoley *theSoundSystem)
 		}
 }
 
-//0x514FE0
 bool SoundSystemHasFoleyPlayedTooRecently(TodFoley *theSoundSystem, FoleyType theFoleyType)
 {
 	FoleyTypeData *aFoleyData = &theSoundSystem->mFoleyTypeData[(int)theFoleyType];
@@ -287,7 +284,6 @@ FoleyInstance *SoundSystemGetFreeInstanceIndex(TodFoley *theSoundSystem, FoleyTy
 	return nullptr;
 }
 
-//0x515020
 void TodFoley::PlayFoleyPitch(FoleyType theFoleyType, float thePitch)
 {
 	FoleyParams *aFoleyParams = LookupFoley(theFoleyType);
@@ -342,7 +338,6 @@ void TodFoley::PlayFoleyPitch(FoleyType theFoleyType, float thePitch)
 	aSoundInstance->Play(aIsLooping, false);
 }
 
-//0x515240
 void TodFoley::PlayFoley(FoleyType theFoleyType)
 {
 	FoleyParams *aFoleyParams = LookupFoley(theFoleyType);
@@ -352,7 +347,6 @@ void TodFoley::PlayFoley(FoleyType theFoleyType)
 	PlayFoleyPitch(theFoleyType, aPitch);
 }
 
-//0x515290
 void TodFoley::StopFoley(FoleyType theFoleyType)
 {
 	SoundSystemReleaseFinishedInstances(this);
@@ -370,7 +364,6 @@ void TodFoley::StopFoley(FoleyType theFoleyType)
 	}
 }
 
-//0x5152D0
 void TodFoley::GamePause(bool theEnteringPause)
 {
 	SoundSystemReleaseFinishedInstances(this);
@@ -414,7 +407,6 @@ void TodFoley::GamePause(bool theEnteringPause)
 	}
 }
 
-//0x5153F0
 void TodFoley::CancelPausedFoley()
 {
 	SoundSystemReleaseFinishedInstances(this);
@@ -434,7 +426,6 @@ void TodFoley::CancelPausedFoley()
 	}
 }
 
-//0x515460
 void TodFoley::ApplyMusicVolume(FoleyInstance *theFoleyInstance)
 {
 	if (gSexyAppBase->mSfxVolume < 1e-6)
@@ -444,7 +435,6 @@ void TodFoley::ApplyMusicVolume(FoleyInstance *theFoleyInstance)
 			gSexyAppBase->mMusicVolume / gSexyAppBase->mSfxVolume);
 }
 
-//0x5154A0
 void TodFoley::RehookupSoundWithMusicVolume()
 {
 	SoundSystemReleaseFinishedInstances(this);
@@ -464,7 +454,6 @@ void TodFoley::RehookupSoundWithMusicVolume()
 	}
 }
 
-//0x515560
 bool TodFoley::IsFoleyPlaying(FoleyType theFoleyType)
 {
 	SoundSystemReleaseFinishedInstances(this);

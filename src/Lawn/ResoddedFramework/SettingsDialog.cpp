@@ -307,7 +307,6 @@ void SettingsDialog::AddedToManager(WidgetManager *theWidgetManager)
 	AddWidget(mFilterList);
 }
 
-//0x45D8E0
 void SettingsDialog::RemovedFromManager(WidgetManager *theWidgetManager)
 {
 	LawnDialog::RemovedFromManager(theWidgetManager);

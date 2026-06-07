@@ -7,7 +7,6 @@
 #include "../../SexyAppFramework/Graphics.h"
 #include "../../SexyAppFramework/Renderer.h"
 
-//0x469A60
 void PoolEffect::PoolEffectInitialize()
 {
 	TodHesitationBracket aHesitation("PoolEffectInitialize");
@@ -42,7 +41,6 @@ void PoolEffect::PoolEffectDispose()
 	delete[] mCausticGrayscaleImage;
 }
 
-//0x469BC0
 unsigned int PoolEffect::BilinearLookupFixedPoint(unsigned int u, unsigned int v)
 {
 	unsigned int timeU = u & 0xFFFF0000;
@@ -62,7 +60,6 @@ unsigned int PoolEffect::BilinearLookupFixedPoint(unsigned int u, unsigned int v
 		   ((((factorU1 * factorV0) / 65536) * mCausticGrayscaleImage[indexV0 * 256 + indexU1]) / 65536);
 }
 
-//0x469CA0
 void PoolEffect::UpdateWaterEffect(Sexy::Graphics *g)
 {
 	int idx = 0;
@@ -104,7 +101,6 @@ void PoolEffect::UpdateWaterEffect(Sexy::Graphics *g)
 	++mCausticImage->mBitsChangedCount;
 }
 
-//0x469DE0
 void PoolEffect::PoolEffectDraw(Sexy::Graphics *g, bool theIsNight)
 {
 	if (!mApp->Is3DAccelerated())

@@ -34,10 +34,10 @@ class TrailParams
 	const char *mTrailFileName;
 };
 
-extern int gTrailParamArraySize;	  //[0x6A9F28]
-extern TrailParams *gTrailParamArray; //[0x6A9F2C]
+extern int gTrailParamArraySize;
+extern TrailParams *gTrailParamArray;
 
-extern TrailParams gLawnTrailArray[(int)TrailType::NUM_TRAILS]; //0x6A19F4
+extern TrailParams gLawnTrailArray[(int)TrailType::NUM_TRAILS];
 
 class TrailDefinition
 {
@@ -60,8 +60,8 @@ bool TrailLoadADef(TrailDefinition *theTrailDef, const char *theTrailFileName);
 void TrailLoadDefinitions(TrailParams *theTrailParamArray, int theTrailParamArraySize);
 void TrailFreeDefinitions();
 
-extern int gTrailDefCount;				//[0x6A9F20]
-extern TrailDefinition *gTrailDefArray; //[0x6A9F24]
+extern int gTrailDefCount;
+extern TrailDefinition *gTrailDefArray;
 
 // #################################################################################################### //
 
