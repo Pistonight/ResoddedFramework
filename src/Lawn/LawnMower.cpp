@@ -6,7 +6,6 @@
 #include "../Sexy.TodLib/TodFoley.h"
 #include "../Sexy.TodLib/Reanimator.h"
 
-//0x458000
 void LawnMower::LawnMowerInitialize(int theRow)
 {
 	mApp = (LawnApp *)gSexyAppBase;
@@ -65,7 +64,6 @@ void LawnMower::LawnMowerInitialize(int theRow)
 	}
 }
 
-//0x4581E0
 void LawnMower::UpdatePool()
 {
 	bool isPoolRange = false;
@@ -127,7 +125,6 @@ void LawnMower::UpdatePool()
 	}
 }
 
-//0x458540
 void LawnMower::MowZombie(Zombie *theZombie)
 {
 	if (mMowerState == LawnMowerState::MOWER_READY)
@@ -163,7 +160,6 @@ void LawnMower::MowZombie(Zombie *theZombie)
 	}
 }
 
-//0x4586E0
 void LawnMower::Update()
 {
 	if (mMowerState == LawnMowerState::MOWER_SQUISHED)
@@ -264,7 +260,6 @@ void LawnMower::Update()
 	mApp->ReanimationGet(mReanimID)->Update();
 }
 
-//0x458A80
 void LawnMower::Draw(Graphics *g)
 {
 	if (!mVisible)
@@ -359,7 +354,6 @@ void LawnMower::Draw(Graphics *g)
 	}
 }
 
-//0x458D10
 void LawnMower::Die()
 {
 	mDead = true;
@@ -373,7 +367,6 @@ void LawnMower::Die()
 	}
 }
 
-//0x458DA0
 void LawnMower::StartMower()
 {
 	if (mMowerState == LawnMowerState::MOWER_TRIGGERED)
@@ -398,7 +391,6 @@ void LawnMower::StartMower()
 	mMowerState = LawnMowerState::MOWER_TRIGGERED;
 }
 
-//0x458EB0
 void LawnMower::SquishMower()
 {
 	Reanimation *aMowerReanim = mApp->ReanimationGet(mReanimID);
@@ -415,7 +407,6 @@ Rect LawnMower::GetLawnMowerAttackRect()
 	return Rect(mPosX, mPosY, 50, 80);
 }
 
-//0x458F60
 void LawnMower::EnableSuperMower(bool theEnable)
 {
 	if (mMowerType == LawnMowerType::LAWNMOWER_LAWN)

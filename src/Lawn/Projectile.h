@@ -19,7 +19,7 @@ class ProjectileDefinition
 	int mImageRow;
 	int mDamage;
 };
-extern ProjectileDefinition gProjectileDefinition[NUM_PROJECTILES]; //0x69F1C0
+extern ProjectileDefinition gProjectileDefinition[NUM_PROJECTILES];
 
 class Projectile : public GameObject
 {
