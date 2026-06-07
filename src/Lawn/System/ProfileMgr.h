@@ -13,9 +13,9 @@ typedef std::map<SexyString, PlayerInfo, Sexy::StringLessNoCase> ProfileMap;
 class ProfileMgr
 {
   protected:
-	ProfileMap mProfileMap;			  //+0x4
-	unsigned long mNextProfileId;	  //+0x10
-	unsigned long mNextProfileUseSeq; //+0x14
+	ProfileMap mProfileMap;
+	unsigned long mNextProfileId;
+	unsigned long mNextProfileUseSeq;
 
   protected:
 	void SyncState(ProfileSyncer &theSync);

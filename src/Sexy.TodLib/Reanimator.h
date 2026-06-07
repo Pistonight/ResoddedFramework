@@ -138,20 +138,20 @@ class ReanimatorTransform
 class ReanimatorTrackInstance
 {
   public:
-	int mBlendCounter;					 //+0x0
-	int mBlendTime;						 //+0x4
-	ReanimatorTransform mBlendTransform; //+0x8
-	float mShakeOverride;				 //+0x34
-	float mShakeX;						 //+0x38
-	float mShakeY;						 //+0x3C
-	AttachmentID mAttachmentID;			 //+0x40
-	Image *mImageOverride;				 //+0x44
-	int mRenderGroup;					 //+0x48
-	Color mTrackColor;					 //+0x4C
-	bool mIgnoreClipRect;				 //+0x5C
-	bool mTruncateDisappearingFrames;	 //+0x5D
-	bool mIgnoreColorOverride;			 //+0x5E
-	bool mIgnoreExtraAdditiveColor;		 //+0x5F
+	int mBlendCounter;
+	int mBlendTime;
+	ReanimatorTransform mBlendTransform;
+	float mShakeOverride;
+	float mShakeX;
+	float mShakeY;
+	AttachmentID mAttachmentID;
+	Image *mImageOverride;
+	int mRenderGroup;
+	Color mTrackColor;
+	bool mIgnoreClipRect;
+	bool mTruncateDisappearingFrames;
+	bool mIgnoreColorOverride;
+	bool mIgnoreExtraAdditiveColor;
 
   public:
 	ReanimatorTrackInstance();

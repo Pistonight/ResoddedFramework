@@ -108,24 +108,24 @@ struct BungeeDropGrid
 class Board : public Widget, public ButtonListener
 {
   public:
-	LawnApp *mApp;													  //+0x8C
-	DataArray<Zombie> mZombies;										  //+0x90
-	DataArray<Plant> mPlants;										  //+0xAC
-	DataArray<Projectile> mProjectiles;								  //+0xC8
-	DataArray<Coin> mCoins;											  //+0xE4
-	DataArray<LawnMower> mLawnMowers;								  //+0x100
-	DataArray<GridItem> mGridItems;									  //+0x11C
-	CursorObject *mCursorObject;									  //+0x138
-	CursorPreview *mCursorPreview;									  //+0x13C
-	MessageWidget *mAdvice;											  //+0x140
-	SeedBank *mSeedBank;											  //+0x144
-	GameButton *mMenuButton;										  //+0x148
-	GameButton *mStoreButton;										  //+0x14C
-	bool mIgnoreMouseUp;											  //+0x150
-	ToolTipWidget *mToolTip;										  //+0x154
-	Font *mDebugFont;												  //+0x158
-	CutScene *mCutScene;											  //+0x15C
-	Challenge *mChallenge;											  //+0x160
+	LawnApp *mApp;
+	DataArray<Zombie> mZombies;
+	DataArray<Plant> mPlants;
+	DataArray<Projectile> mProjectiles;
+	DataArray<Coin> mCoins;
+	DataArray<LawnMower> mLawnMowers;
+	DataArray<GridItem> mGridItems;
+	CursorObject *mCursorObject;
+	CursorPreview *mCursorPreview;
+	MessageWidget *mAdvice;
+	SeedBank *mSeedBank;
+	GameButton *mMenuButton;
+	GameButton *mStoreButton;
+	bool mIgnoreMouseUp;
+	ToolTipWidget *mToolTip;
+	Font *mDebugFont;
+	CutScene *mCutScene;
+	Challenge *mChallenge;
 
 #if LAWN_DEBUG_TOOLS
 	Zombie *mDebugSelectedZombie;

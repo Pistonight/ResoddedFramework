@@ -6,11 +6,11 @@
 class DataReader
 {
   protected:
-	FILE *mFile;			//+0x4
-	char *mData;			//+0x8
-	unsigned long mDataLen; //+0xC
-	unsigned long mDataPos; //+0x10
-	bool mOwnData;			//+0x14
+	FILE *mFile;
+	char *mData;
+	unsigned long mDataLen;
+	unsigned long mDataPos;
+	bool mOwnData;
 
   public:
 	DataReader();
@@ -36,10 +36,10 @@ class DataReaderException : public std::exception
 class DataWriter
 {
   protected:
-	FILE *mFile;			 //+0x4
-	char *mData;			 //+0x8
-	unsigned long mDataLen;	 //+0xC
-	unsigned long mCapacity; //+0x10
+	FILE *mFile;
+	char *mData;
+	unsigned long mDataLen;
+	unsigned long mCapacity;
 
   protected:
 	void EnsureCapacity(unsigned long theNumBytes);
@@ -52,7 +52,7 @@ class DataWriter
 	void OpenMemory(unsigned long theReserveAmount = 0x20);
 	void Close();
 	inline bool WriteToFile(const std::string &theFileName)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	void WriteBytes(const void *theData, unsigned long theDataLen);
 	void WriteLong(unsigned long theLong);
@@ -63,16 +63,16 @@ class DataWriter
 	void WriteDouble(double theDouble);
 	void WriteString(const SexyString &theStr);
 	inline unsigned long GetPos()
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void SetLong(unsigned long, unsigned long)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void SetShort(unsigned int, unsigned long)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void SetByte(unsigned int, unsigned long)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void *GetDataPtr()
 	{
@@ -108,7 +108,7 @@ class DataSync
 	virtual ~DataSync();
 
 	inline void SyncPointers()
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void SetReader(DataReader *theReader)
 	{
@@ -174,10 +174,10 @@ class DataSync
 	void SyncDouble(double &theDouble);
 	void SyncString(SexyString &theStr);
 	inline void SyncPointer(void **)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void RegisterPointer(void *)
-	{ /* δ�ҵ� */
+	{ /* δ�ҵ� */
 	}
 	inline void SetVersion(int theVersion)
 	{
