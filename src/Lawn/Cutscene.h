@@ -88,7 +88,7 @@ class CutScene
 	/// @return True if the seed chooser has already been completed, false otherwise
 	bool IsAfterSeedChooser();
 
-	/// @brief Places flower pot items on the board for roof levels
+	/// @brief Places flower pots on the board for roof levels
 	void AddFlowerPots();
 
 	/// @brief Updates the zombies-won end sequence each tick
@@ -173,7 +173,7 @@ class CutScene
 	/// @return True if in the shovel tutorial, false otherwise
 	bool IsInShovelTutorial();
 
-	/// @brief Places all initial lawn decoration and obstacle items on the board
+	/// @brief Places all initial Plants and GridItems on the board
 	void PlaceLawnItems();
 
 	/// @brief Checks whether the player is eligible for a second seed packet slot upgrade
@@ -181,11 +181,11 @@ class CutScene
 	bool CanGetSecondPacketUpgrade();
 
 	/// @brief Parses and returns the delay time value from the current Crazy Dave message
-	/// @return Delay time in milliseconds extracted from the message data
+	/// @return Delay time in ticks extracted from the message data
 	int ParseDelayTimeFromMessage();
 
 	/// @brief Parses and returns the talk duration from the current Crazy Dave message
-	/// @return Talk time in milliseconds extracted from the message data
+	/// @return Talk time in ticks extracted from the message data
 	int ParseTalkTimeFromMessage();
 
 	/// @brief Clears and resets all state associated with the upsell board
