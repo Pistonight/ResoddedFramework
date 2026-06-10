@@ -6245,6 +6245,7 @@ void Board::Update()
 			bool aPressedSouth     = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_SOUTH);
 			bool aPressedEast      = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_EAST);
 			bool aPressedWest      = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_WEST);
+			bool aPressedNorth     = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_NORTH);
 			bool aPressedStart     = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_START);
 			bool aPressedLShoulder = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_LEFT_SHOULDER);
 			bool aPressedRShoulder = aPad->IsButtonJustPressed(GamepadButtons::BUTTON_RIGHT_SHOULDER);
@@ -6432,6 +6433,20 @@ void Board::Update()
 					RefreshSeedPacketFromCursor();
 				}
 
+			}
+
+			// ---------------------------------------------------
+			// Y (North) Last Stand
+			// ---------------------------------------------------
+			if (aPressedNorth)
+			{
+				if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
+				{
+					mStoreButton->mIsOver = true;
+					MouseDown(mStoreButton->mX, mStoreButton->mY, 1);
+					MouseUp(mStoreButton->mX, mStoreButton->mY, 1);
+
+				}
 			}
 
 			// ---------------------------------------------------
@@ -7154,9 +7169,7 @@ void Board::DrawGameObjects(Graphics *g)
 		case RenderObjectType::RENDER_ITEM_GAMEPAD_CURSOR: {
 			// Guard: skip if visual position is not yet initialized,
 			// or if the cobcannon targeting cursor is active (it has its own reticule).
-			if (!mApp->UsingGamepad() ||
-			    mVisualGamepadX < 0.0f ||
-			    mCursorObject->mCursorType == CursorType::CURSOR_TYPE_COBCANNON_TARGET)
+			if (!mApp->UsingGamepad() || mVisualGamepadX < 0.0f || mCursorObject->mCursorType == CursorType::CURSOR_TYPE_COBCANNON_TARGET || mApp->mGameScene != SCENE_PLAYING)
 				break;
 			{
 				// mVisualGamepadX/Y = grid-locked lerp position (matches console's grid-snapped cursor).
@@ -7188,7 +7201,7 @@ void Board::DrawGameObjects(Graphics *g)
 					float aShadowScale = (1.0f - v9) * 0.15f + 0.85f;
 					SexyTransform2D aShadowMatrix(true);
 					aShadowMatrix.Scale(aShadowScale, aShadowScale);
-					aShadowMatrix.Translate(aCursorX, aCursorY + 15.0f);
+					aShadowMatrix.Translate(mGamepadX, mGamepadY + 15.0f);
 					g->SetColorizeImages(true);
 					g->SetColor(Color(255, 255, 255, 200 + (int)(55 * v9)));
 					g->DrawImageMatrix(IMAGE_GAMEPAD_SELECTOR_SHADOW, aShadowMatrix);
