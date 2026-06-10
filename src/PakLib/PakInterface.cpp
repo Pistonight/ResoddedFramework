@@ -196,9 +196,9 @@ bool PakInterface::AddPakFile(const std::string &theFileName)
 		memcpy(&aSrcSize, aPakCollection->mData.data() + aFileOffset, sizeof(int));
 		aFileOffset += sizeof(int);
 
-		int64_t aFileTime;
-		memcpy(&aFileTime, aPakCollection->mData.data() + aFileOffset, sizeof(int64_t));
-		aFileOffset += sizeof(int64_t);
+		uint64_t aFileTime;
+		memcpy(&aFileTime, aPakCollection->mData.data() + aFileOffset, sizeof(uint64_t));
+		aFileOffset += sizeof(uint64_t);
 
 		for (int i = 0; i < aNameWidth; i++) //windows....
 		{

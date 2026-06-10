@@ -15,7 +15,7 @@ class PakRecord
   public:
 	PakCollection *mCollection;
 	std::string mFileName;
-	int64_t mFileTime;
+	uint64_t mFileTime;
 	int mStartPos;
 	int mSize;
 };

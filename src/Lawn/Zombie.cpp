@@ -859,7 +859,7 @@ void Zombie::SetupDoorArms(Reanimation *aReanim, bool theShow)
 	aReanim->AssignRenderGroupToPrefix("Zombie_outerarm_lower", aArmGroup);
 	aReanim->AssignRenderGroupToPrefix("Zombie_outerarm_upper", aArmGroup);
 	aReanim->AssignRenderGroupToPrefix("anim_innerarm", aArmGroup);
-	aReanim->AssignRenderGroupToPrefix("Zombie_outerarm_screendoor", aDoorGroup);
+	aReanim->AssignRenderGroupToPrefix("Zombie_outerarm_screendoor", theShow ? RENDER_GROUP_OVER_SHIELD : RENDER_GROUP_HIDDEN);
 	aReanim->AssignRenderGroupToPrefix("Zombie_innerarm_screendoor", aDoorGroup);
 	aReanim->AssignRenderGroupToPrefix("Zombie_innerarm_screendoor_hand", aDoorGroup);
 }
@@ -8954,6 +8954,7 @@ void Zombie::AttachShield()
 	{
 		ShowDoorArms(true);
 		ReanimShowPrefix("Zombie_outerarm_screendoor", RENDER_GROUP_OVER_SHIELD);
+		ReanimShowPrefix("Zombie_innerarm_screendoor_hand", RENDER_GROUP_OVER_SHIELD);
 		aTrackName = "anim_screendoor";
 	}
 	else if (mShieldType == ShieldType::SHIELDTYPE_NEWSPAPER)
