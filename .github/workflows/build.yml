@@ -10,7 +10,6 @@ permissions:
   contents: read
 
 env:
-  VCPKG_DEFAULT_TRIPLET: x64-windows-static
   VCPKG_MANIFEST_DIR: ${{ github.workspace }}
 
 jobs:
@@ -59,6 +58,8 @@ jobs:
 
       - name: Configure
         run: cmake --preset ${{ matrix.preset }} -DGITHUB_ACTIONS=ON
+        env:
+          VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
 
       - name: Build
         run: cmake --build --preset ${{ matrix.build_preset }}
@@ -76,3 +77,11 @@ jobs:
         with:
           name: ${{ matrix.artifact_name }}
           path: packaged/${{ matrix.artifact_name }}.zip
+
+      - name: Build summary
+        if: always()
+        run: |
+          echo "## Build Result: ${{ matrix.artifact_name }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Preset:** ${{ matrix.preset }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Triplet:** ${{ matrix.triplet }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $env:GITHUB_STEP_SUMMARY
