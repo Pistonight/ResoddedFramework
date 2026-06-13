@@ -60,9 +60,8 @@ SettingsDialog::SettingsDialog(LawnApp *theApp)
 
 	mOptionsSlider = new LawnScrollbar(mApp);
 	mOptionsSlider->mSliderHeightPercent = 0.57f;
-	mOptionsSlider->mStepMultiplier = 1.0f;
+	mOptionsSlider->mMaxValue = 600;
 	mOptionsSlider->Resize(500, 90, 8, 140);
-	mOptionsSlider->mScrollMultiplier = 0.09f;
 
 	mFullscreenCheckbox = MakeNewCheckbox(SettingsDialog::SETTINGS_FULLSCREEN, this, !theApp->mIsWindowed);
 
@@ -143,8 +142,8 @@ void SettingsDialog::Draw(Graphics* g)
 
 	int aMaxContentHeight = 880;
 	float aMaxScroll = std::max(0.0f, (float)aMaxContentHeight - mOptionsSlider->mAllowedMouseZone.mHeight);
-
-	float aScrollOffset = mOptionsSlider->GetValue() * aMaxScroll;
+	mOptionsSlider->mMaxValue = aMaxScroll;
+	float aScrollOffset = mOptionsSlider->GetValue();
 
 	g->PushState();
 	g->Translate(mApplyButton->mX, mApplyButton->mY);

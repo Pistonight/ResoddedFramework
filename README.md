@@ -61,6 +61,7 @@ Go wild, the source code is organized. That means you can easily extend or even 
 - niqkidd -> Name of the project
 - [InLiothixie](https://github.com/InLiothixi) -> Zombatar Reverse Enginnering + Bug Fixes
 - [Patoke](https://github.com/Patoke) -> Creator of [re-plants-vs-zombies](https://github.com/Patoke/re-plants-vs-zombies), a huge source of reference for reversed engineered code
+- spaghetto207 -> LawnScrollbar implementation
 - The original team behind the 0.9.9 decompilation
 
 ### Acknowledgements

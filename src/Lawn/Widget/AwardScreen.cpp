@@ -67,14 +67,14 @@ AwardScreen::AwardScreen(LawnApp *theApp, AwardType theAwardType)
 			if (anIsScrolling)
 			{
 				mScrollBar = new LawnScrollbar(mApp);
-				mScrollBar->Resize(770, 90, 8, 480);
 				mScrollBar->mAllowedMouseZone = Rect(20, 90, 780, 420);
 				mScrollBar->mThumbColor = Color(131, 69, 32);
 				mScrollBar->mBaseColor = Color(233, 149, 88);
 				int aScrollableRange = aTotalHeight - aVisibleWindow;
 				mScrollBar->mSliderHeightPercent = (float)aVisibleWindow / (float)aTotalHeight;
-				mScrollBar->mScrollMultiplier = 0.03f;
-				mScrollBar->mStepMultiplier = aScrollableRange;
+				mScrollBar->mMaxValue = aScrollableRange;
+				mScrollBar->Resize(770, 90, 8, 480);
+
 			}
 
 		}

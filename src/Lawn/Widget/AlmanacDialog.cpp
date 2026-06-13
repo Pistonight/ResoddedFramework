@@ -82,7 +82,6 @@ AlmanacDialog::AlmanacDialog(LawnApp *theApp)
 	mDescriptionScrollbar = new LawnScrollbar(mApp);
 	mDescriptionScrollbar->mSliderHeightPercent = 0.57f;
 	mDescriptionScrollbar->Resize(735, 377, 8, 140);
-	mDescriptionScrollbar->mScrollMultiplier = 0.09f;
 	SetPage(ALMANAC_PAGE_INDEX);
 	if (!mApp->mBoard || !mApp->mBoard->mPaused)
 		mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_CHOOSE_YOUR_SEEDS);
@@ -140,7 +139,7 @@ void AlmanacDialog::SetupPlant()
 	mDescriptionScrollbar->mAllowedMouseZone = Rect(484, 350, 258, ALMANAC_PLANT_MAX_SPACE);
 	mDescriptionScrollbar->mThumbColor = Color(131, 69, 32);
 	mDescriptionScrollbar->mBaseColor = Color(233, 149, 88);
-	mDescriptionScrollbar->mRawValue = 0.0f;
+	mDescriptionScrollbar->mValue = 0.0f;
 
 	ClearPlantsAndZombies();
 
@@ -170,7 +169,7 @@ void AlmanacDialog::SetupZombie()
 	mDescriptionScrollbar->mAllowedMouseZone = Rect(484, 377, 258, ALMANAC_ZOMBIE_MAX_SPACE);
 	mDescriptionScrollbar->mBaseColor = Color(152, 149, 188);
 	mDescriptionScrollbar->mThumbColor = Color(63, 64, 86);
-	mDescriptionScrollbar->mRawValue = 0.0f;
+	mDescriptionScrollbar->mValue = 0.0f;
 
 
 	ClearPlantsAndZombies();
@@ -386,12 +385,13 @@ void AlmanacDialog::DrawPlants(Graphics *g)
 	{
 		mDescriptionScrollbar->mDisabled = true;
 		mDescriptionScrollbar->mVisible = false;
-		mDescriptionScrollbar->mRawValue = 0.0f;
+		mDescriptionScrollbar->mValue = 0.0f;
 	}
 	else
 	{
 		mDescriptionScrollbar->mDisabled = false;
 		mDescriptionScrollbar->mVisible = true;
+		mDescriptionScrollbar->mMaxValue = aDescriptionHeight - aVisibleHeight + 70;
 	}
 	int anOffsetSlider = 0;
 	int aMaxWidthOffset = 0;
@@ -400,7 +400,7 @@ void AlmanacDialog::DrawPlants(Graphics *g)
 	{
 		aMaxWidthOffset = 15;
 
-		anOffsetSlider = mDescriptionScrollbar->GetValue() * aDescriptionHeight;
+		anOffsetSlider = mDescriptionScrollbar->GetValue();
 		mDescriptionScrollbar->Resize(735, 310 + aDistanceHeader, 8, aVisibleHeight - 28);
 
 		g->SetClipRect(484, 309 + aDistanceHeader, 258, ALMANAC_PLANT_MAX_SPACE - aDistanceHeader - 28); // Cost and Time offset
@@ -622,8 +622,6 @@ void AlmanacDialog::DrawZombies(Graphics *g)
 		}
 	}
 
-	// FIXME: Figure out a formula to properly move the text so the last line is at the buttom of the space.
-
 	int aDistanceHeader = TodDrawStringWrappedHelper(g, aHeaderName, Rect(484, 377, 258, ALMANAC_ZOMBIE_MAX_SPACE), Sexy::FONT_BRIANNETOD12, Color(40, 50, 90), DS_ALIGN_LEFT, true);
 	int aDescriptionHeight = TodDrawStringWrappedHelper(g, aDescription, Rect(484, 377 + aDistanceHeader, 258, ALMANAC_ZOMBIE_MAX_SPACE), Sexy::FONT_BRIANNETOD12, Color(40, 50, 90), aAlign, false);
 	int aVisibleHeight = ALMANAC_ZOMBIE_MAX_SPACE - aDistanceHeader;
@@ -632,13 +630,15 @@ void AlmanacDialog::DrawZombies(Graphics *g)
 	{
 		mDescriptionScrollbar->mDisabled = true;
 		mDescriptionScrollbar->mVisible = false;
-		mDescriptionScrollbar->mRawValue = 0.0f;
+		mDescriptionScrollbar->mValue = 0.0f;
 	}
 	else
 	{
 		mDescriptionScrollbar->mDisabled = false;
 		mDescriptionScrollbar->mVisible = true;
+		mDescriptionScrollbar->mMaxValue = aDescriptionHeight - aVisibleHeight + 70;
 	}
+
 	int aMaxWidthOffset = 0;
 
 	int anOffsetSlider = 0;
@@ -646,7 +646,7 @@ void AlmanacDialog::DrawZombies(Graphics *g)
 	{
 		aMaxWidthOffset = 15;
 
-		anOffsetSlider = mDescriptionScrollbar->GetValue() * aDescriptionHeight;
+		anOffsetSlider = mDescriptionScrollbar->GetValue();
 		mDescriptionScrollbar->Resize(735, 377 + aDistanceHeader, 8, aVisibleHeight);
 		g->SetClipRect(484, 377 + aDistanceHeader, 258, ALMANAC_ZOMBIE_MAX_SPACE - aDistanceHeader);
 	}

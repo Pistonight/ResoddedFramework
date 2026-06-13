@@ -37,18 +37,25 @@ class LawnScrollbar : public Widget
 {
   public:
 	LawnApp *mApp;
-	float mRawValue;
-	float mStepMultiplier;
+	float mValue;
+	float mMaxValue;
 	float mSliderHeightPercent;
-	float mScrollMultiplier;
+	int mScrollbarMode;
+
+	bool mIsDown;
+	bool mIsOver;
+	bool mInitiallyOver;
+
 	Rect mAllowedMouseZone;
-	bool mStartedDrag;
-	bool mUseGlobalCoordinates;
 	Color mThumbColor;
 	Color mBaseColor;
+	Rect mThumbRect;
+	bool mIsHorizontal;
+	float mGrabOffsetX;
+	float mGrabOffsetY;
 
   public:
-	LawnScrollbar(LawnApp* theApp);
+	LawnScrollbar(LawnApp *theApp);
 	~LawnScrollbar();
 
 	virtual void Update();
@@ -56,9 +63,12 @@ class LawnScrollbar : public Widget
 	virtual void MouseDown(int x, int y, int theClickCount);
 	virtual void MouseUp(int x, int y, int theClickCount);
 	virtual void Draw(Graphics *g);
+	virtual void Resize(int theX, int theY, int theWidth, int theHeight);
+	virtual void DrawScrollThumb(Graphics *g);
+	bool IsThumbOver();
+	bool IsThumbDown();
 	float GetValue();
 };
-
 
 bool ModInRange(int theNumber, int theMod, int theRange = 0);
 bool GridInRange(int x1, int y1, int x2, int y2, int theRangeX = 1, int theRangeY = 1);
