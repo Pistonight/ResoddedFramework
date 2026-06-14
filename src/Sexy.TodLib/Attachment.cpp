@@ -71,7 +71,7 @@ void Attachment::Update()
 		}
 
 		default:
-			TOD_ASSERT();
+			TOD_ASSERT(false);
 			break;
 		}
 
@@ -188,11 +188,8 @@ void Attachment::OverrideColor(const Color &theColor)
 	}
 }
 
-void Attachment::PropogateColor(const Color &theColor,
-								bool theEnableAdditiveColor,
-								const Color &theAdditiveColor,
-								bool theEnableOverlayColor,
-								const Color &theOverlayColor)
+void Attachment::PropogateColor(const Color &theColor, bool theEnableAdditiveColor, const Color &theAdditiveColor,
+								bool theEnableOverlayColor, const Color &theOverlayColor)
 {
 	TOD_ASSERT(gEffectSystem);
 
@@ -237,8 +234,8 @@ void Attachment::PropogateColor(const Color &theColor,
 				gEffectSystem->mAttachmentHolder->mAttachments.DataArrayTryToGet(aAttachEffect->mEffectID);
 			if (aAttachment)
 			{
-				aAttachment->PropogateColor(
-					theColor, theEnableAdditiveColor, theAdditiveColor, theEnableOverlayColor, theOverlayColor);
+				aAttachment->PropogateColor(theColor, theEnableAdditiveColor, theAdditiveColor, theEnableOverlayColor,
+											theOverlayColor);
 			}
 			break;
 		}
@@ -652,8 +649,7 @@ void AttachmentReanimTypeDie(AttachmentID &theAttachmentID, ReanimationType theR
 	}
 }
 
-void AttachmentDetachCrossFadeParticleType(AttachmentID &theAttachmentID,
-										   ParticleEffect theParticleEffect,
+void AttachmentDetachCrossFadeParticleType(AttachmentID &theAttachmentID, ParticleEffect theParticleEffect,
 										   const char *theCrossFadeName)
 {
 	Attachment *aAttachment =
@@ -690,12 +686,8 @@ void AttachmentDetachCrossFadeParticleType(AttachmentID &theAttachmentID,
 	}
 }
 
-void AttachmentPropogateColor(AttachmentID &theAttachmentID,
-							  const Color &theColor,
-							  bool theEnableAdditiveColor,
-							  const Color &theAdditiveColor,
-							  bool theEnableOverlayColor,
-							  const Color &theOverlayColor)
+void AttachmentPropogateColor(AttachmentID &theAttachmentID, const Color &theColor, bool theEnableAdditiveColor,
+							  const Color &theAdditiveColor, bool theEnableOverlayColor, const Color &theOverlayColor)
 {
 	if (theAttachmentID == AttachmentID::ATTACHMENTID_NULL)
 		return;
@@ -705,8 +697,8 @@ void AttachmentPropogateColor(AttachmentID &theAttachmentID,
 		gEffectSystem->mAttachmentHolder->mAttachments.DataArrayTryToGet((unsigned int)theAttachmentID);
 	if (aAttachment)
 	{
-		aAttachment->PropogateColor(
-			theColor, theEnableAdditiveColor, theAdditiveColor, theEnableOverlayColor, theOverlayColor);
+		aAttachment->PropogateColor(theColor, theEnableAdditiveColor, theAdditiveColor, theEnableOverlayColor,
+									theOverlayColor);
 	}
 }
 
@@ -791,6 +783,7 @@ Reanimation *FindReanimAttachment(AttachmentID &theAttachmentID)
 			}
 		}
 	}
+	return nullptr;
 }
 
 AttachEffect *FindFirstAttachment(AttachmentID &theAttachmentID)
@@ -806,8 +799,8 @@ AttachEffect *FindFirstAttachment(AttachmentID &theAttachmentID)
 	return (aAttachment->mNumEffects == 0) ? nullptr : &aAttachment->mEffectArray[0];
 }
 
-AttachEffect *CreateEffectAttachment(
-	AttachmentID &theAttachmentID, EffectType theEffectType, unsigned int theDataID, float theOffsetX, float theOffsetY)
+AttachEffect *CreateEffectAttachment(AttachmentID &theAttachmentID, EffectType theEffectType, unsigned int theDataID,
+									 float theOffsetX, float theOffsetY)
 {
 	TOD_ASSERT(gEffectSystem);
 	Attachment *aAttachment =
@@ -832,9 +825,7 @@ AttachEffect *CreateEffectAttachment(
 	return aAttachEffect;
 }
 
-AttachEffect *AttachReanim(AttachmentID &theAttachmentID,
-						   Reanimation *theReanimation,
-						   float theOffsetX,
+AttachEffect *AttachReanim(AttachmentID &theAttachmentID, Reanimation *theReanimation, float theOffsetX,
 						   float theOffsetY)
 {
 	unsigned int aReanimId = gEffectSystem->mReanimationHolder->mReanimations.DataArrayGetID(theReanimation);
@@ -847,9 +838,7 @@ AttachEffect *AttachReanim(AttachmentID &theAttachmentID,
 	return aAttachEffect;
 }
 
-AttachEffect *AttachParticle(AttachmentID &theAttachmentID,
-							 TodParticleSystem *theParticleSystem,
-							 float theOffsetX,
+AttachEffect *AttachParticle(AttachmentID &theAttachmentID, TodParticleSystem *theParticleSystem, float theOffsetX,
 							 float theOffsetY)
 {
 	if (theParticleSystem == nullptr)

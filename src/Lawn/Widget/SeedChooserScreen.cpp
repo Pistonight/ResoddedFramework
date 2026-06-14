@@ -183,8 +183,7 @@ SeedChooserScreen::SeedChooserScreen()
 	UpdateImitaterButton();
 }
 
-int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray *theArray,
-																 int theCount,
+int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArray *theArray, int theCount,
 																 MTRand &theLevelRNG)
 {
 	int aTotalWeight = 0;
@@ -201,6 +200,7 @@ int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArra
 			return theArray[j].mItem;
 	}
 	DBG_ASSERT(false);
+	return 0;
 }
 
 void SeedChooserScreen::CrazyDavePickSeeds()
@@ -351,8 +351,8 @@ void SeedChooserScreen::Draw(Graphics *g)
 	{
 		g->DrawImage(Sexy::IMAGE_SEEDCHOOSER_IMITATERADDON, 459, 503);
 	}
-	TodDrawString(
-		g, "[CHOOSE_YOUR_PLANTS]", 229, 110, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
+	TodDrawString(g, "[CHOOSE_YOUR_PLANTS]", 229, 110, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White,
+				  DS_ALIGN_CENTER);
 
 	int aNumSeeds = Has7Rows() ? 48 : 40;
 	for (SeedType aSeedShadow = SEED_PEASHOOTER; aSeedShadow < aNumSeeds; aSeedShadow = (SeedType)(aSeedShadow + 1))
@@ -410,8 +410,8 @@ void SeedChooserScreen::Draw(Graphics *g)
 				aPosX -= mX;
 				aPosY -= mY;
 			}
-			DrawSeedPacket(
-				g, aPosX, aPosY, aChosenSeed.mSeedType, aChosenSeed.mImitaterType, 0, aGrayed ? 115 : 255, true, false);
+			DrawSeedPacket(g, aPosX, aPosY, aChosenSeed.mSeedType, aChosenSeed.mImitaterType, 0, aGrayed ? 115 : 255,
+						   true, false);
 		}
 	}
 
@@ -423,15 +423,8 @@ void SeedChooserScreen::Draw(Graphics *g)
 		if (mApp->SeedTypeAvailable(aSeedType) &&
 			(aSeedState == SEED_FLYING_TO_BANK || aSeedState == SEED_FLYING_TO_CHOOSER))
 		{
-			DrawSeedPacket(g,
-						   aChosenSeed.mX,
-						   aChosenSeed.mY,
-						   aChosenSeed.mSeedType,
-						   aChosenSeed.mImitaterType,
-						   0,
-						   255,
-						   true,
-						   false);
+			DrawSeedPacket(g, aChosenSeed.mX, aChosenSeed.mY, aChosenSeed.mSeedType, aChosenSeed.mImitaterType, 0, 255,
+						   true, false);
 		}
 	}
 
@@ -551,10 +544,10 @@ void SeedChooserScreen::Update()
 			{
 				int aTimeStart = aChosenSeed.mTimeStartMotion;
 				int aTimeEnd = aChosenSeed.mTimeEndMotion;
-				aChosenSeed.mX = TodAnimateCurve(
-					aTimeStart, aTimeEnd, mSeedChooserAge, aChosenSeed.mStartX, aChosenSeed.mEndX, CURVE_EASE_IN_OUT);
-				aChosenSeed.mY = TodAnimateCurve(
-					aTimeStart, aTimeEnd, mSeedChooserAge, aChosenSeed.mStartY, aChosenSeed.mEndY, CURVE_EASE_IN_OUT);
+				aChosenSeed.mX = TodAnimateCurve(aTimeStart, aTimeEnd, mSeedChooserAge, aChosenSeed.mStartX,
+												 aChosenSeed.mEndX, CURVE_EASE_IN_OUT);
+				aChosenSeed.mY = TodAnimateCurve(aTimeStart, aTimeEnd, mSeedChooserAge, aChosenSeed.mStartY,
+												 aChosenSeed.mEndY, CURVE_EASE_IN_OUT);
 				if (mSeedChooserAge >= aChosenSeed.mTimeEndMotion)
 				{
 					LandFlyingSeed(aChosenSeed);
@@ -578,12 +571,8 @@ void SeedChooserScreen::Update()
 
 bool SeedChooserScreen::DisplayRepickWarningDialog(const SexyString &theMessage)
 {
-	return mApp->LawnMessageBox(Dialogs::DIALOG_CHOOSER_WARNING,
-								"[DIALOG_WARNING]",
-								theMessage,
-								"[DIALOG_BUTTON_YES]",
-								"[REPICK_BUTTON]",
-								Dialog::BUTTONS_YES_NO) == Dialog::ID_YES;
+	return mApp->LawnMessageBox(Dialogs::DIALOG_CHOOSER_WARNING, "[DIALOG_WARNING]", theMessage, "[DIALOG_BUTTON_YES]",
+								"[REPICK_BUTTON]", Dialog::BUTTONS_YES_NO) == Dialog::ID_YES;
 }
 
 bool SeedChooserScreen::FlyersAreComming()
@@ -1050,8 +1039,8 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 			mApp->PlaySample(Sexy::SOUND_TAP);
 			ImitaterDialog *aDialog = new ImitaterDialog();
 			mApp->AddDialog(aDialog->mId, aDialog);
-			aDialog->Resize(
-				(mWidth - aDialog->mWidth) / 2, (mHeight - aDialog->mHeight) / 2, aDialog->mWidth, aDialog->mHeight);
+			aDialog->Resize((mWidth - aDialog->mWidth) / 2, (mHeight - aDialog->mHeight) / 2, aDialog->mWidth,
+							aDialog->mHeight);
 			mApp->mWidgetManager->SetFocus(aDialog);
 		}
 	}
@@ -1077,11 +1066,8 @@ void SeedChooserScreen::MouseDown(int x, int y, int theClickCount)
 			if (SeedNotAllowedDuringTrial(aSeedType))
 			{
 				mApp->PlaySample(Sexy::SOUND_TAP);
-				if (mApp->LawnMessageBox(DIALOG_MESSAGE,
-										 "[GET_FULL_VERSION_TITLE]",
-										 "[GET_FULL_VERSION_BODY]",
-										 "[GET_FULL_VERSION_YES_BUTTON]",
-										 "[GET_FULL_VERSION_NO_BUTTON]",
+				if (mApp->LawnMessageBox(DIALOG_MESSAGE, "[GET_FULL_VERSION_TITLE]", "[GET_FULL_VERSION_BODY]",
+										 "[GET_FULL_VERSION_YES_BUTTON]", "[GET_FULL_VERSION_NO_BUTTON]",
 										 Dialog::BUTTONS_YES_NO) == Dialog::ID_YES)
 				{
 #if SEXY_USE_DRM

@@ -102,9 +102,7 @@ bool ReanimAtlas::ImageFits(int theImageCount, const Rect &rectTest, int theMaxW
 	return true;
 }
 
-bool ReanimAtlas::ImageFindPlaceOnSide(ReanimAtlasImage *theAtlasImageToPlace,
-									   int theImageCount,
-									   int theMaxWidth,
+bool ReanimAtlas::ImageFindPlaceOnSide(ReanimAtlasImage *theAtlasImageToPlace, int theImageCount, int theMaxWidth,
 									   bool theToRight)
 {
 	Rect rectTest;
@@ -119,7 +117,7 @@ bool ReanimAtlas::ImageFindPlaceOnSide(ReanimAtlasImage *theAtlasImageToPlace,
 			rectTest.mX = aImage->mX + aImage->mWidth + 1;
 			rectTest.mY = aImage->mY;
 		}
-		else 
+		else
 		{
 			rectTest.mX = aImage->mX;
 			rectTest.mY = aImage->mY + aImage->mHeight + 1;
@@ -159,13 +157,13 @@ bool ReanimAtlas::PlaceAtlasImage(ReanimAtlasImage *theAtlasImageToPlace, int th
 	if (ImageFindPlace(theAtlasImageToPlace, theImageCount, theMaxWidth))
 		return true;
 
-	TOD_ASSERT();
+	TOD_ASSERT(false);
 	return false;
 }
 
 void ReanimAtlas::ArrangeImages(int &theAtlasWidth, int &theAtlasHeight)
 {
-	std::sort(mImageArray, mImageArray + mImageCount, sSortByNonIncreasingHeight); // 将所有图集图片按高度降序排序
+	std::sort(mImageArray, mImageArray + mImageCount, sSortByNonIncreasingHeight);
 	theAtlasWidth = PickAtlasWidth();
 	theAtlasHeight = 0;
 
@@ -230,7 +228,15 @@ void ReanimAtlas::ReanimAtlasCreate(ReanimatorDefinition *theReanimDef)
 			{
 				int aImageIndex = FindImage(aImage);
 				TOD_ASSERT(aImageIndex >= 0);
+#pragma warning(push)
+#pragma warning(disable : 4312 4068)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wint-to-pointer-cast"
+				// aImageIndex is clearly an invalid pointer so not entirely sure what the intention is
+				// (assigning to nullptr should have the same effect, but keeping this just in case)
 				aImage = (Image *)(aImageIndex + 1);
+#pragma clang diagnostic pop
+#pragma warning(pop)
 			}
 		}
 	}

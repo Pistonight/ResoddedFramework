@@ -108,7 +108,7 @@ void GridItem::DrawGridItem(Graphics *g)
 		DrawIZombieBrain(g);
 		break;
 	default:
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 		break;
 	}
 
@@ -190,9 +190,7 @@ void GridItem::DrawGraveStone(Graphics *g)
 		aExtraTopClip = TodAnimateCurveFloat(400, 0, aPlant->mStateCountdown, 10.0f, 40.0f, TodCurves::CURVE_LINEAR);
 	}
 
-	Rect aSrcRect(aCelWidth * aGraveCol,
-				  aCelHeight * aGraveRow + aExtraTopClip,
-				  aCelWidth,
+	Rect aSrcRect(aCelWidth * aGraveCol, aCelHeight * aGraveRow + aExtraTopClip, aCelWidth,
 				  aVisibleHeight - aExtraBottomClip - aExtraTopClip);
 	Rect aSrcRectDirt(aCelWidth * aGraveCol, aCelHeight * aGraveRow, aCelWidth, aVisibleHeightDirt);
 	int x = mBoard->GridToPixelX(mGridX, mGridY) + aGridCelOffsetX - 4;
@@ -328,15 +326,8 @@ void GridItem::DrawScaryPot(Graphics *g)
 		{
 			aInsideGraphics.mScaleX = 0.7f;
 			aInsideGraphics.mScaleY = 0.7f;
-			DrawSeedPacket(&aInsideGraphics,
-						   aXPos + 23.0f,
-						   aYPos + 33.0f,
-						   mSeedType,
-						   SeedType::SEED_NONE,
-						   0.0f,
-						   255,
-						   false,
-						   false);
+			DrawSeedPacket(&aInsideGraphics, aXPos + 23.0f, aYPos + 33.0f, mSeedType, SeedType::SEED_NONE, 0.0f, 255,
+						   false, false);
 		}
 		else if (mScaryPotType == ScaryPotType::SCARYPOT_ZOMBIE)
 		{

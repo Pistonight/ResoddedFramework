@@ -12,21 +12,14 @@
 #include "System/Achievements.h"
 #include "../Sexy.TodLib/Attachment.h"
 
-ProjectileDefinition gProjectileDefinition[] = { 
-	{ProjectileType::PROJECTILE_PEA, 0, 20},
-	{ProjectileType::PROJECTILE_SNOWPEA, 0, 20},
-	{ProjectileType::PROJECTILE_CABBAGE, 0, 40},
-	{ProjectileType::PROJECTILE_MELON, 0, 80},
-	{ProjectileType::PROJECTILE_PUFF, 0, 20},
-	{ProjectileType::PROJECTILE_WINTERMELON, 0, 80},
-	{ProjectileType::PROJECTILE_FIREBALL, 0, 40},
-	{ProjectileType::PROJECTILE_STAR, 0, 20},
-	{ProjectileType::PROJECTILE_SPIKE, 0, 20},
-	{ProjectileType::PROJECTILE_BASKETBALL, 0, 75},
-	{ProjectileType::PROJECTILE_KERNEL, 0, 20},
-	{ProjectileType::PROJECTILE_COBBIG, 0, 300},
-	{ProjectileType::PROJECTILE_BUTTER, 0, 40},
-	{ProjectileType::PROJECTILE_ZOMBIE_PEA, 0, 20}};
+ProjectileDefinition gProjectileDefinition[] = {
+	{ProjectileType::PROJECTILE_PEA, 0, 20},	  {ProjectileType::PROJECTILE_SNOWPEA, 0, 20},
+	{ProjectileType::PROJECTILE_CABBAGE, 0, 40},  {ProjectileType::PROJECTILE_MELON, 0, 80},
+	{ProjectileType::PROJECTILE_PUFF, 0, 20},	  {ProjectileType::PROJECTILE_WINTERMELON, 0, 80},
+	{ProjectileType::PROJECTILE_FIREBALL, 0, 40}, {ProjectileType::PROJECTILE_STAR, 0, 20},
+	{ProjectileType::PROJECTILE_SPIKE, 0, 20},	  {ProjectileType::PROJECTILE_BASKETBALL, 0, 75},
+	{ProjectileType::PROJECTILE_KERNEL, 0, 20},	  {ProjectileType::PROJECTILE_COBBIG, 0, 300},
+	{ProjectileType::PROJECTILE_BUTTER, 0, 40},	  {ProjectileType::PROJECTILE_ZOMBIE_PEA, 0, 20}};
 
 Projectile::Projectile()
 {
@@ -37,8 +30,8 @@ Projectile::~Projectile()
 	AttachmentDie(mAttachmentID);
 }
 
-void Projectile::ProjectileInitialize(
-	int theX, int theY, int theRenderOrder, int theRow, ProjectileType theProjectileType)
+void Projectile::ProjectileInitialize(int theX, int theY, int theRenderOrder, int theRow,
+									  ProjectileType theProjectileType)
 {
 	int aGridX = mBoard->PixelToGridXKeepOnBoard(theX, theY);
 	mProjectileType = theProjectileType;
@@ -99,7 +92,7 @@ void Projectile::ProjectileInitialize(
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_FIREBALL)
 	{
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_COBBIG)
 	{
@@ -147,8 +140,7 @@ Plant *Projectile::FindCollisionTargetPlant()
 		{
 			if (aPlant->mSeedType == SeedType::SEED_PUFFSHROOM || aPlant->mSeedType == SeedType::SEED_SUNSHROOM ||
 				aPlant->mSeedType == SeedType::SEED_POTATOMINE || aPlant->mSeedType == SeedType::SEED_SPIKEWEED ||
-				aPlant->mSeedType == SeedType::SEED_SPIKEROCK ||
-				aPlant->mSeedType == SeedType::SEED_LILYPAD)
+				aPlant->mSeedType == SeedType::SEED_SPIKEROCK || aPlant->mSeedType == SeedType::SEED_LILYPAD)
 				continue;
 		}
 
@@ -583,8 +575,8 @@ void Projectile::UpdateLobMotion()
 			{
 				mApp->PlayFoley(FoleyType::FOLEY_SPLAT);
 				int aRenderPosition = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1);
-				mApp->AddTodParticle(
-					mPosX + 20.0f, mPosY + 20.0f, aRenderPosition, ParticleEffect::PARTICLE_UMBRELLA_REFLECT);
+				mApp->AddTodParticle(mPosX + 20.0f, mPosY + 20.0f, aRenderPosition,
+									 ParticleEffect::PARTICLE_UMBRELLA_REFLECT);
 				Die();
 			}
 			else if (aUmbrellaPlant->mState != PlantState::STATE_UMBRELLA_TRIGGERED)
@@ -833,13 +825,13 @@ void Projectile::DoImpact(Zombie *theZombie)
 	float aSplatPosY = mPosY + 12.0f;
 	if (mProjectileType == ProjectileType::PROJECTILE_MELON)
 	{
-		mApp->AddTodParticle(
-			aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_MELONSPLASH);
+		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1,
+							 ParticleEffect::PARTICLE_MELONSPLASH);
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_WINTERMELON)
 	{
-		mApp->AddTodParticle(
-			aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1, ParticleEffect::PARTICLE_WINTERMELON);
+		mApp->AddTodParticle(aLastPosX + 30.0f, aLastPosY + 30.0f, mRenderOrder + 1,
+							 ParticleEffect::PARTICLE_WINTERMELON);
 	}
 	else if (mProjectileType == ProjectileType::PROJECTILE_COBBIG)
 	{
@@ -863,8 +855,8 @@ void Projectile::DoImpact(Zombie *theZombie)
 	{
 		if (IsSplashDamage(theZombie))
 		{
-			Reanimation *aFireReanim = mApp->AddReanimation(
-				mPosX + 38.0f, mPosY - 20.0f, mRenderOrder + 1, ReanimationType::REANIM_JALAPENO_FIRE);
+			Reanimation *aFireReanim = mApp->AddReanimation(mPosX + 38.0f, mPosY - 20.0f, mRenderOrder + 1,
+															ReanimationType::REANIM_JALAPENO_FIRE);
 			aFireReanim->mAnimTime = 0.25f;
 			aFireReanim->mAnimRate = 24.0f;
 			aFireReanim->OverrideScale(0.7f, 0.4f);
@@ -936,10 +928,8 @@ void Projectile::Update()
 		return;
 
 	int aTime = 20;
-	if (mProjectileType != ProjectileType::PROJECTILE_PUFF &&
-		mProjectileType != ProjectileType::PROJECTILE_FIREBALL &&
-		mProjectileType != ProjectileType::PROJECTILE_STAR &&
-		mProjectileType != ProjectileType::PROJECTILE_BASKETBALL)
+	if (mProjectileType != ProjectileType::PROJECTILE_PUFF && mProjectileType != ProjectileType::PROJECTILE_FIREBALL &&
+		mProjectileType != ProjectileType::PROJECTILE_STAR && mProjectileType != ProjectileType::PROJECTILE_BASKETBALL)
 	{
 		aTime = 0;
 	}
@@ -1027,7 +1017,7 @@ void Projectile::Draw(Graphics *g)
 	}
 	else
 	{
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 	}
 
 	bool aMirror = false;
@@ -1054,8 +1044,8 @@ void Projectile::Draw(Graphics *g)
 			float aOffsetX = mPosX + aCelWidth * 0.5f;
 			float aOffsetY = mPosZ + mPosY + aCelHeight * 0.5f;
 			SexyTransform2D aTransform;
-			TodScaleRotateTransformMatrix(
-				aTransform, aOffsetX + mBoard->mX, aOffsetY + mBoard->mY, mRotation, aScale, aScale);
+			TodScaleRotateTransformMatrix(aTransform, aOffsetX + mBoard->mX, aOffsetY + mBoard->mY, mRotation, aScale,
+										  aScale);
 			TodBltMatrix(g, aImage, aTransform, g->mClipRect, Color::White, g->mDrawMode, aSrcRect);
 		}
 	}
@@ -1142,8 +1132,8 @@ void Projectile::DrawShadow(Graphics *g)
 		aScale *= 200.0f / (aHeight + 200.0f);
 	}
 
-	TodDrawImageCelScaledF(
-		g, IMAGE_PEA_SHADOWS, aOffsetX, (mShadowY - mPosY + aOffsetY), aCelCol, 0, aScale * aStretch, aScale);
+	TodDrawImageCelScaledF(g, IMAGE_PEA_SHADOWS, aOffsetX, (mShadowY - mPosY + aOffsetY), aCelCol, 0, aScale * aStretch,
+						   aScale);
 }
 
 void Projectile::Die()

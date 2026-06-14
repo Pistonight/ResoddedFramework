@@ -5,13 +5,11 @@
 #include <zlib.h>
 #include "../PakLib/PakInterface.h"
 #include "../SexyAppFramework/PerfTimer.h"
-#include "../SexyAppFramework/XMLParser.h" 
+#include "../SexyAppFramework/XMLParser.h"
 #include <fstream>
 #include "OriginalCompiledDefinition.h"
 
-DefSymbol gTrailFlagDefSymbols[] = {
-	{0, "Loops"},
-	{-1, nullptr}};
+DefSymbol gTrailFlagDefSymbols[] = {{0, "Loops"}, {-1, nullptr}};
 DefField gTrailDefFields[] = {
 	{"Image", offsetof(TrailDefinition, mImage), DefFieldType::DT_IMAGE, nullptr},
 	{"MaxPoints", offsetof(TrailDefinition, mMaxPoints), DefFieldType::DT_INT, nullptr},
@@ -25,40 +23,25 @@ DefField gTrailDefFields[] = {
 	{"", 0x0, DefFieldType::DT_INVALID, nullptr}};
 DefMap gTrailDefMap = {gTrailDefFields, sizeof(TrailDefinition), TrailDefinitionConstructor};
 
-DefSymbol gParticleFlagSymbols[] = {
-	{0, "RandomLaunchSpin"},
-	{1, "AlignLaunchSpin"},
-	{2, "AlignToPixel"},
-	{4, "ParticleLoops"},
-	{3, "SystemLoops"},
-	{5, "ParticlesDontFollow"},
-	{6, "RandomStartTime"},
-	{7, "DieIfOverloaded"},
-	{8, "Additive"},
-	{9, "FullScreen"},
-	{10, "SoftwareOnly"},
-	{11, "HardwareOnly"},
-	{-1, nullptr}};
+DefSymbol gParticleFlagSymbols[] = {{0, "RandomLaunchSpin"},
+									{1, "AlignLaunchSpin"},
+									{2, "AlignToPixel"},
+									{4, "ParticleLoops"},
+									{3, "SystemLoops"},
+									{5, "ParticlesDontFollow"},
+									{6, "RandomStartTime"},
+									{7, "DieIfOverloaded"},
+									{8, "Additive"},
+									{9, "FullScreen"},
+									{10, "SoftwareOnly"},
+									{11, "HardwareOnly"},
+									{-1, nullptr}};
 DefSymbol gEmitterTypeSymbols[] = {
-	{0, "Circle"},
-	{1, "Box"},
-	{2, "BoxPath"},
-	{3, "CirclePath"},
-	{4, "CircleEvenSpacing"},
-	{-1, nullptr}};
+	{0, "Circle"}, {1, "Box"}, {2, "BoxPath"}, {3, "CirclePath"}, {4, "CircleEvenSpacing"}, {-1, nullptr}};
 DefSymbol gParticleTypeSymbols[] = {
-	{1, "Friction"},
-	{2, "Acceleration"},
-	{3, "Attractor"},
-	{4, "MaxVelocity"},
-	{5, "Velocity"},
-	{6, "Position"},
-	{7, "SystemPosition"},
-	{8, "GroundConstraint"},
-	{9, "Shake"},
-	{10, "Circle"},
-	{11, "Away"},
-	{-1, nullptr}};
+	{1, "Friction"}, {2, "Acceleration"}, {3, "Attractor"},		 {4, "MaxVelocity"},
+	{5, "Velocity"}, {6, "Position"},	  {7, "SystemPosition"}, {8, "GroundConstraint"},
+	{9, "Shake"},	 {10, "Circle"},	  {11, "Away"},			 {-1, nullptr}};
 
 DefField gParticleFieldDefFields[] = {
 	{"FieldType", offsetof(ParticleField, mFieldType), DefFieldType::DT_ENUM, gParticleTypeSymbols},
@@ -122,11 +105,9 @@ DefField gEmitterDefFields[] = {
 };
 DefMap gEmitterDefMap = {gEmitterDefFields, sizeof(TodEmitterDefinition), TodEmitterDefinitionConstructor};
 
-DefField gParticleDefFields[] = {
-	{"Emitter", 0x0, DefFieldType::DT_ARRAY, &gEmitterDefMap},
-	{"", 0x0, DefFieldType::DT_INVALID, nullptr}};
-DefMap gParticleDefMap = {
-	gParticleDefFields, sizeof(TodParticleDefinition), TodParticleDefinitionConstructor};
+DefField gParticleDefFields[] = {{"Emitter", 0x0, DefFieldType::DT_ARRAY, &gEmitterDefMap},
+								 {"", 0x0, DefFieldType::DT_INVALID, nullptr}};
+DefMap gParticleDefMap = {gParticleDefFields, sizeof(TodParticleDefinition), TodParticleDefinitionConstructor};
 
 DefField gReanimatorTransformDefFields[] = {
 	{"x", offsetof(ReanimatorTransform, mTransX), DefFieldType::DT_FLOAT, nullptr},
@@ -140,25 +121,21 @@ DefField gReanimatorTransformDefFields[] = {
 	{"i", offsetof(ReanimatorTransform, mImage), DefFieldType::DT_IMAGE, nullptr},
 	{"font", offsetof(ReanimatorTransform, mFont), DefFieldType::DT_FONT, nullptr},
 	{"text", offsetof(ReanimatorTransform, mText), DefFieldType::DT_STRING, nullptr},
-	{"", 0x0, DefFieldType::DT_INVALID, nullptr}
-};
-DefMap gReanimatorTransformDefMap = { gReanimatorTransformDefFields, sizeof(ReanimatorTransform), ReanimatorTransformConstructor};
+	{"", 0x0, DefFieldType::DT_INVALID, nullptr}};
+DefMap gReanimatorTransformDefMap = {gReanimatorTransformDefFields, sizeof(ReanimatorTransform),
+									 ReanimatorTransformConstructor};
 
 DefField gReanimatorTrackDefFields[] = {
 	{"name", offsetof(ReanimatorTrack, mName), DefFieldType::DT_STRING, nullptr},
 	{"t", offsetof(ReanimatorTrack, mTransforms), DefFieldType::DT_ARRAY, &gReanimatorTransformDefMap},
-	{"", 0x0, DefFieldType::DT_INVALID, nullptr}
-};
-DefMap gReanimatorTrackDefMap = {
-	gReanimatorTrackDefFields, sizeof(ReanimatorTrack), ReanimatorTrackConstructor};
+	{"", 0x0, DefFieldType::DT_INVALID, nullptr}};
+DefMap gReanimatorTrackDefMap = {gReanimatorTrackDefFields, sizeof(ReanimatorTrack), ReanimatorTrackConstructor};
 
 DefField gReanimatorDefFields[] = {
 	{"track", offsetof(ReanimatorDefinition, mTracks), DefFieldType::DT_ARRAY, &gReanimatorTrackDefMap},
 	{"fps", offsetof(ReanimatorDefinition, mFPS), DefFieldType::DT_FLOAT, nullptr},
-	{"", 0x0, DefFieldType::DT_INVALID, nullptr}
-};
-DefMap gReanimatorDefMap = {
-	gReanimatorDefFields, sizeof(ReanimatorDefinition), ReanimatorDefinitionConstructor};
+	{"", 0x0, DefFieldType::DT_INVALID, nullptr}};
+DefMap gReanimatorDefMap = {gReanimatorDefFields, sizeof(ReanimatorDefinition), ReanimatorDefinitionConstructor};
 
 static DefLoadResPath gDefLoadResPaths[4] = {
 	{"IMAGE_", ""}, {"IMAGE_", "particles/"}, {"IMAGE_REANIM_", "reanim/"}, {"IMAGE_REANIM_", "images/"}};
@@ -265,12 +242,11 @@ void *DefinitionAlloc(int theSize)
 	return aPtr;
 }
 
-void DefinitionFree(void* &theMemory)
+void DefinitionFree(void *&theMemory)
 {
 	delete[] theMemory;
 	theMemory = nullptr;
 }
-
 
 bool DefinitionLoadImage(Image **theImage, const SexyString &theName)
 {
@@ -358,7 +334,7 @@ bool DefReadFromCacheFloatTrack(void *&theReadPtr, FloatParameterTrack *theTrack
 	}
 	return true;
 }
-bool DefReadFromCacheInt(void*& theReadPtr, int* theInt)
+bool DefReadFromCacheInt(void *&theReadPtr, int *theInt)
 {
 	int aValue;
 	SMemR(theReadPtr, &aValue, sizeof(int));
@@ -366,7 +342,7 @@ bool DefReadFromCacheInt(void*& theReadPtr, int* theInt)
 	return true;
 }
 
-bool DefReadFromCacheFloat(void*& theReadPtr, float* theFloat)
+bool DefReadFromCacheFloat(void *&theReadPtr, float *theFloat)
 {
 	float aValue;
 	SMemR(theReadPtr, &aValue, sizeof(float));
@@ -436,7 +412,7 @@ bool DefReadFromCacheFont(void *&theReadPtr, Font **theFont)
 }
 
 bool DefMapReadFromCache(void *&theReadPtr, DefMap *theDefMap, void *theDefinition)
-{ 
+{
 	for (DefField *aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)
 	{
 		bool aSucceed = true;
@@ -523,13 +499,11 @@ uint32_t DefinitionCalcHash(DefMap *theDefMap)
 	return aResult;
 }
 
-void *DefinitionUncompressCompiledBuffer(const CompiledDefinitionHeader *aHeader,
-										 void *theCompressedBuffer,
-										 size_t theCompressedBufferSize,
-										 const SexyString &theCompiledFilePath)
+void *DefinitionUncompressCompiledBuffer(const CompiledDefinitionHeader *aHeader, void *theCompressedBuffer,
+										 size_t theCompressedBufferSize, const SexyString &theCompiledFilePath)
 {
 	auto sz = theCompressedBufferSize;
-	
+
 	if (theCompressedBufferSize < 8)
 	{
 		TodTraceAndLog("[TodLib] - Compile def too small", theCompiledFilePath.c_str());
@@ -538,10 +512,7 @@ void *DefinitionUncompressCompiledBuffer(const CompiledDefinitionHeader *aHeader
 
 	Bytef *aUncompressedBuffer = (Bytef *)DefinitionAlloc(aHeader->mUncompressedSize);
 	theCompressedBufferSize = aHeader->mUncompressedSize;
-	int aResult = uncompress(aUncompressedBuffer,
-							 (uLongf *)&theCompressedBufferSize,
-							 (Bytef *)theCompressedBuffer,
-							 sz);
+	int aResult = uncompress(aUncompressedBuffer, (uLongf *)&theCompressedBufferSize, (Bytef *)theCompressedBuffer, sz);
 	TOD_ASSERT(aResult == Z_OK);
 	TOD_ASSERT(theCompressedBufferSize == aHeader->mUncompressedSize);
 	return aUncompressedBuffer;
@@ -596,9 +567,10 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 		{
 #if SEXY_IS_X86
 			bool aResult = LegacyDefinition::DefinitionReadCompiledFile(theCompiledFilePath, theDefMap, theDefinition);
-			if (aResult)  //If it's an x86 machine, and we find original definitions, load them, then convert to the format we use currently
+			if (aResult) //If it's an x86 machine, and we find original definitions, load them, then convert to the format we use currently
 			{
-				TodTraceAndLog("[TodLib] - Converting a Legacy Compiled Definition: \"%s\" to the New Format\n", theCompiledFilePath.c_str());
+				TodTraceAndLog("[TodLib] - Converting a Legacy Compiled Definition: \"%s\" to the New Format\n",
+							   theCompiledFilePath.c_str());
 				DefinitionWriteCompiledFile(theCompiledFilePath, theDefMap, theDefinition);
 			}
 			return aResult;
@@ -606,7 +578,6 @@ bool DefinitionReadCompiledFile(const SexyString &theCompiledFilePath, DefMap *t
 			return false;
 #endif
 		}
-		
 	}
 
 	return false;
@@ -621,7 +592,9 @@ bool IsFileInPakFile(const SexyString &theFilePath)
 {
 	PFILE *pFile = p_fopen(theFilePath.c_str(), "rb");
 	bool aIsInPak =
-		pFile && !pFile->mFP; // The file found and opened by mPakRecordMap.find has a null pointer mFP (because it was not opened from an actual file).
+		pFile &&
+		!pFile
+			 ->mFP; // The file found and opened by mPakRecordMap.find has a null pointer mFP (because it was not opened from an actual file).
 	if (pFile)
 	{
 		p_fclose(pFile);
@@ -644,9 +617,11 @@ bool DefinitionIsCompiled(const SexyString &theXMLFilePath)
 void DefinitionFillWithDefaults(DefMap *theDefMap, void *theDefinition)
 {
 	memset(theDefinition, NULL, theDefMap->mDefSize); // Initialize theDefinition to 0.
-	for (DefField *aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++) // Iterate through each member variable of theDefinition
-		if (aField->mFieldType == DefFieldType::DT_STRING) 
-			*(char **)((uintptr_t)theDefinition + aField->mFieldOffset) = ""; // Assign all char* member variables to pointers to empty character arrays.
+	for (DefField *aField = theDefMap->mMapFields; *aField->mFieldName != '\0';
+		 aField++) // Iterate through each member variable of theDefinition
+		if (aField->mFieldType == DefFieldType::DT_STRING)
+			*(char **)((uintptr_t)theDefinition + aField->mFieldOffset) =
+				""; // Assign all char* member variables to pointers to empty character arrays.
 }
 
 void DefinitionXmlError(XMLParser *theXmlParser, const char *theFormat, ...)
@@ -658,7 +633,8 @@ void DefinitionXmlError(XMLParser *theXmlParser, const char *theFormat, ...)
 
 	int aLine = theXmlParser->GetCurrentLineNum();
 	std::string aFileName = theXmlParser->GetFileName();
-	TodTraceAndLog("[TodLib] - %s(%d): XML Definition Error: %s\n", aFileName.c_str(), aLine, aFormattedMessage.c_str());
+	TodTraceAndLog("[TodLib] - %s(%d): XML Definition Error: %s\n", aFileName.c_str(), aLine,
+				   aFormattedMessage.c_str());
 }
 
 bool DefinitionReadXMLString(XMLParser *theXmlParser, SexyString &theValue)
@@ -671,7 +647,10 @@ bool DefinitionReadXMLString(XMLParser *theXmlParser, SexyString &theValue)
 	}
 	if (aXMLElement.mType == XMLElement::TYPE_END) // Processing ends when the end tag is read.
 		return true;
-	else if (aXMLElement.mType != XMLElement::TYPE_ELEMENT) // Apart from the closing tag, under normal circumstances, the content read here should be the defined main text.
+	else if (
+		aXMLElement.mType !=
+		XMLElement::
+			TYPE_ELEMENT) // Apart from the closing tag, under normal circumstances, the content read here should be the defined main text.
 	{
 		DefinitionXmlError(theXmlParser, "unknown element type");
 		return false;
@@ -762,7 +741,7 @@ bool DefinitionReadVector2Field(XMLParser *theXmlParser, SexyVector2 *theValue)
 	if (!DefinitionReadXMLString(theXmlParser, aStringValue))
 		return false;
 
-	if (sexysscanf(aStringValue.c_str(), "%f %f", theValue) == 1)
+	if (sexysscanf(aStringValue.c_str(), "%f %f", &theValue->x, &theValue->y) == 1)
 		return true;
 
 	DefinitionXmlError(theXmlParser, "Can't parse vector2 value '%s'", aStringValue.c_str());
@@ -772,7 +751,7 @@ bool DefinitionReadVector2Field(XMLParser *theXmlParser, SexyVector2 *theValue)
 bool DefinitionReadArrayField(XMLParser *theXmlParser, DefinitionArrayDef *theArray, DefField *theField)
 {
 	DefMap *aDefMap = (DefMap *)theField->mExtraData;
-	
+
 	if (theArray->mArrayCount == 0)
 	{
 		theArray->mArrayCount = 1;
@@ -793,8 +772,7 @@ bool DefinitionReadArrayField(XMLParser *theXmlParser, DefinitionArrayDef *theAr
 		theArray->mArrayCount++;
 	}
 
-	if (DefinitionLoadMap(theXmlParser,
-						  aDefMap,
+	if (DefinitionLoadMap(theXmlParser, aDefMap,
 						  (unsigned char *)theArray->mArrayData + aDefMap->mDefSize * (theArray->mArrayCount - 1)))
 		return true;
 
@@ -998,9 +976,7 @@ _m_break:
 	return true;
 }
 
-bool DefinitionReadFlagField(XMLParser *theXmlParser,
-							 const SexyString &theElementName,
-							 uintptr_t *theResultValue,
+bool DefinitionReadFlagField(XMLParser *theXmlParser, const SexyString &theElementName, uintptr_t *theResultValue,
 							 DefSymbol *theSymbolMap)
 {
 	int aValue;
@@ -1011,12 +987,13 @@ bool DefinitionReadFlagField(XMLParser *theXmlParser,
 	if (!DefinitionReadXMLString(theXmlParser, aStringValue))
 		return false;
 
-	int aFlag;
-	if (sexysscanf(aStringValue.c_str(), "%f %f", &aFlag) != 1)
+	float aFlagFloat;
+	if (sexysscanf(aStringValue.c_str(), "%f", &aFlagFloat) != 1)
 	{
 		DefinitionXmlError(theXmlParser, "Can't parse int value '%s'", aStringValue.c_str());
 		return false;
 	}
+	auto aFlag = static_cast<int>(aFlagFloat);
 
 	if (aFlag)
 	{
@@ -1038,9 +1015,10 @@ bool DefinitionReadImageField(XMLParser *theXmlParser, Image **theImage)
 	if (DefinitionLoadImage(theImage, aStringValue))
 		return true;
 
-	std::string aMessgae = StrFormat(
-		"Failed to find image '%s' in %s", aStringValue.c_str(), theXmlParser->GetFileName().c_str());
+	std::string aMessgae =
+		StrFormat("Failed to find image '%s' in %s", aStringValue.c_str(), theXmlParser->GetFileName().c_str());
 	TodErrorMessageBox(aMessgae.c_str(), "Missing image");
+	return false;
 }
 
 bool DefinitionReadFontField(XMLParser *theXmlParser, Font **theFont)
@@ -1052,8 +1030,10 @@ bool DefinitionReadFontField(XMLParser *theXmlParser, Font **theFont)
 	if (DefinitionLoadFont(theFont, aStringValue))
 		return true;
 
-	std::string aMessgae = StrFormat("Failed to find font '%s' in %s", aStringValue.c_str(), theXmlParser->GetFileName().c_str());
+	std::string aMessgae =
+		StrFormat("Failed to find font '%s' in %s", aStringValue.c_str(), theXmlParser->GetFileName().c_str());
 	TodErrorMessageBox(aMessgae.c_str(), "Missing font");
+	return false;
 }
 
 bool DefinitionReadField(XMLParser *theXmlParser, DefMap *theDefMap, void *theDefinition, bool *theDone)
@@ -1074,7 +1054,8 @@ bool DefinitionReadField(XMLParser *theXmlParser, DefMap *theDefMap, void *theDe
 		return true;
 	}
 	if (aXMLElement.mType !=
-		XMLElement::TYPE_START) // Normally, the start tag should be read here, while other content is read in subsequent corresponding functions.
+		XMLElement::
+			TYPE_START) // Normally, the start tag should be read here, while other content is read in subsequent corresponding functions.
 	{
 		DefinitionXmlError(theXmlParser, "Missing element start");
 		return false;
@@ -1084,11 +1065,12 @@ bool DefinitionReadField(XMLParser *theXmlParser, DefMap *theDefMap, void *theDe
 	{
 		void *pVar = (void *)((uintptr_t)theDefinition + aField->mFieldOffset);
 		if (aField->mFieldType == DefFieldType::DT_FLAGS &&
-			DefinitionReadFlagField(
-				theXmlParser, aXMLElement.mValue, (uintptr_t *)pVar, (DefSymbol *)aField->mExtraData))
+			DefinitionReadFlagField(theXmlParser, aXMLElement.mValue, (uintptr_t *)pVar,
+									(DefSymbol *)aField->mExtraData))
 			return true;
 
-		if (stricmp(aXMLElement.mValue.c_str(), aField->mFieldName) == 0) // Determine if aXMLElement is defined as the member variable.
+		if (stricmp(aXMLElement.mValue.c_str(), aField->mFieldName) ==
+			0) // Determine if aXMLElement is defined as the member variable.
 		{
 			bool aSuccess = false;
 			switch (aField->mFieldType)
@@ -1131,8 +1113,8 @@ bool DefinitionReadField(XMLParser *theXmlParser, DefMap *theDefMap, void *theDe
 			return false;
 		}
 	}
-	DefinitionXmlError(
-		theXmlParser, "Ignoring unknown element '%s'", aXMLElement.mValue.c_str()); // When no member variables are defined in aXMLElement
+	DefinitionXmlError(theXmlParser, "Ignoring unknown element '%s'",
+					   aXMLElement.mValue.c_str()); // When no member variables are defined in aXMLElement
 	return false;
 }
 
@@ -1157,7 +1139,6 @@ void DefWriteToCacheFlag(DefinitionCompiler *theWritePtr, uint32_t *theValue)
 		theWritePtr->Write(0);
 		return;
 	}
-	
 }
 
 void DefWriteToCacheString(DefinitionCompiler *theWritePtr, const char *theValue)
@@ -1210,7 +1191,6 @@ void DefWriteToCacheArray(DefinitionCompiler *theWritePtr, DefinitionArrayDef *t
 		void *elem = (uint8_t *)theValue->mArrayData + i * theDefMap->mDefSize;
 		DefMapWriteToCache(theWritePtr, theDefMap, elem);
 	}
-
 }
 
 void DefWriteToCacheFloatTrack(DefinitionCompiler *theWritePtr, FloatParameterTrack *theValue)
@@ -1245,14 +1225,12 @@ void DefMapWriteToCache(DefinitionCompiler *theWritePtr, DefMap *theDefMap, void
 		switch (aField->mFieldType)
 		{
 		case DefFieldType::DT_ENUM:
-		case DefFieldType::DT_INT:
-		{
+		case DefFieldType::DT_INT: {
 			int value = *(int *)aSrc;
 			theWritePtr->Write(value);
 			break;
 		}
-		case DefFieldType::DT_FLOAT:
-		{
+		case DefFieldType::DT_FLOAT: {
 			float value = *(float *)aSrc;
 			theWritePtr->Write(value);
 			break;
@@ -1299,11 +1277,10 @@ bool DefinitionWriteCompiledFile(const SexyString &theCompiledFilePath, DefMap *
 	aHeader.mUncompressedSize = (uint32_t)aCompiler.mBuffer.size();
 	aHeader.mDataOffset = sizeof(CompiledDefinitionHeader);
 
-
 	uLongf aCompressedSize = compressBound(aCompiler.mBuffer.size());
 	void *aCompressedData = DefinitionAlloc(aCompressedSize);
-	int res = compress(
-		(Bytef *)aCompressedData, &aCompressedSize, (Bytef *)aCompiler.mBuffer.data(), aHeader.mUncompressedSize);
+	int res = compress((Bytef *)aCompressedData, &aCompressedSize, (Bytef *)aCompiler.mBuffer.data(),
+					   aHeader.mUncompressedSize);
 
 	if (res != Z_OK)
 	{
@@ -1321,9 +1298,7 @@ bool DefinitionWriteCompiledFile(const SexyString &theCompiledFilePath, DefMap *
 	return true;
 }
 
-bool DefinitionCompileFile(const SexyString theXMLFilePath,
-						   const SexyString &theCompiledFilePath,
-						   DefMap *theDefMap,
+bool DefinitionCompileFile(const SexyString theXMLFilePath, const SexyString &theCompiledFilePath, DefMap *theDefMap,
 						   void *theDefinition)
 {
 	XMLParser aXMLParser;
@@ -1343,7 +1318,7 @@ bool DefinitionCompileAndLoad(const SexyString &theXMLFilePath, DefMap *theDefMa
 {
 	SexyString aCompiledFilePath = DefinitionGetCompiledFilePathFromXMLFilePath(theXMLFilePath);
 	TodHesitationTrace("predef");
-	
+
 	try
 	{
 		if (DefinitionReadCompiledFile(aCompiledFilePath, theDefMap, theDefinition))
@@ -1352,11 +1327,15 @@ bool DefinitionCompileAndLoad(const SexyString &theXMLFilePath, DefMap *theDefMa
 			return true;
 		}
 	}
-	catch (int anErrorCode) {}
+	catch (int anErrorCode)
+	{
+	}
 
 	PerfTimer aTimer;
 	aTimer.Start();
-	bool aResult = DefinitionCompileFile(theXMLFilePath, "fresh_" + aCompiledFilePath, theDefMap, theDefinition); //write to fresh_compiled to not overwrite on game re-compile by accident
+	bool aResult =
+		DefinitionCompileFile(theXMLFilePath, "fresh_" + aCompiledFilePath, theDefMap,
+							  theDefinition); //write to fresh_compiled to not overwrite on game re-compile by accident
 	TodTraceAndLog("[TodLib] - compile %d ms:'%s'", (int)aTimer.GetDuration(), aCompiledFilePath.c_str());
 	TodHesitationTrace("compiled %s", aCompiledFilePath.c_str());
 	if (aResult)
@@ -1372,8 +1351,8 @@ float FloatTrackEvaluate(FloatParameterTrack &theTrack, float theTimeValue, floa
 		return 0.0f;
 
 	if (theTimeValue < theTrack.mNodes[0].mTime) // If the current time is less than the start time of the first node
-		return TodCurveEvaluate(
-			theInterp, theTrack.mNodes[0].mLowValue, theTrack.mNodes[0].mHighValue, theTrack.mNodes[0].mDistribution);
+		return TodCurveEvaluate(theInterp, theTrack.mNodes[0].mLowValue, theTrack.mNodes[0].mHighValue,
+								theTrack.mNodes[0].mDistribution);
 
 	for (int i = 1; i < theTrack.mCountNodes; i++)
 	{
@@ -1392,13 +1371,16 @@ float FloatTrackEvaluate(FloatParameterTrack &theTrack, float theTimeValue, floa
 	}
 
 	FloatParameterTrackNode *aLastNode =
-		&theTrack.mNodes[theTrack.mCountNodes - 1]; // If the current time is greater than the start time of the last node
+		&theTrack
+			 .mNodes[theTrack.mCountNodes - 1]; // If the current time is greater than the start time of the last node
 	return TodCurveEvaluate(theInterp, aLastNode->mLowValue, aLastNode->mHighValue, aLastNode->mDistribution);
 }
 
 void FloatTrackSetDefault(FloatParameterTrack &theTrack, float theValue)
 {
-	if (theTrack.mNodes == nullptr && theValue != 0.0f) // Ensure that this parameter has no nodes (has not been assigned a value) and that the given default value is not 0.
+	if (theTrack.mNodes == nullptr &&
+		theValue !=
+			0.0f) // Ensure that this parameter has no nodes (has not been assigned a value) and that the given default value is not 0.
 	{
 		theTrack.mCountNodes = 1; // The default parameter track has exactly one node.
 		FloatParameterTrackNode *aNode = (FloatParameterTrackNode *)DefinitionAlloc(sizeof(FloatParameterTrackNode));
@@ -1432,7 +1414,8 @@ void DefinitionFreeArrayField(DefinitionArrayDef *theArray, DefMap *theDefMap)
 {
 	for (int i = 0; i < theArray->mArrayCount; i++)
 		DefinitionFreeMap(theDefMap,
-			(void *)((uintptr_t)theArray->mArrayData + theDefMap->mDefSize * i)); // The last parameter represents pData[i].
+						  (void *)((uintptr_t)theArray->mArrayData +
+								   theDefMap->mDefSize * i)); // The last parameter represents pData[i].
 	DefinitionFree(theArray->mArrayData);
 }
 
@@ -1444,8 +1427,7 @@ void DefinitionFreeMap(DefMap *theDefMap, void *theDefinition)
 		void *aVar = (void *)((uintptr_t)theDefinition + aField->mFieldOffset); // pointer to this member variable
 		switch (aField->mFieldType)
 		{
-		case DefFieldType::DT_STRING:
-		{
+		case DefFieldType::DT_STRING: {
 			char *aStr = *(char **)aVar;
 			if (aStr == nullptr)
 				continue;
@@ -1458,9 +1440,8 @@ void DefinitionFreeMap(DefMap *theDefMap, void *theDefinition)
 		case DefFieldType::DT_ARRAY:
 			DefinitionFreeArrayField((DefinitionArrayDef *)aVar, (DefMap *)aField->mExtraData);
 			break;
-		case DefFieldType::DT_TRACK_FLOAT:
-		{
-			FloatParameterTrack* aCastedField = (FloatParameterTrack *)aVar;
+		case DefFieldType::DT_TRACK_FLOAT: {
+			FloatParameterTrack *aCastedField = (FloatParameterTrack *)aVar;
 			if (aCastedField->mCountNodes != 0)
 				delete[] aCastedField->mNodes; // Release the node of the floating-point parameter track
 			aCastedField->mNodes = nullptr;
