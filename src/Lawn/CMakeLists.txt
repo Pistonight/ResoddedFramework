@@ -122,3 +122,8 @@ foreach(DLL ${DLLS_TO_COPY})
             "${EXPORT_DIR}"
     )
 endforeach()
+
+if(MSVC)
+    # set source and execution charset to utf-8
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
+endif()

@@ -310,7 +310,7 @@ size_t PakInterface::FRead(void *thePtr, int theElemSize, int theCount, PFILE *t
 	{
 		int aSizeBytes = std::min(1l * theElemSize * theCount, theFile->mRecord->mSize - theFile->mPos);
 
-		// 取得在整个 pak 中开始读取的位置的指针
+        // obtain pointer to start reading relative to the whole pak
 		uint8_t *src = theFile->mRecord->mCollection->mData.data() + theFile->mRecord->mStartPos + theFile->mPos;
 		uint8_t *dest = (uint8_t *)thePtr;
 		memcpy(thePtr, src, aSizeBytes);
