@@ -136,7 +136,7 @@ void MessageWidget::SetLabel(const SexyString &theNewLabel, MessageStyle theMess
 			break;
 
 		default:
-			TOD_ASSERT();
+			TOD_ASSERT(false);
 			break;
 		}
 
@@ -154,7 +154,7 @@ void MessageWidget::LayoutReanimText()
 	int aCurLine = 0, aCurPos = 0;
 	Font *aFont = GetFont();
 	int aLabelLen = strlen(mLabel);
-	
+
 	mSlideOffTime = aLabelLen + 100;
 
 	float aLineWidth[MAX_REANIM_LINES];
@@ -238,8 +238,8 @@ void MessageWidget::Update()
 			}
 			else
 			{
-				aTextReanim->mAnimRate = TodAnimateCurveFloat(
-					0, 50, (mDisplayTime - mDuration) * aTextSpeed - aPos, 0.0f, 40.0f, TodCurves::CURVE_LINEAR);
+				aTextReanim->mAnimRate = TodAnimateCurveFloat(0, 50, (mDisplayTime - mDuration) * aTextSpeed - aPos,
+															  0.0f, 40.0f, TodCurves::CURVE_LINEAR);
 			}
 		}
 		else
@@ -248,8 +248,8 @@ void MessageWidget::Update()
 			{
 				aTextReanim->PlayReanim("anim_leave", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 0.0f);
 			}
-			aTextReanim->mAnimRate = TodAnimateCurveFloat(
-				0, 50, (mSlideOffTime - mDuration) * aTextSpeed - aPos, 0.0f, 40.0f, TodCurves::CURVE_LINEAR);
+			aTextReanim->mAnimRate = TodAnimateCurveFloat(0, 50, (mSlideOffTime - mDuration) * aTextSpeed - aPos, 0.0f,
+														  40.0f, TodCurves::CURVE_LINEAR);
 		}
 
 		aTextReanim->Update();
@@ -321,7 +321,8 @@ Font *MessageWidget::GetFont()
 		return Sexy::FONT_HOUSEOFTERROR16;
 	}
 
-	TOD_ASSERT();
+	TOD_ASSERT(false);
+	return Sexy::FONT_HOUSEOFTERROR16;
 }
 
 void MessageWidget::Draw(Graphics *g)
@@ -413,7 +414,7 @@ void MessageWidget::Draw(Graphics *g)
 		break;
 
 	default:
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 		break;
 	}
 
@@ -429,7 +430,8 @@ void MessageWidget::Draw(Graphics *g)
 	{
 		if (aMinAlpha != 255)
 		{
-			aColor.mAlpha = TodAnimateCurve(75, 0, mApp->mAppCounter % 75, aMinAlpha, 255, TodCurves::CURVE_BOUNCE_SLOW_MIDDLE);
+			aColor.mAlpha =
+				TodAnimateCurve(75, 0, mApp->mAppCounter % 75, aMinAlpha, 255, TodCurves::CURVE_BOUNCE_SLOW_MIDDLE);
 			aOutlineColor.mAlpha = aColor.mAlpha;
 		}
 		if (aFadeOut)
@@ -446,11 +448,7 @@ void MessageWidget::Draw(Graphics *g)
 			g->FillRect(aRect);
 
 			aRect.mY += aTextOffsetY;
-			TodDrawStringWrapped(g,
-								 mLabel,
-								 aRect,
-								 aFont,
-								 aColor,
+			TodDrawStringWrapped(g, mLabel, aRect, aFont, aColor,
 								 DrawStringJustification::DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 		}
 		else
@@ -458,19 +456,10 @@ void MessageWidget::Draw(Graphics *g)
 			Rect aRect(aPosX - mApp->mBoard->mX - BOARD_WIDTH / 2, aPosY - aFont->mAscent, BOARD_WIDTH, BOARD_HEIGHT);
 			if (aOutlineFont)
 			{
-				TodDrawStringWrapped(g,
-									 mLabel,
-									 aRect,
-									 aOutlineFont,
-									 aOutlineColor,
+				TodDrawStringWrapped(g, mLabel, aRect, aOutlineFont, aOutlineColor,
 									 DrawStringJustification::DS_ALIGN_CENTER);
 			}
-			TodDrawStringWrapped(g,
-								 mLabel,
-								 aRect,
-								 aFont,
-								 aColor,
-								 DrawStringJustification::DS_ALIGN_CENTER);
+			TodDrawStringWrapped(g, mLabel, aRect, aFont, aColor, DrawStringJustification::DS_ALIGN_CENTER);
 		}
 
 		if (mMessageStyle == MessageStyle::MESSAGE_STYLE_HOUSE_NAME)
@@ -486,13 +475,8 @@ void MessageWidget::Draw(Graphics *g)
 
 			if (aSubStr.size() > 0)
 			{
-				TodDrawString(g,
-							  aSubStr,
-							  BOARD_WIDTH / 2 - mApp->mBoard->mX,
-							  aPosY + 26,
-							  Sexy::FONT_HOUSEOFTERROR16,
-							  Color(224, 187, 62, aColor.mAlpha),
-							  DrawStringJustification::DS_ALIGN_CENTER);
+				TodDrawString(g, aSubStr, BOARD_WIDTH / 2 - mApp->mBoard->mX, aPosY + 26, Sexy::FONT_HOUSEOFTERROR16,
+							  Color(224, 187, 62, aColor.mAlpha), DrawStringJustification::DS_ALIGN_CENTER);
 			}
 		}
 	}

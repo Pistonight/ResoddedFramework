@@ -45,8 +45,7 @@ void StoreScreenOverlay::Draw(Graphics *g)
 	mParent->DrawOverlay(g);
 }
 
-StoreScreen::StoreScreen(LawnApp *theApp)
-	: Dialog(nullptr, nullptr, DIALOG_STORE, true, "Store", "", "", BUTTONS_NONE)
+StoreScreen::StoreScreen(LawnApp *theApp) : Dialog(nullptr, nullptr, DIALOG_STORE, true, "Store", "", "", BUTTONS_NONE)
 {
 	mApp = theApp;
 	mClip = false;
@@ -150,7 +149,7 @@ StoreItem StoreScreen::GetStoreItemType(int theSpotIndex)
 		return gStoreItemSpots[mPage][theSpotIndex];
 	}
 
-	TOD_ASSERT();
+	TOD_ASSERT(false);
 	return STORE_ITEM_INVALID;
 }
 
@@ -303,8 +302,8 @@ void StoreScreen::DrawItemIcon(Graphics *g, int theItemPosition, StoreItem theIt
 		aNumSlots = std::clamp(aNumSlots, 7, 10);
 		SexyString aSlotText = TodReplaceNumberString("[STORE_UPGRADE_SLOTS]", "{SLOTS}", aNumSlots);
 		Rect aRect(aPosX, aPosY + 6, 55, 70);
-		TodDrawStringWrapped(
-			g, aSlotText, aRect, Sexy::FONT_HOUSEOFTERROR16, Color::White, DS_ALIGN_CENTER_VERTICAL_MIDDLE);
+		TodDrawStringWrapped(g, aSlotText, aRect, Sexy::FONT_HOUSEOFTERROR16, Color::White,
+							 DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 	}
 	else if (theItemType == STORE_ITEM_POOL_CLEANER)
 	{
@@ -411,18 +410,14 @@ void StoreScreen::DrawItem(Graphics *g, int theItemPosition, StoreItem theItemTy
 		{
 			aRect.mX -= 4;
 		}
-		TodDrawStringWrapped(g,
-							 "[COMING_SOON]",
-							 aRect,
-							 Sexy::FONT_HOUSEOFTERROR16,
-							 Color(255, 0, 0),
+		TodDrawStringWrapped(g, "[COMING_SOON]", aRect, Sexy::FONT_HOUSEOFTERROR16, Color(255, 0, 0),
 							 DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 	}
 	else if (IsItemSoldOut(theItemType))
 	{
 		Rect aRect(aPosX, aPosY, 50, 70);
-		TodDrawStringWrapped(
-			g, "[SOLD_OUT]", aRect, Sexy::FONT_HOUSEOFTERROR16, Color(255, 0, 0), DS_ALIGN_CENTER_VERTICAL_MIDDLE);
+		TodDrawStringWrapped(g, "[SOLD_OUT]", aRect, Sexy::FONT_HOUSEOFTERROR16, Color(255, 0, 0),
+							 DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 	}
 	else if (mMouseOverItem == theItemType)
 	{
@@ -493,8 +488,7 @@ void StoreScreen::Draw(Graphics *g)
 	g->SetColor(Color(180, 255, 90));
 	g->SetFont(Sexy::FONT_CONTINUUMBOLD14);
 	SexyString aCoinLabel = mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
-	g->DrawString(aCoinLabel,
-				  STORESCREEN_COINBANK_X + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel),
+	g->DrawString(aCoinLabel, STORESCREEN_COINBANK_X + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel),
 				  STORESCREEN_COINBANK_Y + 24);
 
 	if (!mPrevButton->mDisabled)
@@ -508,15 +502,10 @@ void StoreScreen::Draw(Graphics *g)
 			}
 		}
 
-		SexyString aPageString = TodReplaceNumberString(
-			TodReplaceNumberString("[STORE_PAGE]", "{PAGE}", mPage), "{NUM_PAGES}", aNumPages);
-		TodDrawString(g,
-					  aPageString,
-					  STORESCREEN_PAGESTRING_X,
-					  STORESCREEN_COINBANK_Y,
-					  Sexy::FONT_BRIANNETOD12,
-					  Color(80, 80, 80),
-					  DS_ALIGN_CENTER);
+		SexyString aPageString =
+			TodReplaceNumberString(TodReplaceNumberString("[STORE_PAGE]", "{PAGE}", mPage), "{NUM_PAGES}", aNumPages);
+		TodDrawString(g, aPageString, STORESCREEN_PAGESTRING_X, STORESCREEN_COINBANK_Y, Sexy::FONT_BRIANNETOD12,
+					  Color(80, 80, 80), DS_ALIGN_CENTER);
 	}
 }
 
@@ -651,7 +640,7 @@ void StoreScreen::UpdateMouse()
 					aMessageIndex = 2034;
 					break;
 				default:
-					TOD_ASSERT();
+					TOD_ASSERT(false);
 					break;
 				}
 				if (mApp->mCrazyDaveMessageIndex != aMessageIndex)
@@ -1006,7 +995,7 @@ int StoreScreen::GetItemCost(StoreItem theStoreItem)
 	case STORE_ITEM_FIRSTAID:
 		return 200;
 	default:
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 		return 0;
 	}
 }
@@ -1023,25 +1012,16 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
 	mApp->CrazyDaveStopTalking();
 	if (!CanAffordItem(theStoreItem))
 	{
-		Dialog *aDialog = mApp->DoDialog(
-			DIALOG_NOT_ENOUGH_MONEY,
-			true,
-			"[NOT_ENOUGH_MONEY]",
-			"[CANNOT_AFFORD_ITEM]",
-			"[DIALOG_BUTTON_OK]",
-			BUTTONS_FOOTER);
+		Dialog *aDialog = mApp->DoDialog(DIALOG_NOT_ENOUGH_MONEY, true, "[NOT_ENOUGH_MONEY]", "[CANNOT_AFFORD_ITEM]",
+										 "[DIALOG_BUTTON_OK]", BUTTONS_FOOTER);
 		mWaitForDialog = true;
 		aDialog->WaitForResult(true);
 		mWaitForDialog = false;
 	}
 	else
 	{
-		LawnDialog *aComfirmDialog = (LawnDialog *)mApp->DoDialog(DIALOG_STORE_PURCHASE,
-																  true,
-																  "[BUY_ITEM_HEADER]",
-																  "[BUY_ITEM]",
-																  "",
-																  BUTTONS_YES_NO);
+		LawnDialog *aComfirmDialog = (LawnDialog *)mApp->DoDialog(DIALOG_STORE_PURCHASE, true, "[BUY_ITEM_HEADER]",
+																  "[BUY_ITEM]", "", BUTTONS_YES_NO);
 		aComfirmDialog->mLawnYesButton->SetLabel("[DIALOG_BUTTON_YES]");
 		aComfirmDialog->mLawnNoButton->SetLabel("[DIALOG_BUTTON_NO]");
 
@@ -1055,13 +1035,10 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
 			if (theStoreItem == STORE_ITEM_PACKET_UPGRADE)
 			{
 				++mApp->mPlayerInfo->mPurchases[theStoreItem];
-				SexyString aDialogLines = StrFormat(TodStringTranslate("[NOW_YOU_CAN_CHOOSE_X_SEEDS]").c_str(), 6 + mApp->mPlayerInfo->mPurchases[theStoreItem]);
-				Dialog *aDialog = mApp->DoDialog(DIALOG_UPGRADED,
-												 true,
-												 "[MORE_SLOTS]",
-												 aDialogLines,
-												 "[DIALOG_BUTTON_OK]",
-												 BUTTONS_FOOTER);
+				SexyString aDialogLines = StrFormat(TodStringTranslate("[NOW_YOU_CAN_CHOOSE_X_SEEDS]").c_str(),
+													6 + mApp->mPlayerInfo->mPurchases[theStoreItem]);
+				Dialog *aDialog = mApp->DoDialog(DIALOG_UPGRADED, true, "[MORE_SLOTS]", aDialogLines,
+												 "[DIALOG_BUTTON_OK]", BUTTONS_FOOTER);
 
 				mWaitForDialog = true;
 				aDialog->WaitForResult(true);
@@ -1105,12 +1082,8 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
 				mApp->mPlayerInfo->mPurchases[theStoreItem] = 1;
 				mApp->mPlayerInfo->mChallengeRecords[GAMEMODE_TREE_OF_WISDOM] = 1;
 
-				LawnDialog *aDialog = (LawnDialog *)mApp->DoDialog(DIALOG_STORE_PURCHASE,
-																   true,
-																   "[VISIT_TREE_HEADER]",
-																   "[VISIT_TREE_BODY]",
-																   "",
-																   BUTTONS_YES_NO);
+				LawnDialog *aDialog = (LawnDialog *)mApp->DoDialog(DIALOG_STORE_PURCHASE, true, "[VISIT_TREE_HEADER]",
+																   "[VISIT_TREE_BODY]", "", BUTTONS_YES_NO);
 				aDialog->mLawnYesButton->SetLabel("[DIALOG_BUTTON_YES]");
 				aDialog->mLawnNoButton->SetLabel("[DIALOG_BUTTON_NO]");
 
@@ -1161,7 +1134,6 @@ void StoreScreen::PurchaseItem(StoreItem theStoreItem)
 					mInCutscene = true;
 					SetBubbleText(4000, 300, false);
 					EnableButtons(false);
-
 				}
 			}
 
@@ -1240,30 +1212,23 @@ void StoreScreen::MouseDown(int x, int y, int theClickCount)
 			if (IsFullVersionOnly(aItemType))
 			{
 				mWaitForDialog = true;
-				mApp->LawnMessageBox(DIALOG_MESSAGE,
-									 "[GET_FULL_VERSION_TITLE]",
-									 "[FULL_VERSION_TO_BUY]",
-									 "[DIALOG_BUTTON_OK]",
-									 "",
-									 BUTTONS_FOOTER);
+				mApp->LawnMessageBox(DIALOG_MESSAGE, "[GET_FULL_VERSION_TITLE]", "[FULL_VERSION_TO_BUY]",
+									 "[DIALOG_BUTTON_OK]", "", BUTTONS_FOOTER);
 				mWaitForDialog = false;
 			}
 			else if (aItemType == STORE_ITEM_PVZ)
 			{
 				mWaitForDialog = true;
-				int aResult = mApp->LawnMessageBox(DIALOG_MESSAGE,
-												   "[BUY_PVZ_TITLE]",
-												   "[BUY_PVZ_BODY]",
-												   "[GET_FULL_VERSION_YES_BUTTON]",
-												   "[GET_FULL_VERSION_NO_BUTTON]",
+				int aResult = mApp->LawnMessageBox(DIALOG_MESSAGE, "[BUY_PVZ_TITLE]", "[BUY_PVZ_BODY]",
+												   "[GET_FULL_VERSION_YES_BUTTON]", "[GET_FULL_VERSION_NO_BUTTON]",
 												   BUTTONS_YES_NO);
 				mWaitForDialog = false;
 				if (aResult == ID_OK)
 				{
-					#if SEXY_USE_DRM
+#if SEXY_USE_DRM
 					if (mApp->mDRM)
 						mApp->mDRM->BuyGame();
-					#endif
+#endif
 				}
 			}
 			else if (!IsItemSoldOut(aItemType) && !IsItemUnavailable(aItemType) && !IsComingSoon(aItemType))

@@ -17,141 +17,77 @@
 
 void Tod_SWTri_AddAllDrawTriFuncs()
 {
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x8888, false, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x8888, true, TodDrawTriangle_8888_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0888, false, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0888, true, TodDrawTriangle_0888_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0565, false, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0565, true, TodDrawTriangle_0565_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, false, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, false, true, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, false, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, false, true, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA0_MOD1_GLOB1_BLEND1);
 
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, false, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
-	SWTri_AddDrawTriFunc(
-		true, true, true, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, false, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD0_GLOB1_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB0_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, false, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB0_BLEND1);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0555, false, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB1_BLEND0);
+	SWTri_AddDrawTriFunc(true, true, true, true, 0x0555, true, TodDrawTriangle_0555_TEX1_TALPHA1_MOD1_GLOB1_BLEND1);
 }
 
 SexyString TodGetCurrentLevelName()
@@ -197,7 +133,7 @@ TodWeightedArray *TodPickArrayItemFromWeightedArray(const TodWeightedArray *theA
 		}
 	}
 
-	TOD_ASSERT();
+	TOD_ASSERT(false);
 	return nullptr;
 }
 
@@ -229,7 +165,7 @@ TodWeightedGridArray *TodPickFromWeightedGridArray(const TodWeightedGridArray *t
 		}
 	}
 
-	TOD_ASSERT();
+	TOD_ASSERT(false);
 	return nullptr;
 }
 
@@ -244,7 +180,7 @@ float TodCalcSmoothWeight(float aWeight, float aLastPicked, float aSecondLastPic
 	float aExpectedLength2 = aExpectedLength1 * 2.0f;
 	float aAdvancedLength1 = aLastPicked + 1.0f - aExpectedLength1;
 	float aAdvancedLength2 = aSecondLastPicked + 1.0f - aExpectedLength2;
-	float aFactor1 = 1.0f + aAdvancedLength1 / aExpectedLength1 * 2.0f; 
+	float aFactor1 = 1.0f + aAdvancedLength1 / aExpectedLength1 * 2.0f;
 	float aFactor2 = 1.0f + aAdvancedLength2 / aExpectedLength2 * 2.0f;
 	float aFactorFinal = ClampFloat(aFactor1 * 0.75f + aFactor2 * 0.25f, 0.01f, 100.0f);
 	return aWeight * aFactorFinal;
@@ -263,8 +199,8 @@ uintptr_t TodPickFromSmoothArray(TodSmoothArray *theArray, int theCount)
 	float aTotalAdjustedWeight = 0.0f;
 	for (int j = 0; j < theCount; j++)
 	{
-		aTotalAdjustedWeight += TodCalcSmoothWeight(
-			theArray[j].mWeight * aNormalizeFactor, theArray[j].mLastPicked, theArray[j].mSecondLastPicked);
+		aTotalAdjustedWeight += TodCalcSmoothWeight(theArray[j].mWeight * aNormalizeFactor, theArray[j].mLastPicked,
+													theArray[j].mSecondLastPicked);
 	}
 	TOD_ASSERT(aTotalAdjustedWeight > 0.0f);
 
@@ -273,8 +209,8 @@ uintptr_t TodPickFromSmoothArray(TodSmoothArray *theArray, int theCount)
 	int k;
 	for (k = 0; k < theCount - 1; k++)
 	{
-		aAccumulatedWeight += TodCalcSmoothWeight(
-			theArray[k].mWeight * aNormalizeFactor, theArray[k].mLastPicked, theArray[k].mSecondLastPicked);
+		aAccumulatedWeight += TodCalcSmoothWeight(theArray[k].mWeight * aNormalizeFactor, theArray[k].mLastPicked,
+												  theArray[k].mSecondLastPicked);
 		if (aRandWeight <= aAccumulatedWeight)
 		{
 			break;
@@ -441,7 +377,7 @@ float TodCurveEvaluate(float theTime, float thePositionStart, float thePositionE
 		aWarpedTime = sinf(2 * PI * TodCurveS(theTime));
 		break;
 	default:
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 		break;
 	}
 	return (thePositionEnd - thePositionStart) * aWarpedTime + thePositionStart;
@@ -471,19 +407,15 @@ float TodCurveEvaluateClamped(float theTime, float thePositionStart, float thePo
 	return TodCurveEvaluate(theTime, thePositionStart, thePositionEnd, theCurve);
 }
 
-float TodAnimateCurveFloatTime(float theTimeStart,
-							   float theTimeEnd,
-							   float theTimeAge,
-							   float thePositionStart,
-							   float thePositionEnd,
-							   TodCurves theCurve)
+float TodAnimateCurveFloatTime(float theTimeStart, float theTimeEnd, float theTimeAge, float thePositionStart,
+							   float thePositionEnd, TodCurves theCurve)
 {
 	float aWarpedAge = (theTimeAge - theTimeStart) / (theTimeEnd - theTimeStart);
 	return TodCurveEvaluateClamped(aWarpedAge, thePositionStart, thePositionEnd, theCurve);
 }
 
-float TodAnimateCurveFloat(
-	int theTimeStart, int theTimeEnd, int theTimeAge, float thePositionStart, float thePositionEnd, TodCurves theCurve)
+float TodAnimateCurveFloat(int theTimeStart, int theTimeEnd, int theTimeAge, float thePositionStart,
+						   float thePositionEnd, TodCurves theCurve)
 {
 	//return TodAnimateCurveFloatTime(theTimeStart, theTimeEnd, theTimeAge, thePositionStart, thePositionEnd, theCurve);
 
@@ -491,8 +423,8 @@ float TodAnimateCurveFloat(
 	return TodCurveEvaluateClamped(aWarpedAge, thePositionStart, thePositionEnd, theCurve);
 }
 
-int TodAnimateCurve(
-	int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd, TodCurves theCurve)
+int TodAnimateCurve(int theTimeStart, int theTimeEnd, int theTimeAge, int thePositionStart, int thePositionEnd,
+					TodCurves theCurve)
 {
 	return FloatRoundToInt(
 		TodAnimateCurveFloat(theTimeStart, theTimeEnd, theTimeAge, thePositionStart, thePositionEnd, theCurve));
@@ -510,13 +442,8 @@ float RandRangeFloat(float theMin, float theMax)
 	return Rand(theMax - theMin) + theMin;
 }
 
-void TodDrawString(Graphics *g,
-				   const SexyString &theText,
-				   int thePosX,
-				   int thePosY,
-				   Font *theFont,
-				   const Color &theColor,
-				   DrawStringJustification theJustification)
+void TodDrawString(Graphics *g, const SexyString &theText, int thePosX, int thePosY, Font *theFont,
+				   const Color &theColor, DrawStringJustification theJustification)
 {
 	SexyString aFinalString = TodStringTranslate(theText);
 
@@ -535,14 +462,8 @@ void TodDrawString(Graphics *g,
 	theFont->DrawString(g, aPosX, thePosY, aFinalString, theColor, g->mClipRect);
 }
 
-void TodDrawImageCelScaled(Graphics *g,
-						   Image *theImageStrip,
-						   int thePosX,
-						   int thePosY,
-						   int theCelCol,
-						   int theCelRow,
-						   float theScaleX,
-						   float theScaleY)
+void TodDrawImageCelScaled(Graphics *g, Image *theImageStrip, int thePosX, int thePosY, int theCelCol, int theCelRow,
+						   float theScaleX, float theScaleY)
 {
 	TOD_ASSERT(theCelCol >= 0 && theCelCol < theImageStrip->mNumCols);
 	TOD_ASSERT(theCelRow >= 0 && theCelRow < theImageStrip->mNumRows);
@@ -559,8 +480,8 @@ static RenderCommand gRenderCommandPool[POOL_SIZE];
 static RenderCommand *gRenderTail[256];
 static RenderCommand *gRenderHead[256];
 
-void TodDrawStringMatrix(
-	Graphics *g, const Font *theFont, const SexyMatrix3 &theMatrix, const SexyString &theString, const Color &theColor)
+void TodDrawStringMatrix(Graphics *g, const Font *theFont, const SexyMatrix3 &theMatrix, const SexyString &theString,
+						 const Color &theColor)
 {
 	SexyString aFinalString = TodStringTranslate(theString);
 
@@ -702,15 +623,15 @@ void TodDrawStringMatrix(
 
 			if (aRenderCommand->mImage)
 			{
-				Rect aSrcRect(
-					aRenderCommand->mSrc[0], aRenderCommand->mSrc[1], aRenderCommand->mSrc[2], aRenderCommand->mSrc[3]);
+				Rect aSrcRect(aRenderCommand->mSrc[0], aRenderCommand->mSrc[1], aRenderCommand->mSrc[2],
+							  aRenderCommand->mSrc[3]);
 				SexyTransform2D aTransform;
 				float aPosX = aSrcRect.mWidth * 0.5f + aRenderCommand->mDest[0];
 				float aPosY = aSrcRect.mHeight * 0.5f + aRenderCommand->mDest[1];
 				SexyMatrix3Translation(aTransform, aPosX, aPosY);
 				SexyMatrix3Multiply(aTransform, theMatrix, aTransform);
-				TodBltMatrix(
-					g, aRenderCommand->mImage, aTransform, g->mClipRect, aRenderCommand->mColor, aDrawMode, aSrcRect);
+				TodBltMatrix(g, aRenderCommand->mImage, aTransform, g->mClipRect, aRenderCommand->mColor, aDrawMode,
+							 aSrcRect);
 			}
 
 			aRenderCommand = aRenderCommand->mNext;
@@ -800,13 +721,8 @@ void TodSandImageIfNeeded(Image *theImage)
 	}
 }
 
-void TodBltMatrix(Graphics *g,
-				  Image *theImage,
-				  const SexyMatrix3 &theTransform,
-				  const Rect &theClipRect,
-				  const Color &theColor,
-				  int theDrawMode,
-				  const Rect &theSrcRect)
+void TodBltMatrix(Graphics *g, Image *theImage, const SexyMatrix3 &theTransform, const Rect &theClipRect,
+				  const Color &theColor, int theDrawMode, const Rect &theSrcRect)
 {
 	float aOffsetX = 0.0f;
 	float aOffsetY = 0.0f;
@@ -820,50 +736,28 @@ void TodBltMatrix(Graphics *g,
 	if (theClipRect.mX != 0 || theClipRect.mY != 0 || theClipRect.mWidth != BOARD_WIDTH ||
 		theClipRect.mHeight != BOARD_HEIGHT)
 	{
-		g->mDestImage->BltMatrix(theImage,
-								 aOffsetX,
-								 aOffsetY,
-								 theTransform,
-								 theClipRect,
-								 theColor,
-								 theDrawMode,
-								 theSrcRect,
-								 g->mLinearBlend);
+		g->mDestImage->BltMatrix(theImage, aOffsetX, aOffsetY, theTransform, theClipRect, theColor, theDrawMode,
+								 theSrcRect, g->mLinearBlend);
 	}
 	else if (GPUImage::Check3D(g->mDestImage))
 	{
 		theImage->mDrawn = true;
 		Renderer *aInterface = ((GPUImage *)g->mDestImage)->mRenderer;
-		aInterface->BltTransformed(theImage,
-								   theClipRect,
-								   theColor,
-								   theDrawMode,
-								   theSrcRect,
-								   theTransform,
-								   g->mLinearBlend,
-								   aOffsetX,
-								   aOffsetY,
-								   true);
+		aInterface->BltTransformed(theImage, theClipRect, theColor, theDrawMode, theSrcRect, theTransform,
+								   g->mLinearBlend, aOffsetX, aOffsetY, true);
 	}
 	else
 	{
 		Rect aBufFixClipRect(0, 0, BOARD_WIDTH + 1, BOARD_HEIGHT + 1);
-		g->mDestImage->BltMatrix(theImage,
-								 aOffsetX,
-								 aOffsetY,
-								 theTransform,
-								 aBufFixClipRect,
-								 theColor,
-								 theDrawMode,
-								 theSrcRect,
-								 g->mLinearBlend);
+		g->mDestImage->BltMatrix(theImage, aOffsetX, aOffsetY, theTransform, aBufFixClipRect, theColor, theDrawMode,
+								 theSrcRect, g->mLinearBlend);
 	}
 
 	gTodTriangleDrawAdditive = false;
 }
 
-void TodDrawImageCelCenterScaledF(
-	Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol, int theCelRow, float theScaleX, float theScaleY)
+void TodDrawImageCelCenterScaledF(Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol,
+								  int theCelRow, float theScaleX, float theScaleY)
 {
 	TOD_ASSERT(theCelCol >= 0 && theCelCol < theImageStrip->mNumCols);
 	TOD_ASSERT(theCelRow >= 0 && theCelRow < theImageStrip->mNumRows);
@@ -895,14 +789,8 @@ void TodDrawImageCelCenterScaledF(
 	TodBltMatrix(g, theImageStrip, aTransform, g->mClipRect, aColor, g->mDrawMode, aSrcRect);
 }
 
-void TodDrawImageCelScaledF(Graphics *g,
-							Image *theImageStrip,
-							float thePosX,
-							float thePosY,
-							int theCelCol,
-							int theCelRow,
-							float theScaleX,
-							float theScaleY)
+void TodDrawImageCelScaledF(Graphics *g, Image *theImageStrip, float thePosX, float thePosY, int theCelCol,
+							int theCelRow, float theScaleX, float theScaleY)
 {
 	TOD_ASSERT(theCelCol >= 0 && theCelCol < theImageStrip->mNumCols);
 	TOD_ASSERT(theCelRow >= 0 && theCelRow < theImageStrip->mNumRows);
@@ -961,8 +849,8 @@ void TodDrawImageScaledF(Graphics *g, Image *theImage, float thePosX, float theP
 	TodBltMatrix(g, theImage, aTransform, g->mClipRect, aColor, g->mDrawMode, aSrcRect);
 }
 
-void TodDrawImageCenterScaledF(
-	Graphics *g, Image *theImage, float thePosX, float thePosY, float theScaleX, float theScaleY)
+void TodDrawImageCenterScaledF(Graphics *g, Image *theImage, float thePosX, float thePosY, float theScaleX,
+							   float theScaleY)
 {
 	if (theScaleX == 1.0f && theScaleY == 1.0f)
 	{
@@ -1063,9 +951,7 @@ void FixPixelsOnAlphaEdgeForBlending(Image *theImage)
 	int aDuration = std::max(aTimer.GetDuration(), 0.0);
 	if (aDuration > 20)
 	{
-		TodTraceAndLog("[TodLib] - LOADING:Long sanding '%s' %d ms on %s",
-					   theImage->mFilePath.c_str(),
-					   aDuration,
+		TodTraceAndLog("[TodLib] - LOADING:Long sanding '%s' %d ms on %s", theImage->mFilePath.c_str(), aDuration,
 					   gGetCurrentLevelName().c_str());
 	}
 }
@@ -1198,7 +1084,7 @@ bool TodResourceManager::TodLoadResources(const std::string &theGroup)
 		return false;
 	}
 
-	if (ExtractResourcesByName && !ExtractResourcesByName(this, theGroup.c_str()))
+	if (!ExtractResourcesByName(this, theGroup.c_str()))
 	{
 		gSexyAppBase->ShowResourceError(true);
 		return false;
@@ -1209,7 +1095,8 @@ bool TodResourceManager::TodLoadResources(const std::string &theGroup)
 	int aDuration = std::max(aTimer.GetDuration(), 0.0);
 	if (aDuration > 20)
 	{
-		TodTraceAndLog("[TodLib] - LOADED: '%s' %d ms on %s", theGroup.c_str(), aDuration, gGetCurrentLevelName().c_str());
+		TodTraceAndLog("[TodLib] - LOADED: '%s' %d ms on %s", theGroup.c_str(), aDuration,
+					   gGetCurrentLevelName().c_str());
 	}
 
 	return true;
@@ -1374,8 +1261,7 @@ void FreeGlobalAllocators()
 	gNumGlobalAllocators = 0;
 }
 
-SexyString TodReplaceString(const SexyString &theText,
-							const SexyString &theStringToFind,
+SexyString TodReplaceString(const SexyString &theText, const SexyString &theStringToFind,
 							const SexyString &theStringToSubstitute)
 {
 	SexyString aFinalString = TodStringTranslate(theText);
@@ -1402,8 +1288,7 @@ SexyString TodReplaceNumberString(const SexyString &theText, const SexyString &t
 	return aFinalString;
 }
 
-bool TodIsPointInPolygon(const SexyVector2 *thePolygonPoint,
-						 int theNumberPolygonPoints,
+bool TodIsPointInPolygon(const SexyVector2 *thePolygonPoint, int theNumberPolygonPoints,
 						 const SexyVector2 &theCheckPoint)
 {
 	TOD_ASSERT(theNumberPolygonPoints >= 3);

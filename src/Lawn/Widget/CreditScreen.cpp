@@ -14,275 +14,274 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include <SDL3/SDL_timer.h>
 
-static CreditsTiming gCreditsTiming[] = {
-	{128.5f, CreditWordType::WORD_AW, 0, CreditBrainType::BRAIN_OFF},
-	{133.0f, CreditWordType::WORD_OH, 0, CreditBrainType::BRAIN_OFF},
-	{136.5f, CreditWordType::WORD_EE, 0, CreditBrainType::BRAIN_OFF},
-	{140.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{141.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_NEXT_WORD},
-	{143.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{145.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{149.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{153.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{155.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{159.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{163.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{171.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{172.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{173.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{175.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{177.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{181.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{185.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{187.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{191.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{193.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{199.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{203.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{205.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FLY_ON},
-	{207.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{209.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{213.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{217.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{219.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{223.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{227.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{231.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{234.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{235.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
-	{237.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
-	{239.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
-	{241.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
-	{245.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
-	{249.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
-	{251.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
-	{255.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
-	{257.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
-	{261.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{262.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
-	{266.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{266.5f, CreditWordType::WORD_AW, 96, CreditBrainType::BRAIN_FAST_ON},
-	{268.5f, CreditWordType::WORD_OH, 154, CreditBrainType::BRAIN_NEXT_WORD},
-	{270.5f, CreditWordType::WORD_OH, 244, CreditBrainType::BRAIN_NEXT_WORD},
-	{272.5f, CreditWordType::WORD_AW, 329, CreditBrainType::BRAIN_NEXT_WORD},
-	{276.5f, CreditWordType::WORD_AW, 419, CreditBrainType::BRAIN_NEXT_WORD},
-	{279.5f, CreditWordType::WORD_AW, 506, CreditBrainType::BRAIN_NEXT_WORD},
-	{281.5f, CreditWordType::WORD_AW, 597, CreditBrainType::BRAIN_NEXT_WORD},
-	{284.5f, CreditWordType::WORD_AW, 671, CreditBrainType::BRAIN_NEXT_WORD},
-	{286.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{287.0f, CreditWordType::WORD_OH, 48, CreditBrainType::BRAIN_FAST_ON},
-	{288.0f, CreditWordType::WORD_AW, 125, CreditBrainType::BRAIN_NEXT_WORD},
-	{290.0f, CreditWordType::WORD_OH, 193, CreditBrainType::BRAIN_NEXT_WORD},
-	{291.0f, CreditWordType::WORD_EE, 254, CreditBrainType::BRAIN_NEXT_WORD},
-	{294.5f, CreditWordType::WORD_AW, 318, CreditBrainType::BRAIN_NEXT_WORD},
-	{295.0f, CreditWordType::WORD_AW, 375, CreditBrainType::BRAIN_NEXT_WORD},
-	{296.0f, CreditWordType::WORD_AW, 438, CreditBrainType::BRAIN_NEXT_WORD},
-	{297.0f, CreditWordType::WORD_AW, 480, CreditBrainType::BRAIN_NEXT_WORD},
-	{299.0f, CreditWordType::WORD_AW, 556, CreditBrainType::BRAIN_NEXT_WORD},
-	{301.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{303.0f, CreditWordType::WORD_AW, 675, CreditBrainType::BRAIN_NEXT_WORD},
-	{305.0f, CreditWordType::WORD_AW, 744, CreditBrainType::BRAIN_NEXT_WORD},
-	{307.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{309.5f, CreditWordType::WORD_OFF, 207, CreditBrainType::BRAIN_FLY_ON},
-	{310.5f, CreditWordType::WORD_OFF, 287, CreditBrainType::BRAIN_NEXT_WORD},
-	{311.5f, CreditWordType::WORD_OFF, 365, CreditBrainType::BRAIN_NEXT_WORD},
-	{313.5f, CreditWordType::WORD_OFF, 435, CreditBrainType::BRAIN_NEXT_WORD},
-	{315.5f, CreditWordType::WORD_OFF, 518, CreditBrainType::BRAIN_NEXT_WORD},
-	{317.5f, CreditWordType::WORD_OFF, 603, CreditBrainType::BRAIN_NEXT_WORD},
-	{318.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{319.5f, CreditWordType::WORD_OFF, 198, CreditBrainType::BRAIN_FAST_ON},
-	{320.5f, CreditWordType::WORD_OFF, 264, CreditBrainType::BRAIN_NEXT_WORD},
-	{322.5f, CreditWordType::WORD_OFF, 335, CreditBrainType::BRAIN_NEXT_WORD},
-	{323.5f, CreditWordType::WORD_OFF, 411, CreditBrainType::BRAIN_NEXT_WORD},
-	{324.5f, CreditWordType::WORD_OFF, 474, CreditBrainType::BRAIN_NEXT_WORD},
-	{326.5f, CreditWordType::WORD_OFF, 527, CreditBrainType::BRAIN_NEXT_WORD},
-	{328.5f, CreditWordType::WORD_OFF, 595, CreditBrainType::BRAIN_NEXT_WORD},
-	{332.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{337.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{339.5f, CreditWordType::WORD_AW, 190, CreditBrainType::BRAIN_FLY_ON},
-	{340.5f, CreditWordType::WORD_AW, 260, CreditBrainType::BRAIN_NEXT_WORD},
-	{342.5f, CreditWordType::WORD_AA, 314, CreditBrainType::BRAIN_NEXT_WORD},
-	{344.5f, CreditWordType::WORD_AW, 364, CreditBrainType::BRAIN_NEXT_WORD},
-	{347.5f, CreditWordType::WORD_AW, 426, CreditBrainType::BRAIN_NEXT_WORD},
-	{349.5f, CreditWordType::WORD_OH, 474, CreditBrainType::BRAIN_NEXT_WORD},
-	{350.5f, CreditWordType::WORD_AW, 538, CreditBrainType::BRAIN_NEXT_WORD},
-	{352.5f, CreditWordType::WORD_EE, 606, CreditBrainType::BRAIN_NEXT_WORD},
-	{353.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{354.5f, CreditWordType::WORD_EE, 187, CreditBrainType::BRAIN_FAST_ON},
-	{356.5f, CreditWordType::WORD_AW, 242, CreditBrainType::BRAIN_NEXT_WORD},
-	{358.5f, CreditWordType::WORD_OH, 280, CreditBrainType::BRAIN_NEXT_WORD},
-	{359.5f, CreditWordType::WORD_AW, 340, CreditBrainType::BRAIN_NEXT_WORD},
-	{360.5f, CreditWordType::WORD_AW, 394, CreditBrainType::BRAIN_NEXT_WORD},
-	{361.5f, CreditWordType::WORD_EE, 439, CreditBrainType::BRAIN_NEXT_WORD},
-	{363.5f, CreditWordType::WORD_AW, 500, CreditBrainType::BRAIN_NEXT_WORD},
-	{364.5f, CreditWordType::WORD_AW, 550, CreditBrainType::BRAIN_NEXT_WORD},
-	{366.5f, CreditWordType::WORD_EE, 606, CreditBrainType::BRAIN_NEXT_WORD},
-	{369.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{371.5f, CreditWordType::WORD_OFF, 200, CreditBrainType::BRAIN_FLY_ON},
-	{372.5f, CreditWordType::WORD_OH, 258, CreditBrainType::BRAIN_NEXT_WORD},
-	{374.5f, CreditWordType::WORD_OFF, 332, CreditBrainType::BRAIN_NEXT_WORD},
-	{376.5f, CreditWordType::WORD_OFF, 416, CreditBrainType::BRAIN_NEXT_WORD},
-	{378.5f, CreditWordType::WORD_OFF, 494, CreditBrainType::BRAIN_NEXT_WORD},
-	{380.5f, CreditWordType::WORD_OFF, 576, CreditBrainType::BRAIN_NEXT_WORD},
-	{381.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{382.5f, CreditWordType::WORD_OFF, 255, CreditBrainType::BRAIN_FAST_ON},
-	{384.5f, CreditWordType::WORD_OFF, 322, CreditBrainType::BRAIN_NEXT_WORD},
-	{386.5f, CreditWordType::WORD_OFF, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{388.5f, CreditWordType::WORD_OFF, 474, CreditBrainType::BRAIN_NEXT_WORD},
-	{390.5f, CreditWordType::WORD_OFF, 533, CreditBrainType::BRAIN_NEXT_WORD},
-	{394.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{522.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{523.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{525.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{527.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{531.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{535.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{537.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{541.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{545.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{549.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{554.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{555.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{557.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{559.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{563.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{567.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{569.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{573.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{575.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{581.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{582.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
-	{586.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{587.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{589.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{591.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{595.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{599.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{601.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{605.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{609.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
-	{613.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{616.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{617.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
-	{619.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
-	{621.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
-	{623.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
-	{627.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
-	{631.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
-	{633.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
-	{637.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
-	{639.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
-	{643.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{644.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
-	{648.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{649.0f, CreditWordType::WORD_AA, 196, CreditBrainType::BRAIN_FAST_ON},
-	{651.0f, CreditWordType::WORD_EE, 247, CreditBrainType::BRAIN_NEXT_WORD},
-	{653.0f, CreditWordType::WORD_AW, 299, CreditBrainType::BRAIN_NEXT_WORD},
-	{655.0f, CreditWordType::WORD_AW, 371, CreditBrainType::BRAIN_NEXT_WORD},
-	{658.0f, CreditWordType::WORD_OH, 443, CreditBrainType::BRAIN_NEXT_WORD},
-	{659.0f, CreditWordType::WORD_EE, 475, CreditBrainType::BRAIN_NEXT_WORD},
-	{661.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
-	{662.0f, CreditWordType::WORD_AA, 544, CreditBrainType::BRAIN_NEXT_WORD},
-	{664.0f, CreditWordType::WORD_OH, 573, CreditBrainType::BRAIN_NEXT_WORD},
-	{667.0f, CreditWordType::WORD_AA, 610, CreditBrainType::BRAIN_NEXT_WORD},
-	{669.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{670.0f, CreditWordType::WORD_OFF, 48, CreditBrainType::BRAIN_FAST_ON},
-	{671.0f, CreditWordType::WORD_OFF, 110, CreditBrainType::BRAIN_NEXT_WORD},
-	{673.0f, CreditWordType::WORD_OFF, 185, CreditBrainType::BRAIN_NEXT_WORD},
-	{674.0f, CreditWordType::WORD_OFF, 262, CreditBrainType::BRAIN_NEXT_WORD},
-	{676.0f, CreditWordType::WORD_OFF, 317, CreditBrainType::BRAIN_NEXT_WORD},
-	{677.0f, CreditWordType::WORD_OFF, 357, CreditBrainType::BRAIN_NEXT_WORD},
-	{678.0f, CreditWordType::WORD_OFF, 417, CreditBrainType::BRAIN_NEXT_WORD},
-	{679.0f, CreditWordType::WORD_OFF, 491, CreditBrainType::BRAIN_NEXT_WORD},
-	{682.0f, CreditWordType::WORD_OFF, 558, CreditBrainType::BRAIN_NEXT_WORD},
-	{685.0f, CreditWordType::WORD_OFF, 628, CreditBrainType::BRAIN_NEXT_WORD},
-	{687.0f, CreditWordType::WORD_OFF, 720, CreditBrainType::BRAIN_NEXT_WORD},
-	{689.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{690.0f, CreditWordType::WORD_OFF, 172, CreditBrainType::BRAIN_FAST_ON},
-	{692.0f, CreditWordType::WORD_OFF, 263, CreditBrainType::BRAIN_NEXT_WORD},
-	{694.0f, CreditWordType::WORD_OFF, 346, CreditBrainType::BRAIN_NEXT_WORD},
-	{696.0f, CreditWordType::WORD_OFF, 423, CreditBrainType::BRAIN_NEXT_WORD},
-	{698.0f, CreditWordType::WORD_OFF, 480, CreditBrainType::BRAIN_NEXT_WORD},
-	{700.0f, CreditWordType::WORD_OFF, 536, CreditBrainType::BRAIN_NEXT_WORD},
-	{702.0f, CreditWordType::WORD_OFF, 583, CreditBrainType::BRAIN_NEXT_WORD},
-	{705.0f, CreditWordType::WORD_OFF, 633, CreditBrainType::BRAIN_NEXT_WORD},
-	{708.0f, CreditWordType::WORD_OFF, 668, CreditBrainType::BRAIN_NEXT_WORD},
-	{712.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{719.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{720.0f, CreditWordType::WORD_OFF, 182, CreditBrainType::BRAIN_FAST_ON},
-	{722.0f, CreditWordType::WORD_OFF, 267, CreditBrainType::BRAIN_NEXT_WORD},
-	{724.0f, CreditWordType::WORD_OFF, 331, CreditBrainType::BRAIN_NEXT_WORD},
-	{726.0f, CreditWordType::WORD_OFF, 371, CreditBrainType::BRAIN_NEXT_WORD},
-	{729.0f, CreditWordType::WORD_OFF, 434, CreditBrainType::BRAIN_NEXT_WORD},
-	{731.0f, CreditWordType::WORD_OFF, 486, CreditBrainType::BRAIN_NEXT_WORD},
-	{732.0f, CreditWordType::WORD_OFF, 562, CreditBrainType::BRAIN_NEXT_WORD},
-	{734.0f, CreditWordType::WORD_OFF, 617, CreditBrainType::BRAIN_NEXT_WORD},
-	{735.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{736.0f, CreditWordType::WORD_AW, 148, CreditBrainType::BRAIN_FAST_ON},
-	{738.0f, CreditWordType::WORD_AW, 211, CreditBrainType::BRAIN_NEXT_WORD},
-	{740.0f, CreditWordType::WORD_EE, 298, CreditBrainType::BRAIN_NEXT_WORD},
-	{742.0f, CreditWordType::WORD_OH, 367, CreditBrainType::BRAIN_NEXT_WORD},
-	{744.0f, CreditWordType::WORD_AW, 440, CreditBrainType::BRAIN_NEXT_WORD},
-	{746.0f, CreditWordType::WORD_OH, 506, CreditBrainType::BRAIN_NEXT_WORD},
-	{747.0f, CreditWordType::WORD_AW, 533, CreditBrainType::BRAIN_NEXT_WORD},
-	{748.0f, CreditWordType::WORD_AW, 601, CreditBrainType::BRAIN_NEXT_WORD},
-	{749.0f, CreditWordType::WORD_AW, 645, CreditBrainType::BRAIN_NEXT_WORD},
-	{750.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
-	{753.0f, CreditWordType::WORD_OFF, 123, CreditBrainType::BRAIN_FLY_ON},
-	{755.0f, CreditWordType::WORD_OFF, 195, CreditBrainType::BRAIN_NEXT_WORD},
-	{757.0f, CreditWordType::WORD_OFF, 255, CreditBrainType::BRAIN_NEXT_WORD},
-	{759.0f, CreditWordType::WORD_OFF, 312, CreditBrainType::BRAIN_NEXT_WORD},
-	{761.0f, CreditWordType::WORD_OFF, 378, CreditBrainType::BRAIN_NEXT_WORD},
-	{763.0f, CreditWordType::WORD_OFF, 443, CreditBrainType::BRAIN_NEXT_WORD},
-	{765.0f, CreditWordType::WORD_OFF, 516, CreditBrainType::BRAIN_NEXT_WORD},
-	{767.0f, CreditWordType::WORD_OFF, 563, CreditBrainType::BRAIN_NEXT_WORD},
-	{770.0f, CreditWordType::WORD_OFF, 588, CreditBrainType::BRAIN_NEXT_WORD},
-	{773.0f, CreditWordType::WORD_OFF, 657, CreditBrainType::BRAIN_NEXT_WORD},
-	{777.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{907.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{908.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{910.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{912.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{916.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{920.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{922.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{926.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{930.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
-	{934.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{939.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{940.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{942.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{944.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{948.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{952.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{954.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{958.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{960.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
-	{966.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{967.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
-	{971.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{972.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
-	{974.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
-	{976.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
-	{980.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
-	{984.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
-	{986.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
-	{990.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
-	{994.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
-	{998.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{1001.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
-	{1002.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
-	{1004.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
-	{1006.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
-	{1008.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
-	{1012.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
-	{1016.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
-	{1018.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
-	{1022.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
-	{1024.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
-	{1028.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
-	{1029.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
-	{1033.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF}};
+static CreditsTiming gCreditsTiming[] = {{128.5f, CreditWordType::WORD_AW, 0, CreditBrainType::BRAIN_OFF},
+										 {133.0f, CreditWordType::WORD_OH, 0, CreditBrainType::BRAIN_OFF},
+										 {136.5f, CreditWordType::WORD_EE, 0, CreditBrainType::BRAIN_OFF},
+										 {140.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {141.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_NEXT_WORD},
+										 {143.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {145.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {149.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {153.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {155.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {159.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {163.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {171.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {172.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {173.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {175.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {177.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {181.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {185.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {187.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {191.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {193.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {199.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {203.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {205.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FLY_ON},
+										 {207.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {209.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {213.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {217.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {219.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {223.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {227.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {231.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {234.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {235.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
+										 {237.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
+										 {239.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
+										 {241.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
+										 {245.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
+										 {249.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
+										 {251.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
+										 {255.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
+										 {257.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
+										 {261.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {262.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
+										 {266.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {266.5f, CreditWordType::WORD_AW, 96, CreditBrainType::BRAIN_FAST_ON},
+										 {268.5f, CreditWordType::WORD_OH, 154, CreditBrainType::BRAIN_NEXT_WORD},
+										 {270.5f, CreditWordType::WORD_OH, 244, CreditBrainType::BRAIN_NEXT_WORD},
+										 {272.5f, CreditWordType::WORD_AW, 329, CreditBrainType::BRAIN_NEXT_WORD},
+										 {276.5f, CreditWordType::WORD_AW, 419, CreditBrainType::BRAIN_NEXT_WORD},
+										 {279.5f, CreditWordType::WORD_AW, 506, CreditBrainType::BRAIN_NEXT_WORD},
+										 {281.5f, CreditWordType::WORD_AW, 597, CreditBrainType::BRAIN_NEXT_WORD},
+										 {284.5f, CreditWordType::WORD_AW, 671, CreditBrainType::BRAIN_NEXT_WORD},
+										 {286.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {287.0f, CreditWordType::WORD_OH, 48, CreditBrainType::BRAIN_FAST_ON},
+										 {288.0f, CreditWordType::WORD_AW, 125, CreditBrainType::BRAIN_NEXT_WORD},
+										 {290.0f, CreditWordType::WORD_OH, 193, CreditBrainType::BRAIN_NEXT_WORD},
+										 {291.0f, CreditWordType::WORD_EE, 254, CreditBrainType::BRAIN_NEXT_WORD},
+										 {294.5f, CreditWordType::WORD_AW, 318, CreditBrainType::BRAIN_NEXT_WORD},
+										 {295.0f, CreditWordType::WORD_AW, 375, CreditBrainType::BRAIN_NEXT_WORD},
+										 {296.0f, CreditWordType::WORD_AW, 438, CreditBrainType::BRAIN_NEXT_WORD},
+										 {297.0f, CreditWordType::WORD_AW, 480, CreditBrainType::BRAIN_NEXT_WORD},
+										 {299.0f, CreditWordType::WORD_AW, 556, CreditBrainType::BRAIN_NEXT_WORD},
+										 {301.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {303.0f, CreditWordType::WORD_AW, 675, CreditBrainType::BRAIN_NEXT_WORD},
+										 {305.0f, CreditWordType::WORD_AW, 744, CreditBrainType::BRAIN_NEXT_WORD},
+										 {307.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {309.5f, CreditWordType::WORD_OFF, 207, CreditBrainType::BRAIN_FLY_ON},
+										 {310.5f, CreditWordType::WORD_OFF, 287, CreditBrainType::BRAIN_NEXT_WORD},
+										 {311.5f, CreditWordType::WORD_OFF, 365, CreditBrainType::BRAIN_NEXT_WORD},
+										 {313.5f, CreditWordType::WORD_OFF, 435, CreditBrainType::BRAIN_NEXT_WORD},
+										 {315.5f, CreditWordType::WORD_OFF, 518, CreditBrainType::BRAIN_NEXT_WORD},
+										 {317.5f, CreditWordType::WORD_OFF, 603, CreditBrainType::BRAIN_NEXT_WORD},
+										 {318.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {319.5f, CreditWordType::WORD_OFF, 198, CreditBrainType::BRAIN_FAST_ON},
+										 {320.5f, CreditWordType::WORD_OFF, 264, CreditBrainType::BRAIN_NEXT_WORD},
+										 {322.5f, CreditWordType::WORD_OFF, 335, CreditBrainType::BRAIN_NEXT_WORD},
+										 {323.5f, CreditWordType::WORD_OFF, 411, CreditBrainType::BRAIN_NEXT_WORD},
+										 {324.5f, CreditWordType::WORD_OFF, 474, CreditBrainType::BRAIN_NEXT_WORD},
+										 {326.5f, CreditWordType::WORD_OFF, 527, CreditBrainType::BRAIN_NEXT_WORD},
+										 {328.5f, CreditWordType::WORD_OFF, 595, CreditBrainType::BRAIN_NEXT_WORD},
+										 {332.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {337.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {339.5f, CreditWordType::WORD_AW, 190, CreditBrainType::BRAIN_FLY_ON},
+										 {340.5f, CreditWordType::WORD_AW, 260, CreditBrainType::BRAIN_NEXT_WORD},
+										 {342.5f, CreditWordType::WORD_AA, 314, CreditBrainType::BRAIN_NEXT_WORD},
+										 {344.5f, CreditWordType::WORD_AW, 364, CreditBrainType::BRAIN_NEXT_WORD},
+										 {347.5f, CreditWordType::WORD_AW, 426, CreditBrainType::BRAIN_NEXT_WORD},
+										 {349.5f, CreditWordType::WORD_OH, 474, CreditBrainType::BRAIN_NEXT_WORD},
+										 {350.5f, CreditWordType::WORD_AW, 538, CreditBrainType::BRAIN_NEXT_WORD},
+										 {352.5f, CreditWordType::WORD_EE, 606, CreditBrainType::BRAIN_NEXT_WORD},
+										 {353.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {354.5f, CreditWordType::WORD_EE, 187, CreditBrainType::BRAIN_FAST_ON},
+										 {356.5f, CreditWordType::WORD_AW, 242, CreditBrainType::BRAIN_NEXT_WORD},
+										 {358.5f, CreditWordType::WORD_OH, 280, CreditBrainType::BRAIN_NEXT_WORD},
+										 {359.5f, CreditWordType::WORD_AW, 340, CreditBrainType::BRAIN_NEXT_WORD},
+										 {360.5f, CreditWordType::WORD_AW, 394, CreditBrainType::BRAIN_NEXT_WORD},
+										 {361.5f, CreditWordType::WORD_EE, 439, CreditBrainType::BRAIN_NEXT_WORD},
+										 {363.5f, CreditWordType::WORD_AW, 500, CreditBrainType::BRAIN_NEXT_WORD},
+										 {364.5f, CreditWordType::WORD_AW, 550, CreditBrainType::BRAIN_NEXT_WORD},
+										 {366.5f, CreditWordType::WORD_EE, 606, CreditBrainType::BRAIN_NEXT_WORD},
+										 {369.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {371.5f, CreditWordType::WORD_OFF, 200, CreditBrainType::BRAIN_FLY_ON},
+										 {372.5f, CreditWordType::WORD_OH, 258, CreditBrainType::BRAIN_NEXT_WORD},
+										 {374.5f, CreditWordType::WORD_OFF, 332, CreditBrainType::BRAIN_NEXT_WORD},
+										 {376.5f, CreditWordType::WORD_OFF, 416, CreditBrainType::BRAIN_NEXT_WORD},
+										 {378.5f, CreditWordType::WORD_OFF, 494, CreditBrainType::BRAIN_NEXT_WORD},
+										 {380.5f, CreditWordType::WORD_OFF, 576, CreditBrainType::BRAIN_NEXT_WORD},
+										 {381.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {382.5f, CreditWordType::WORD_OFF, 255, CreditBrainType::BRAIN_FAST_ON},
+										 {384.5f, CreditWordType::WORD_OFF, 322, CreditBrainType::BRAIN_NEXT_WORD},
+										 {386.5f, CreditWordType::WORD_OFF, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {388.5f, CreditWordType::WORD_OFF, 474, CreditBrainType::BRAIN_NEXT_WORD},
+										 {390.5f, CreditWordType::WORD_OFF, 533, CreditBrainType::BRAIN_NEXT_WORD},
+										 {394.5f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {522.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {523.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {525.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {527.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {531.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {535.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {537.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {541.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {545.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {549.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {554.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {555.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {557.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {559.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {563.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {567.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {569.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {573.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {575.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {581.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {582.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
+										 {586.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {587.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {589.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {591.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {595.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {599.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {601.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {605.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {609.0f, CreditWordType::WORD_AW, 619, CreditBrainType::BRAIN_NEXT_WORD},
+										 {613.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {616.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {617.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
+										 {619.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
+										 {621.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
+										 {623.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
+										 {627.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
+										 {631.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
+										 {633.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
+										 {637.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
+										 {639.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
+										 {643.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {644.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
+										 {648.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {649.0f, CreditWordType::WORD_AA, 196, CreditBrainType::BRAIN_FAST_ON},
+										 {651.0f, CreditWordType::WORD_EE, 247, CreditBrainType::BRAIN_NEXT_WORD},
+										 {653.0f, CreditWordType::WORD_AW, 299, CreditBrainType::BRAIN_NEXT_WORD},
+										 {655.0f, CreditWordType::WORD_AW, 371, CreditBrainType::BRAIN_NEXT_WORD},
+										 {658.0f, CreditWordType::WORD_OH, 443, CreditBrainType::BRAIN_NEXT_WORD},
+										 {659.0f, CreditWordType::WORD_EE, 475, CreditBrainType::BRAIN_NEXT_WORD},
+										 {661.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
+										 {662.0f, CreditWordType::WORD_AA, 544, CreditBrainType::BRAIN_NEXT_WORD},
+										 {664.0f, CreditWordType::WORD_OH, 573, CreditBrainType::BRAIN_NEXT_WORD},
+										 {667.0f, CreditWordType::WORD_AA, 610, CreditBrainType::BRAIN_NEXT_WORD},
+										 {669.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {670.0f, CreditWordType::WORD_OFF, 48, CreditBrainType::BRAIN_FAST_ON},
+										 {671.0f, CreditWordType::WORD_OFF, 110, CreditBrainType::BRAIN_NEXT_WORD},
+										 {673.0f, CreditWordType::WORD_OFF, 185, CreditBrainType::BRAIN_NEXT_WORD},
+										 {674.0f, CreditWordType::WORD_OFF, 262, CreditBrainType::BRAIN_NEXT_WORD},
+										 {676.0f, CreditWordType::WORD_OFF, 317, CreditBrainType::BRAIN_NEXT_WORD},
+										 {677.0f, CreditWordType::WORD_OFF, 357, CreditBrainType::BRAIN_NEXT_WORD},
+										 {678.0f, CreditWordType::WORD_OFF, 417, CreditBrainType::BRAIN_NEXT_WORD},
+										 {679.0f, CreditWordType::WORD_OFF, 491, CreditBrainType::BRAIN_NEXT_WORD},
+										 {682.0f, CreditWordType::WORD_OFF, 558, CreditBrainType::BRAIN_NEXT_WORD},
+										 {685.0f, CreditWordType::WORD_OFF, 628, CreditBrainType::BRAIN_NEXT_WORD},
+										 {687.0f, CreditWordType::WORD_OFF, 720, CreditBrainType::BRAIN_NEXT_WORD},
+										 {689.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {690.0f, CreditWordType::WORD_OFF, 172, CreditBrainType::BRAIN_FAST_ON},
+										 {692.0f, CreditWordType::WORD_OFF, 263, CreditBrainType::BRAIN_NEXT_WORD},
+										 {694.0f, CreditWordType::WORD_OFF, 346, CreditBrainType::BRAIN_NEXT_WORD},
+										 {696.0f, CreditWordType::WORD_OFF, 423, CreditBrainType::BRAIN_NEXT_WORD},
+										 {698.0f, CreditWordType::WORD_OFF, 480, CreditBrainType::BRAIN_NEXT_WORD},
+										 {700.0f, CreditWordType::WORD_OFF, 536, CreditBrainType::BRAIN_NEXT_WORD},
+										 {702.0f, CreditWordType::WORD_OFF, 583, CreditBrainType::BRAIN_NEXT_WORD},
+										 {705.0f, CreditWordType::WORD_OFF, 633, CreditBrainType::BRAIN_NEXT_WORD},
+										 {708.0f, CreditWordType::WORD_OFF, 668, CreditBrainType::BRAIN_NEXT_WORD},
+										 {712.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {719.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {720.0f, CreditWordType::WORD_OFF, 182, CreditBrainType::BRAIN_FAST_ON},
+										 {722.0f, CreditWordType::WORD_OFF, 267, CreditBrainType::BRAIN_NEXT_WORD},
+										 {724.0f, CreditWordType::WORD_OFF, 331, CreditBrainType::BRAIN_NEXT_WORD},
+										 {726.0f, CreditWordType::WORD_OFF, 371, CreditBrainType::BRAIN_NEXT_WORD},
+										 {729.0f, CreditWordType::WORD_OFF, 434, CreditBrainType::BRAIN_NEXT_WORD},
+										 {731.0f, CreditWordType::WORD_OFF, 486, CreditBrainType::BRAIN_NEXT_WORD},
+										 {732.0f, CreditWordType::WORD_OFF, 562, CreditBrainType::BRAIN_NEXT_WORD},
+										 {734.0f, CreditWordType::WORD_OFF, 617, CreditBrainType::BRAIN_NEXT_WORD},
+										 {735.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {736.0f, CreditWordType::WORD_AW, 148, CreditBrainType::BRAIN_FAST_ON},
+										 {738.0f, CreditWordType::WORD_AW, 211, CreditBrainType::BRAIN_NEXT_WORD},
+										 {740.0f, CreditWordType::WORD_EE, 298, CreditBrainType::BRAIN_NEXT_WORD},
+										 {742.0f, CreditWordType::WORD_OH, 367, CreditBrainType::BRAIN_NEXT_WORD},
+										 {744.0f, CreditWordType::WORD_AW, 440, CreditBrainType::BRAIN_NEXT_WORD},
+										 {746.0f, CreditWordType::WORD_OH, 506, CreditBrainType::BRAIN_NEXT_WORD},
+										 {747.0f, CreditWordType::WORD_AW, 533, CreditBrainType::BRAIN_NEXT_WORD},
+										 {748.0f, CreditWordType::WORD_AW, 601, CreditBrainType::BRAIN_NEXT_WORD},
+										 {749.0f, CreditWordType::WORD_AW, 645, CreditBrainType::BRAIN_NEXT_WORD},
+										 {750.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FAST_OFF},
+										 {753.0f, CreditWordType::WORD_OFF, 123, CreditBrainType::BRAIN_FLY_ON},
+										 {755.0f, CreditWordType::WORD_OFF, 195, CreditBrainType::BRAIN_NEXT_WORD},
+										 {757.0f, CreditWordType::WORD_OFF, 255, CreditBrainType::BRAIN_NEXT_WORD},
+										 {759.0f, CreditWordType::WORD_OFF, 312, CreditBrainType::BRAIN_NEXT_WORD},
+										 {761.0f, CreditWordType::WORD_OFF, 378, CreditBrainType::BRAIN_NEXT_WORD},
+										 {763.0f, CreditWordType::WORD_OFF, 443, CreditBrainType::BRAIN_NEXT_WORD},
+										 {765.0f, CreditWordType::WORD_OFF, 516, CreditBrainType::BRAIN_NEXT_WORD},
+										 {767.0f, CreditWordType::WORD_OFF, 563, CreditBrainType::BRAIN_NEXT_WORD},
+										 {770.0f, CreditWordType::WORD_OFF, 588, CreditBrainType::BRAIN_NEXT_WORD},
+										 {773.0f, CreditWordType::WORD_OFF, 657, CreditBrainType::BRAIN_NEXT_WORD},
+										 {777.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {907.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {908.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {910.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {912.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {916.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {920.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {922.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {926.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {930.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
+										 {934.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {939.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {940.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {942.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {944.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {948.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {952.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {954.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {958.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {960.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
+										 {966.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {967.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
+										 {971.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {972.0f, CreditWordType::WORD_AW, 214, CreditBrainType::BRAIN_FAST_ON},
+										 {974.0f, CreditWordType::WORD_AW, 297, CreditBrainType::BRAIN_NEXT_WORD},
+										 {976.0f, CreditWordType::WORD_AW, 348, CreditBrainType::BRAIN_NEXT_WORD},
+										 {980.0f, CreditWordType::WORD_EE, 400, CreditBrainType::BRAIN_NEXT_WORD},
+										 {984.0f, CreditWordType::WORD_AW, 455, CreditBrainType::BRAIN_NEXT_WORD},
+										 {986.0f, CreditWordType::WORD_OH, 523, CreditBrainType::BRAIN_NEXT_WORD},
+										 {990.0f, CreditWordType::WORD_AW, 593, CreditBrainType::BRAIN_NEXT_WORD},
+										 {994.0f, CreditWordType::WORD_AW, 616, CreditBrainType::BRAIN_NEXT_WORD},
+										 {998.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {1001.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF},
+										 {1002.0f, CreditWordType::WORD_EE, 150, CreditBrainType::BRAIN_FAST_ON},
+										 {1004.0f, CreditWordType::WORD_OH, 220, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1006.0f, CreditWordType::WORD_AW, 307, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1008.0f, CreditWordType::WORD_AW, 390, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1012.0f, CreditWordType::WORD_EE, 452, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1016.0f, CreditWordType::WORD_AW, 512, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1018.0f, CreditWordType::WORD_AW, 573, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1022.0f, CreditWordType::WORD_AW, 630, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1024.0f, CreditWordType::WORD_AW, 656, CreditBrainType::BRAIN_NEXT_WORD},
+										 {1028.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_FLY_OFF},
+										 {1029.0f, CreditWordType::WORD_AA, 0, CreditBrainType::BRAIN_OFF},
+										 {1033.0f, CreditWordType::WORD_OFF, 0, CreditBrainType::BRAIN_OFF}};
 static int gCreditsTimingCount = LENGTH(gCreditsTiming);
 
 CreditsOverlay::CreditsOverlay(CreditScreen *theCreditScreen)
@@ -326,13 +325,8 @@ CreditScreen::CreditScreen(LawnApp *theApp)
 	mMainMenuButton->Resize(298, 554, 209, 46);
 	mMainMenuButton->SetVisible(false);
 
-	mReplayButton = MakeNewButton(CreditScreen::Credits_Button_Replay,
-								  this,
-								  "[CREDITS_REPLAY_BUTTON]",
-								  FONT_HOUSEOFTERROR16,
-								  IMAGE_CREDITS_PLAYBUTTON,
-								  nullptr,
-								  nullptr);
+	mReplayButton = MakeNewButton(CreditScreen::Credits_Button_Replay, this, "[CREDITS_REPLAY_BUTTON]",
+								  FONT_HOUSEOFTERROR16, IMAGE_CREDITS_PLAYBUTTON, nullptr, nullptr);
 	mReplayButton->mTextDownOffsetX = 1;
 	mReplayButton->mTextDownOffsetY = 1;
 	mReplayButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 255, 255);
@@ -588,7 +582,7 @@ Reanimation *CreditScreen::PlayReanim(int aIndex)
 	}
 	else
 	{
-		TOD_ASSERT();
+		TOD_ASSERT(false);
 		return nullptr;
 	}
 
@@ -645,15 +639,8 @@ void DrawDisco(Graphics *g, float aCenterX, float aCenterY, float theTime)
 	aVerts[1][2].v = 1.0;
 	aVerts[1][2].color = aColor;
 
-	g->mDestImage->BltTrianglesTex(IMAGE_REANIM_CREDITS_DISCOLIGHTS,
-								   aVerts,
-								   2,
-								   Rect(0, 0, BOARD_WIDTH, BOARD_HEIGHT),
-								   Color::White,
-								   g->mDrawMode,
-								   0.0f,
-								   0.0f,
-								   g->mLinearBlend);
+	g->mDestImage->BltTrianglesTex(IMAGE_REANIM_CREDITS_DISCOLIGHTS, aVerts, 2, Rect(0, 0, BOARD_WIDTH, BOARD_HEIGHT),
+								   Color::White, g->mDrawMode, 0.0f, 0.0f, g->mLinearBlend);
 }
 
 void CreditScreen::DrawFogEffect(Graphics *g, float theTime)
@@ -724,22 +711,28 @@ void CreditScreen::DrawFinalCredits(Graphics *g)
 		{
 			SexyString aHeaderText = aCurrentRoleStr.substr(1); // remove the ^ lol
 			aScrollY -= 4;
-			aScrollY += TodDrawStringWrappedHelper(g, aHeaderText, Rect(60, aScrollY, 680, 250), FONT_HOUSEOFTERROR16,Color::White, DrawStringJustification::DS_ALIGN_CENTER, true);
+			aScrollY += TodDrawStringWrappedHelper(g, aHeaderText, Rect(60, aScrollY, 680, 250), FONT_HOUSEOFTERROR16,
+												   Color::White, DrawStringJustification::DS_ALIGN_CENTER, true);
 			aScrollY -= 4;
 		}
 		else
 		{
-			TodDrawStringWrapped(g, aCurrentRoleStr, Rect(60, aScrollY, 300, 250), FONT_HOUSEOFTERROR16, Color::White, DrawStringJustification::DS_ALIGN_RIGHT);
-			TodDrawStringWrapped(g, aNameStr, Rect(390, aScrollY, 450, 250), FONT_HOUSEOFTERROR16, Color::White, DrawStringJustification::DS_ALIGN_LEFT);
-			int aRoleHeight = TodDrawStringWrappedHelper(g, aCurrentRoleStr, Rect(30, aScrollY, 300, 250), FONT_HOUSEOFTERROR16, Color::White, DrawStringJustification::DS_ALIGN_RIGHT, false);
-			int aNameHeight = TodDrawStringWrappedHelper(g, aNameStr, Rect(390, aScrollY, 450, 250), FONT_HOUSEOFTERROR16, Color::White, DrawStringJustification::DS_ALIGN_LEFT, false);
+			TodDrawStringWrapped(g, aCurrentRoleStr, Rect(60, aScrollY, 300, 250), FONT_HOUSEOFTERROR16, Color::White,
+								 DrawStringJustification::DS_ALIGN_RIGHT);
+			TodDrawStringWrapped(g, aNameStr, Rect(390, aScrollY, 450, 250), FONT_HOUSEOFTERROR16, Color::White,
+								 DrawStringJustification::DS_ALIGN_LEFT);
+			int aRoleHeight =
+				TodDrawStringWrappedHelper(g, aCurrentRoleStr, Rect(30, aScrollY, 300, 250), FONT_HOUSEOFTERROR16,
+										   Color::White, DrawStringJustification::DS_ALIGN_RIGHT, false);
+			int aNameHeight =
+				TodDrawStringWrappedHelper(g, aNameStr, Rect(390, aScrollY, 450, 250), FONT_HOUSEOFTERROR16,
+										   Color::White, DrawStringJustification::DS_ALIGN_LEFT, false);
 
 			aScrollY += std::max(aRoleHeight, aNameHeight);
 		}
 
 		aCurrentRoleStr = TodStringTranslate(StrFormat(aRawRoleStr.c_str(), aCurrentRoleIndex++));
 	}
-
 
 	mFinalScrollProgress += 0.1f;
 	if (mFinalScrollProgress > 260)
@@ -821,35 +814,26 @@ void CreditScreen::Draw(Graphics *g)
 
 		if (aTransformBackground2.mFrame != -1.0f)
 		{
-			aBackground2G.ClipRect(aTransformBackground2.mTransX,
-								   aTransformBackground2.mTransY,
-								   aTransformBackground2.mImage->mWidth - 1,
-								   aTransformBackground2.mImage->mHeight - 1);
-			aBackground2G.DrawImageF(IMAGE_BACKGROUND1,
-									 aTransformBackground2.mTransX - BOARD_WIDTH / 2,
+			aBackground2G.ClipRect(aTransformBackground2.mTransX, aTransformBackground2.mTransY,
+								   aTransformBackground2.mImage->mWidth - 1, aTransformBackground2.mImage->mHeight - 1);
+			aBackground2G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground2.mTransX - BOARD_WIDTH / 2,
 									 aTransformBackground2.mTransY - BOARD_HEIGHT / 2);
 			aBackground2G.ClearClipRect();
 		}
 		if (aTransformBackground3.mFrame != -1.0f)
 		{
 			Graphics aBackground3G(*g);
-			aBackground3G.ClipRect(aTransformBackground3.mTransX,
-								   aTransformBackground3.mTransY,
-								   aTransformBackground3.mImage->mWidth - 1,
-								   aTransformBackground3.mImage->mHeight - 1);
-			aBackground3G.DrawImageF(IMAGE_BACKGROUND1,
-									 aTransformBackground3.mTransX - BOARD_WIDTH / 2,
+			aBackground3G.ClipRect(aTransformBackground3.mTransX, aTransformBackground3.mTransY,
+								   aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
+			aBackground3G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground3.mTransX - BOARD_WIDTH / 2,
 									 aTransformBackground3.mTransY - BOARD_HEIGHT / 2);
 		}
 		if (aTransformBackground4.mFrame != -1.0f)
 		{
 			Graphics aBackground4G(*g);
-			aBackground4G.ClipRect(aTransformBackground4.mTransX,
-								   aTransformBackground4.mTransY,
-								   aTransformBackground4.mImage->mWidth - 1,
-								   aTransformBackground4.mImage->mHeight - 1);
-			aBackground4G.DrawImageF(IMAGE_BACKGROUND2,
-									 aTransformBackground4.mTransX - BOARD_WIDTH / 2,
+			aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY,
+								   aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
+			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2,
 									 aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
 		}
 	}
@@ -868,12 +852,9 @@ void CreditScreen::Draw(Graphics *g)
 		if (aTransformBackground1.mFrame != -1.0f)
 		{
 			Graphics aBackground1G(*g);
-			aBackground1G.ClipRect(aTransformBackground1.mTransX,
-								   aTransformBackground1.mTransY,
-								   aTransformBackground1.mImage->mWidth - 1,
-								   aTransformBackground1.mImage->mHeight - 1);
-			aBackground1G.DrawImageF(IMAGE_BACKGROUND1,
-									 aTransformBackground1.mTransX - BOARD_WIDTH / 2 + 320,
+			aBackground1G.ClipRect(aTransformBackground1.mTransX, aTransformBackground1.mTransY,
+								   aTransformBackground1.mImage->mWidth - 1, aTransformBackground1.mImage->mHeight - 1);
+			aBackground1G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground1.mTransX - BOARD_WIDTH / 2 + 320,
 									 aTransformBackground1.mTransY - BOARD_HEIGHT / 2 - 60);
 		}
 		if (aTransformBackground3.mFrame != -1.0f)
@@ -881,20 +862,17 @@ void CreditScreen::Draw(Graphics *g)
 			Graphics aBackground3G(*g);
 			aBackground3G.mTransX += aTransformBackground3.mTransX - 20.0f;
 			aBackground3G.mTransY += aTransformBackground3.mTransY - 260.0f;
-			aBackground3G.ClipRect(
-				20, 260, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
+			aBackground3G.ClipRect(20, 260, aTransformBackground3.mImage->mWidth - 1,
+								   aTransformBackground3.mImage->mHeight - 1);
 			aBackground3G.DrawImageF(IMAGE_BACKGROUND3, -220.0f, 0.0f);
 			aBackground3G.DrawImageF(IMAGE_POOL, 34.0f, 278.0f);
 		}
 		if (aTransformBackground4.mFrame != -1.0f)
 		{
 			Graphics aBackground4G(*g);
-			aBackground4G.ClipRect(aTransformBackground4.mTransX,
-								   aTransformBackground4.mTransY,
-								   aTransformBackground4.mImage->mWidth - 1,
-								   aTransformBackground4.mImage->mHeight - 1);
-			aBackground4G.DrawImageF(IMAGE_BACKGROUND2,
-									 aTransformBackground4.mTransX - BOARD_WIDTH / 2,
+			aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY,
+								   aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
+			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2,
 									 aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
 		}
 	}
@@ -1020,12 +998,8 @@ void CreditScreen::Draw(Graphics *g)
 
 	if (aDrawFog)
 	{
-		float aPercent = TodAnimateCurveFloatTime(aFrameFactor * 189.0f,
-												  aFrameFactor * 249.0f,
-												  aCreditsReanim->mAnimTime,
-												  0.0f,
-												  1.0f,
-												  TodCurves::CURVE_LINEAR);
+		float aPercent = TodAnimateCurveFloatTime(aFrameFactor * 189.0f, aFrameFactor * 249.0f,
+												  aCreditsReanim->mAnimTime, 0.0f, 1.0f, TodCurves::CURVE_LINEAR);
 		DrawFogEffect(&aBackground2G, aPercent);
 	}
 	aCreditsReanim->DrawRenderGroup(g, 3);
@@ -1205,16 +1179,12 @@ void CreditScreen::UpdateMovie()
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 140.0f) ||
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 142.0f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDIT_STROBE);
 		}
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 136.5f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDITS_RAYSWIPE);
 		}
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 330.0f))
@@ -1264,9 +1234,7 @@ void CreditScreen::UpdateMovie()
 
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 120.0f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDITS_ZOMBIEHEADWIPE);
 		}
 	}
@@ -1309,15 +1277,13 @@ void CreditScreen::UpdateMovie()
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 239.5f) ||
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 243.5f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDIT_STROBE);
 		}
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 332.75f))
 		{
-			mApp->AddTodParticle(
-				678.0f, 352.0f, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_MELONSPLASH);
+			mApp->AddTodParticle(678.0f, 352.0f, (int)RenderLayer::RENDER_LAYER_TOP,
+								 ParticleEffect::PARTICLE_MELONSPLASH);
 		}
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 336.0f))
 		{
@@ -1332,9 +1298,7 @@ void CreditScreen::UpdateMovie()
 		}
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 342.0f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDIT_STROBE);
 		}
 
@@ -1345,8 +1309,8 @@ void CreditScreen::UpdateMovie()
 		float aFogPosX = aTransformBackground2.mTransX + 856.0f;
 		if (aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 188.0f))
 		{
-			TodParticleSystem *aFogParticle = mApp->AddTodParticle(
-				aFogPosX, 230.0f, (int)RenderLayer::RENDER_LAYER_TOP, ParticleEffect::PARTICLE_CREDITS_FOG);
+			TodParticleSystem *aFogParticle = mApp->AddTodParticle(aFogPosX, 230.0f, (int)RenderLayer::RENDER_LAYER_TOP,
+																   ParticleEffect::PARTICLE_CREDITS_FOG);
 			mFogParticleID = mApp->ParticleGetID(aFogParticle);
 		}
 		TodParticleSystem *aFogParticle = mApp->ParticleTryToGet(mFogParticleID);
@@ -1383,9 +1347,7 @@ void CreditScreen::UpdateMovie()
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 243.0f) ||
 			aCreditsReanim->ShouldTriggerTimedEvent(aFrameFactor * 247.0f))
 		{
-			mApp->AddTodParticle(BOARD_WIDTH / 2,
-								 BOARD_HEIGHT / 2,
-								 (int)RenderLayer::RENDER_LAYER_TOP,
+			mApp->AddTodParticle(BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (int)RenderLayer::RENDER_LAYER_TOP,
 								 ParticleEffect::PARTICLE_CREDIT_STROBE);
 		}
 	}
@@ -1401,39 +1363,31 @@ void CreditScreen::UpdateMovie()
 	{
 		if (aAfterTiming->mBrainType == CreditBrainType::BRAIN_FLY_ON)
 		{
-			mBrainPosX = TodAnimateCurveFloatTime(
-				0.0f, 1.0f, aFraction, -50.0f, aAfterTiming->mWordX - 15.0f, TodCurves::CURVE_EASE_IN_OUT);
+			mBrainPosX = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, -50.0f, aAfterTiming->mWordX - 15.0f,
+												  TodCurves::CURVE_EASE_IN_OUT);
 			mBrainPosY =
 				TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, 505.0f, 485.0f, TodCurves::CURVE_BOUNCE_FAST_MIDDLE);
 			mDrawBrain = true;
 		}
 		else if (aAfterTiming->mBrainType == CreditBrainType::BRAIN_FAST_ON)
 		{
-			mBrainPosX = TodAnimateCurveFloatTime(0.0f,
-												  1.0f,
-												  aFraction,
-												  aAfterTiming->mWordX - 50.0f,
-												  aAfterTiming->mWordX - 15.0f,
-												  TodCurves::CURVE_EASE_IN_OUT);
+			mBrainPosX = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, aAfterTiming->mWordX - 50.0f,
+												  aAfterTiming->mWordX - 15.0f, TodCurves::CURVE_EASE_IN_OUT);
 			mBrainPosY = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, 485.0f, 505.0f, TodCurves::CURVE_EASE_IN_OUT);
 			mDrawBrain = true;
 		}
 		else if (aAfterTiming->mBrainType == CreditBrainType::BRAIN_FLY_OFF)
 		{
-			mBrainPosX = TodAnimateCurveFloatTime(
-				0.0f, 1.0f, aFraction, aBeforeTiming->mWordX - 15.0f, 850.0f, TodCurves::CURVE_EASE_IN_OUT);
+			mBrainPosX = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, aBeforeTiming->mWordX - 15.0f, 850.0f,
+												  TodCurves::CURVE_EASE_IN_OUT);
 			mBrainPosY =
 				TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, 505.0f, 485.0f, TodCurves::CURVE_BOUNCE_FAST_MIDDLE);
 			mDrawBrain = true;
 		}
 		else if (aAfterTiming->mBrainType == CreditBrainType::BRAIN_FAST_OFF)
 		{
-			mBrainPosX = TodAnimateCurveFloatTime(0.0f,
-												  1.0f,
-												  aFraction,
-												  aBeforeTiming->mWordX - 15.0f,
-												  aBeforeTiming->mWordX + 25.0f,
-												  TodCurves::CURVE_EASE_IN_OUT);
+			mBrainPosX = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, aBeforeTiming->mWordX - 15.0f,
+												  aBeforeTiming->mWordX + 25.0f, TodCurves::CURVE_EASE_IN_OUT);
 			mBrainPosY = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, 505.0f, 485.0f, TodCurves::CURVE_EASE_IN_OUT);
 			mDrawBrain = true;
 		}
@@ -1441,12 +1395,8 @@ void CreditScreen::UpdateMovie()
 				 aBeforeTiming->mBrainType == CreditBrainType::BRAIN_FAST_ON ||
 				 aBeforeTiming->mBrainType == CreditBrainType::BRAIN_NEXT_WORD)
 		{
-			mBrainPosX = TodAnimateCurveFloatTime(0.0f,
-												  1.0f,
-												  aFraction,
-												  aBeforeTiming->mWordX - 15.0f,
-												  aAfterTiming->mWordX - 15.0f,
-												  TodCurves::CURVE_EASE_IN_OUT);
+			mBrainPosX = TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, aBeforeTiming->mWordX - 15.0f,
+												  aAfterTiming->mWordX - 15.0f, TodCurves::CURVE_EASE_IN_OUT);
 			mBrainPosY =
 				TodAnimateCurveFloatTime(0.0f, 1.0f, aFraction, 505.0f, 485.0f, TodCurves::CURVE_BOUNCE_FAST_MIDDLE);
 			mDrawBrain = true;
@@ -1755,12 +1705,8 @@ void CreditScreen::PauseCredits()
 	int aDurationOnPause = mTimerSinceStart.GetDuration();
 	mApp->mMusic->GameMusicPause(true);
 
-	if (mApp->LawnMessageBox(Dialogs::DIALOG_MESSAGE,
-							 "[CREDITS_PAUSE_HEADER]",
-							 "[CREDITS_PAUSE_BODY]",
-							 "[CREDITS_RESUME_BUTTON]",
-							 "[MAIN_MENU_BUTTON]",
-							 Dialog::BUTTONS_YES_NO) == Dialog::ID_NO)
+	if (mApp->LawnMessageBox(Dialogs::DIALOG_MESSAGE, "[CREDITS_PAUSE_HEADER]", "[CREDITS_PAUSE_BODY]",
+							 "[CREDITS_RESUME_BUTTON]", "[MAIN_MENU_BUTTON]", Dialog::BUTTONS_YES_NO) == Dialog::ID_NO)
 	{
 		mApp->KillCreditScreen();
 		mApp->DoBackToMain();

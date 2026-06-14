@@ -2,6 +2,8 @@
 //#define SEXY_PERF_ENABLED
 //#define SEXY_MEMTRACE
 
+#include <sstream>
+
 #include "SexyAppBase.h"
 #include "resource.h"
 #include "SEHCatcher.h"
@@ -63,12 +65,10 @@
 
 using namespace Sexy;
 
-
 const int DEMO_FILE_ID = 0x42BEEF78;
 const int DEMO_VERSION = 2;
 
 SexyAppBase *Sexy::gSexyAppBase = NULL;
-
 
 #if SEXY_CRASH_HANDLER
 
@@ -129,7 +129,7 @@ unsigned char gDraggingCursorData[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static GPUImage *gFPSImage = NULL;
 
-static SysFont* gDebugFont = nullptr;
+static SysFont *gDebugFont = nullptr;
 
 Version SexyAppBase::gVersion(VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, BUILD_NUMBER);
 
@@ -318,10 +318,10 @@ SexyAppBase::SexyAppBase()
 	mWidgetManager = new WidgetManager(this);
 	mResourceManager = new ResourceManager(this);
 
-	#ifdef _WIN32
+#ifdef _WIN32
 	mCopyMutex = NULL;
-	#endif
-	
+#endif
+
 #if SEXY_USE_CONTROLLER
 	for (int i = 0; i < MAX_GAMEPADS; i++)
 	{
@@ -360,9 +360,10 @@ SexyAppBase::~SexyAppBase()
 					SDL_MessageBoxData msgBoxData;
 					msgBoxData.flags = SDL_MESSAGEBOX_WARNING;
 					msgBoxData.title = GetString("HARDWARE_ACCEL_SWITCHED_ON",
-												  "Hardware Acceleration was switched on during this session.\nIf this "
-												  "resulted in slower performance,it should be switched off.\nWould "
-												  "you like to keep Hardware Acceleration switched on?").c_str();
+												 "Hardware Acceleration was switched on during this session.\nIf this "
+												 "resulted in slower performance,it should be switched off.\nWould "
+												 "you like to keep Hardware Acceleration switched on?")
+										   .c_str();
 					std::string aMessage =
 						(mCompanyName + " " +
 						 GetString("HARDWARE_ACCEL_CONFIRMATION", "Hardware Acceleration Confirmation"));
@@ -382,7 +383,7 @@ SexyAppBase::~SexyAppBase()
 		}
 
 		//if (writeToRegistry)
-			//RegistryWriteBoolean("Is3D", mDDInterface->mIs3D);
+		//RegistryWriteBoolean("Is3D", mDDInterface->mIs3D);
 	}
 
 	if (!showedMsgBox && Renderer::gRenderingPreDrawError && !IsScreenSaver())
@@ -398,9 +399,10 @@ SexyAppBase::~SexyAppBase()
 					  "If you noticed graphics problems, you may want to turn off Hardware Acceleration.\n"
 					  "Would you like to keep Hardware Acceleration switched on?");
 		msgBoxData.title = anAntiDangle1.c_str();
-		std::string anAntiDangle2 = mCompanyName + " " + GetString("HARDWARE_ACCEL_CONFIRMATION", "Hardware Acceleration Confirmation");
+		std::string anAntiDangle2 =
+			mCompanyName + " " + GetString("HARDWARE_ACCEL_CONFIRMATION", "Hardware Acceleration Confirmation");
 		msgBoxData.message = anAntiDangle2.c_str();
-			
+
 		msgBoxData.buttons = buttons;
 		msgBoxData.numbuttons = 2;
 		int aResult;
@@ -790,21 +792,21 @@ void SexyAppBase::DemoAddMarker(const std::string &theString)
 }
 
 //fuck uhh, todo: recode the entire demo system.
-void SexyAppBase::DemoRegisterHandle(void* theHandle)
+void SexyAppBase::DemoRegisterHandle(void *theHandle)
 {
 	if ((mRecordingDemoBuffer) || (mPlayingDemoBuffer))
 	{
 		// Insert the handle into a map with an auto-incrementing number so
 		//  we can match up the auto-incrementing numbers with the handle
 		//  later on, as handles may not be the same between executions
-	//	std::pair<HandleToIntMap::iterator, bool> aPair =
+		//	std::pair<HandleToIntMap::iterator, bool> aPair =
 		//	mHandleToIntMap.insert(HandleToIntMap::value_type(theHandle, mCurHandleNum));
 		//DBG_ASSERT(aPair.second);
 		//mCurHandleNum++;
 	}
 }
 
-void SexyAppBase::DemoWaitForHandle(void* theHandle)
+void SexyAppBase::DemoWaitForHandle(void *theHandle)
 {
 	/*
 	WaitForSingleObject(theHandle, INFINITE);
@@ -819,7 +821,7 @@ void SexyAppBase::DemoWaitForHandle(void* theHandle)
 	*/
 }
 
-bool SexyAppBase::DemoCheckHandle(void* theHandle)
+bool SexyAppBase::DemoCheckHandle(void *theHandle)
 {
 	/*
 	if (mPlayingDemoBuffer)
@@ -911,24 +913,16 @@ void SexyAppBase::DemoAssertIntEqual(int theInt)
 	}
 }
 
-Dialog *SexyAppBase::NewDialog(int theDialogId,
-							   bool isModal,
-							   const SexyString &theDialogHeader,
-							   const SexyString &theDialogLines,
-							   const SexyString &theDialogFooter,
-							   int theButtonMode)
+Dialog *SexyAppBase::NewDialog(int theDialogId, bool isModal, const SexyString &theDialogHeader,
+							   const SexyString &theDialogLines, const SexyString &theDialogFooter, int theButtonMode)
 {
 	Dialog *aDialog =
 		new Dialog(NULL, NULL, theDialogId, isModal, theDialogHeader, theDialogLines, theDialogFooter, theButtonMode);
 	return aDialog;
 }
 
-Dialog *SexyAppBase::DoDialog(int theDialogId,
-							  bool isModal,
-							  const SexyString &theDialogHeader,
-							  const SexyString &theDialogLines,
-							  const SexyString &theDialogFooter,
-							  int theButtonMode)
+Dialog *SexyAppBase::DoDialog(int theDialogId, bool isModal, const SexyString &theDialogHeader,
+							  const SexyString &theDialogLines, const SexyString &theDialogFooter, int theButtonMode)
 {
 	KillDialog(theDialogId);
 
@@ -1098,7 +1092,7 @@ bool SexyAppBase::OpenURL(const std::string &theURL, bool shutdownOnOpen)
 
 std::string SexyAppBase::GetProductVersionDLL(const std::string &thePath)
 {
-	#ifdef _WIN32
+#ifdef _WIN32
 	// Dynamically Load Version.dll
 	typedef DWORD(APIENTRY * GetFileVersionInfoSizeFunc)(LPSTR lptstrFilename, LPDWORD lpdwHandle);
 	typedef BOOL(APIENTRY * GetFileVersionInfoFunc)(LPSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData);
@@ -1129,8 +1123,8 @@ std::string SexyAppBase::GetProductVersionDLL(const std::string &thePath)
 		{
 			aProductVersion = aBuffer;
 		}
-		else if (aVerQueryValueFunc(
-					 aVersionBuffer, "\\StringFileInfo\\040904E4\\ProductVersion", (void **)&aBuffer, &aSize))
+		else if (aVerQueryValueFunc(aVersionBuffer, "\\StringFileInfo\\040904E4\\ProductVersion", (void **)&aBuffer,
+									&aSize))
 		{
 			aProductVersion = aBuffer;
 		}
@@ -1139,10 +1133,9 @@ std::string SexyAppBase::GetProductVersionDLL(const std::string &thePath)
 	}
 
 	return aProductVersion;
-	#else
+#else
 	return "";
-	#endif
-	
+#endif
 }
 
 void SexyAppBase::WaitForLoadingThread()
@@ -1165,7 +1158,7 @@ void SexyAppBase::TakeScreenshot()
 	ClearUpdateBacklog();
 	if (mRenderer == nullptr)
 		return;
-	
+
 	// Get free image name
 	std::string anImageDir = "screenshots";
 	MkDir(anImageDir);
@@ -1175,7 +1168,7 @@ void SexyAppBase::TakeScreenshot()
 	std::string anImagePrefix = "image";
 
 	std::string anImageName = anImageDir + anImagePrefix + StrFormat("%d", aMaxId);
-	
+
 	while (true)
 	{
 		anImageName = anImageDir + anImagePrefix + StrFormat("%d", aMaxId);
@@ -1185,7 +1178,7 @@ void SexyAppBase::TakeScreenshot()
 
 		++aMaxId;
 	}
-	
+
 	// Write image
 	ImageLib::Image aSaveImage;
 	aSaveImage.mBits = mRenderer->CaptureFrameBuffer();
@@ -1201,7 +1194,6 @@ void SexyAppBase::TakeScreenshot()
 	}
 	aSaveImage.mNumChannels = 4;
 	ImageLib::WriteImage(anImageName, &aSaveImage, ".png");
-
 }
 
 void SexyAppBase::DumpProgramInfo()
@@ -1372,21 +1364,16 @@ void SexyAppBase::DumpProgramInfo()
 		aTotalRLAdditiveMemory += aRLAdditiveMemory;
 
 		char aStr[256];
-		sprintf(aStr,
-				"%d x %d<BR>%s bytes",
-				aMemoryImage->mWidth,
-				aMemoryImage->mHeight,
+		sprintf(aStr, "%d x %d<BR>%s bytes", aMemoryImage->mWidth, aMemoryImage->mHeight,
 				CommaSeperate(aMemorySize).c_str());
 		aDumpStream << "<TD ALIGN=RIGHT>" << aStr << "</TD>" << std::endl;
 
 		aDumpStream << "<TD>"
-					<< SexyStringToString(
-						   ((aBitsMemory != 0) ? "mBits<BR>" + CommaSeperate(aBitsMemory) : "&nbsp;"))
+					<< SexyStringToString(((aBitsMemory != 0) ? "mBits<BR>" + CommaSeperate(aBitsMemory) : "&nbsp;"))
 					<< "</TD>" << std::endl;
 		aDumpStream << "<TD>"
-					<< SexyStringToString(((aPalletizedMemory != 0)
-											   ? "Palletized<BR>" + CommaSeperate(aPalletizedMemory)
-											   : "&nbsp;"))
+					<< SexyStringToString(
+						   ((aPalletizedMemory != 0) ? "Palletized<BR>" + CommaSeperate(aPalletizedMemory) : "&nbsp;"))
 					<< "</TD>" << std::endl;
 		aDumpStream << "<TD>"
 					<< SexyStringToString(
@@ -1394,19 +1381,19 @@ void SexyAppBase::DumpProgramInfo()
 					<< "</TD>" << std::endl;
 		aDumpStream << "<TD>"
 					<< SexyStringToString(((aMemoryImage->mGPUData != NULL)
-											   ? "Texture<BR>" + StringToSexyString(aTextureFormatName) +
-													 "<BR>" + CommaSeperate(aTextureMemory)
+											   ? "Texture<BR>" + StringToSexyString(aTextureFormatName) + "<BR>" +
+													 CommaSeperate(aTextureMemory)
 											   : "&nbsp;"))
 					<< "</TD>" << std::endl;
 
-		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mIsVolatile) ? "Volatile" : "&nbsp;"))
-					<< "</TD>" << std::endl;
-		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mForcedMode) ? "Forced" : "&nbsp;"))
-					<< "</TD>" << std::endl;
-		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mHasAlpha) ? "HasAlpha" : "&nbsp;"))
-					<< "</TD>" << std::endl;
-		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mHasTrans) ? "HasTrans" : "&nbsp;"))
-					<< "</TD>" << std::endl;
+		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mIsVolatile) ? "Volatile" : "&nbsp;")) << "</TD>"
+					<< std::endl;
+		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mForcedMode) ? "Forced" : "&nbsp;")) << "</TD>"
+					<< std::endl;
+		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mHasAlpha) ? "HasAlpha" : "&nbsp;")) << "</TD>"
+					<< std::endl;
+		aDumpStream << "<TD>" << SexyStringToString(((aMemoryImage->mHasTrans) ? "HasTrans" : "&nbsp;")) << "</TD>"
+					<< std::endl;
 		aDumpStream << "<TD>"
 					<< SexyStringToString(((aNativeAlphaMemory != 0)
 											   ? "NativeAlpha<BR>" + CommaSeperate(aNativeAlphaMemory)
@@ -1417,9 +1404,8 @@ void SexyAppBase::DumpProgramInfo()
 						   ((aRLAlphaMemory != 0) ? "RLAlpha<BR>" + CommaSeperate(aRLAlphaMemory) : "&nbsp;"))
 					<< "</TD>" << std::endl;
 		aDumpStream << "<TD>"
-					<< SexyStringToString(((aRLAdditiveMemory != 0)
-											   ? "RLAdditive<BR>" + CommaSeperate(aRLAdditiveMemory)
-											   : "&nbsp;"))
+					<< SexyStringToString(
+						   ((aRLAdditiveMemory != 0) ? "RLAdditive<BR>" + CommaSeperate(aRLAdditiveMemory) : "&nbsp;"))
 					<< "</TD>" << std::endl;
 		aDumpStream << "<TD>" << (aMemoryImage->mFilePath.empty() ? "&nbsp;" : aMemoryImage->mFilePath) << "</TD>"
 					<< std::endl;
@@ -1443,8 +1429,8 @@ void SexyAppBase::DumpProgramInfo()
 				*(aThumbBitsPtr++) = aBits[aSrcX + (aSrcY * aCopiedImage.mWidth)];
 			}
 
-		ImageLib::WriteImage(
-			(GetAppDataFolder() + std::string("_dump\\") + aThumbName).c_str(), &anImageLibImage, ".jpeg");
+		ImageLib::WriteImage((GetAppDataFolder() + std::string("_dump\\") + aThumbName).c_str(), &anImageLibImage,
+							 ".jpeg");
 
 		// Write high resolution image
 
@@ -1491,9 +1477,7 @@ double SexyAppBase::GetLoadingThreadProgress()
 	return std::min(mCompletedLoadingThreadTasks / (double)mNumLoadingThreadTasks, 1.0);
 }
 
-bool SexyAppBase::RegistryWrite(const std::string &theValueName,
-								JSONRegistryType theType,
-								const uint8_t *theValue,
+bool SexyAppBase::RegistryWrite(const std::string &theValueName, JSONRegistryType theType, const uint8_t *theValue,
 								uint32_t theLength)
 {
 	if (mPlayingDemoBuffer)
@@ -1596,7 +1580,7 @@ void SexyAppBase::WriteToRegistry()
 }
 
 bool SexyAppBase::RegistryEraseKey(const SexyString &_theKeyName)
-{ 
+{
 	if (mPlayingDemoBuffer)
 	{
 		if (mManualShutdown)
@@ -1682,16 +1666,14 @@ bool SexyAppBase::RegistryGetSubKeys(const std::string &theKeyName, StringVector
 	return false;
 }
 
-bool SexyAppBase::RegistryRead(const std::string &theValueName,
-							   JSONRegistryType *theType,
-							   uint8_t *theValue,
+bool SexyAppBase::RegistryRead(const std::string &theValueName, JSONRegistryType *theType, uint8_t *theValue,
 							   uint32_t *theLength)
 {
 	return RegistryReadKey(theValueName, theType, theValue, theLength, 0);
 }
 
-bool SexyAppBase::RegistryReadKey(
-	const std::string &theValueName, JSONRegistryType *theType, uint8_t *theValue, uint32_t *theLength, int theKey)
+bool SexyAppBase::RegistryReadKey(const std::string &theValueName, JSONRegistryType *theType, uint8_t *theValue,
+								  uint32_t *theLength, int theKey)
 {
 	std::filesystem::path configPath = GetAppDataFolder() + "/registry.json";
 	if (!std::filesystem::exists(configPath) || !theType || !theValue || !theLength)
@@ -2104,20 +2086,15 @@ std::string SexyAppBase::GetGameSEHInfo()
 	char aTimeStr[16];
 	sprintf(aTimeStr, "%02d:%02d:%02d", (aSecLoaded / 60 / 60), (aSecLoaded / 60) % 60, aSecLoaded % 60);
 
-	char aThreadIdStr[16];
-	sprintf(aThreadIdStr, "%X", mPrimaryThreadId);
+	// c++20: replace with std::format
+	std::ostringstream aInfoStream;
+	aInfoStream << "Product: " << mProdName << "\r\n"
+				<< "Version: " << mProductVersion << "\r\n"
+				<< "Time Loaded" << aTimeStr << "\r\n"
+				<< "Fullscreen: " << (mIsWindowed ? "No" : "Yes") << "\r\n"
+				<< "Primary ThreadId:" << mPrimaryThreadId << "\r\n";
 
-	std::string anInfoString = "Product: " + mProdName + "\r\n" + "Version: " + mProductVersion + "\r\n";
-
-	anInfoString += "Time Loaded: " + std::string(aTimeStr) +
-					"\r\n"
-					"Fullscreen: " +
-					(mIsWindowed ? std::string("No") : std::string("Yes")) +
-					"\r\n"
-					"Primary ThreadId: " +
-					aThreadIdStr + "\r\n";
-
-	return anInfoString;
+	return aInfoStream.str();
 }
 
 void SexyAppBase::GetSEHWebParams(DefinesMap *theDefinesMap)
@@ -2168,7 +2145,6 @@ void SexyAppBase::Shutdown()
 
 void SexyAppBase::RestoreScreenResolution()
 {
-
 }
 
 void SexyAppBase::DoExit(int theCode)
@@ -2596,8 +2572,7 @@ bool SexyAppBase::DrawDirtyStuff()
 	}
 #endif
 
-	if ((drewScreen || (aStartTime - mLastDrawTick >= 1000)) &&
-		((int)(aStartTime - mNextDrawTick) >= 0))
+	if ((drewScreen || (aStartTime - mLastDrawTick >= 1000)) && ((int)(aStartTime - mNextDrawTick) >= 0))
 	{
 		mLastDrawWasEmpty = false;
 
@@ -2616,8 +2591,7 @@ bool SexyAppBase::DrawDirtyStuff()
 			g.DrawImage(gFPSImage, mWidth - gFPSImage->GetWidth() - 10, mHeight - gFPSImage->GetHeight() - 10);
 
 			if (mPlayingDemoBuffer)
-				g.DrawImage(gDemoTimeLeftImage,
-							mWidth - gDemoTimeLeftImage->GetWidth() - 10,
+				g.DrawImage(gDemoTimeLeftImage, mWidth - gDemoTimeLeftImage->GetWidth() - 10,
 							mHeight - gFPSImage->GetHeight() - gDemoTimeLeftImage->GetHeight() - 15);
 		}
 
@@ -2700,7 +2674,6 @@ void SexyAppBase::LogScreenSaverError(const std::string &theError)
 
 void SexyAppBase::BeginPopup()
 {
-
 }
 
 void SexyAppBase::EndPopup()
@@ -2726,7 +2699,7 @@ int SexyAppBase::MsgBox(const std::string &theText, const std::string &theTitle,
 	{
 		LogScreenSaverError(theText);
 		return 0;
-	}//todo flags for bttns
+	} //todo flags for bttns
 
 	BeginPopup();
 
@@ -2734,26 +2707,25 @@ int SexyAppBase::MsgBox(const std::string &theText, const std::string &theTitle,
 
 	uint32_t aConvertedFlags = 0;
 	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_ERROR)
-		aConvertedFlags |= SDL_MESSAGEBOX_ERROR;                    
+		aConvertedFlags |= SDL_MESSAGEBOX_ERROR;
 	else if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_WARNING)
-		aConvertedFlags |= SDL_MESSAGEBOX_WARNING;                    
+		aConvertedFlags |= SDL_MESSAGEBOX_WARNING;
 	else
-		aConvertedFlags |= MESSAGEBOX_INFORMATION;      
+		aConvertedFlags |= MESSAGEBOX_INFORMATION;
 
-	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT) 
-		aConvertedFlags |= SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT;  
+	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT)
+		aConvertedFlags |= SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT;
 	else
-		aConvertedFlags |= SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT;      
+		aConvertedFlags |= SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT;
 
 	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_OK)
 		aButtonVec.push_back({SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 0, "Ok"});
-	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_CANCEL) 
+	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_CANCEL)
 		aButtonVec.push_back({SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 0, "Cancel"});
-	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_YES) 
+	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_YES)
 		aButtonVec.push_back({SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 0, "Yes"});
-	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_NO) 
+	if (theFlags & SexyMessageBoxFlags::MESSAGEBOX_BTN_NO)
 		aButtonVec.push_back({SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, 0, "No"});
-
 
 	SDL_MessageBoxData msgBoxData;
 	msgBoxData.window = nullptr;
@@ -2778,14 +2750,13 @@ void SexyAppBase::Popup(const std::string &theString)
 		return;
 	}
 
-	SDL_Window* aInternalWindow = nullptr;
+	SDL_Window *aInternalWindow = nullptr;
 	if (mWindow != nullptr)
 		aInternalWindow = mWindow->mInternalWindow;
 
 	BeginPopup();
 	if (!mShutdown)
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-								 GetString("FATAL_ERROR", "FATAL ERROR").c_str(),
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, GetString("FATAL_ERROR", "FATAL ERROR").c_str(),
 								 theString.c_str(), aInternalWindow);
 
 	EndPopup();
@@ -2821,8 +2792,7 @@ static intptr_t CALLBACK MarkerListDialogProc(HWND hwnd, UINT msg, WPARAM wParam
 		GetClientRect(hwnd, &aRect);
 		MoveWindow(aListBox, 10, 10, aRect.right - aRect.left - 20, aRect.bottom - aRect.top - 20, FALSE);
 		for (SexyAppBase::DemoMarkerList::iterator anItr = gSexyAppBase->mDemoMarkerList.begin();
-			 anItr != gSexyAppBase->mDemoMarkerList.end();
-			 ++anItr)
+			 anItr != gSexyAppBase->mDemoMarkerList.end(); ++anItr)
 		{
 			if (anItr->second <= gSexyAppBase->mUpdateCount)
 				continue;
@@ -2835,7 +2805,7 @@ static intptr_t CALLBACK MarkerListDialogProc(HWND hwnd, UINT msg, WPARAM wParam
 			SexyString aStr = StrFormat("%s (%02d:%02d:%02d)", anItr->first.c_str(), anHours, aMinutes, aSeconds);
 			GetTextExtentPoint32(hDCListBox, aStr.c_str(), aStr.length(), &aSize);
 			dwExtent = aSize.cx + tm.tmAveCharWidth > (int)dwExtent ? aSize.cx + tm.tmAveCharWidth : (int)dwExtent;
-			
+
 			SendMessage(aListBox, LB_SETHORIZONTALEXTENT, dwExtent, 0);
 			LRESULT anIndex = SendMessage(aListBox, LB_ADDSTRING, 0, (LPARAM)aStr.c_str());
 			SendMessage(aListBox, LB_SETITEMDATA, anIndex, anItr->second);
@@ -3147,7 +3117,6 @@ static uint32_t gPowerSaveTick = 0;
 
 void SexyAppBase::HandleNotifyGameMessage(int theType, int theParam)
 {
-	
 }
 
 void SexyAppBase::RehupFocus()
@@ -3419,8 +3388,9 @@ void SexyAppBase::ShowMemoryUsage()
 		aDesc = "Supported";
 	else
 		aDesc = "Unsupported";
-	
-	aStr += StrFormat("Current Rendering Backend: %s\n", gRenderBackends.find(mRenderer->mCurrentBackend)->second.c_str());
+
+	aStr +=
+		StrFormat("Current Rendering Backend: %s\n", gRenderBackends.find(mRenderer->mCurrentBackend)->second.c_str());
 	aStr += StrFormat("3D-Mode is %s (3D is %s on this system)\n\n", Is3DAccelerated() ? "On" : "Off", aDesc);
 
 	aStr += StrFormat("Num Images: %d\n", (int)mMemoryImageSet.size());
@@ -3435,17 +3405,17 @@ void SexyAppBase::ShowMemoryUsage()
 	aStr += StrFormat("Num Textures: %d \n\n", aNumTextures);
 
 	FormatUsage aUsage = aFormatMap[PixelFormat_A8R8G8B8];
-	aStr += StrFormat(
-		"A8R8G8B8: %d - %s KB\n", aUsage.first, SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
+	aStr += StrFormat("A8R8G8B8: %d - %s KB\n", aUsage.first,
+					  SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
 	aUsage = aFormatMap[PixelFormat_A4R4G4B4];
-	aStr += StrFormat(
-		"A4R4G4B4: %d - %s KB\n", aUsage.first, SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
+	aStr += StrFormat("A4R4G4B4: %d - %s KB\n", aUsage.first,
+					  SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
 	aUsage = aFormatMap[PixelFormat_R5G6B5];
-	aStr += StrFormat(
-		"R5G6B5: %d - %s KB\n", aUsage.first, SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
+	aStr += StrFormat("R5G6B5: %d - %s KB\n", aUsage.first,
+					  SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
 	aUsage = aFormatMap[PixelFormat_Palette8];
-	aStr += StrFormat(
-		"Palette8: %d - %s KB\n", aUsage.first, SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
+	aStr += StrFormat("Palette8: %d - %s KB\n", aUsage.first,
+					  SexyStringToString(CommaSeperate(aUsage.second / 1024)).c_str());
 
 	MsgBox(aStr, "Video Stats", MESSAGEBOX_BTN_OK);
 	mLastTime = timeGetTime();
@@ -3578,7 +3548,6 @@ bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
 			aConvertedEvent.motion.x = x;
 			aConvertedEvent.motion.y = y;
 			ImGui_ImplSDL3_ProcessEvent(&aConvertedEvent);
-
 		}
 		else
 #endif
@@ -3591,423 +3560,410 @@ bool SexyAppBase::ProcessDeferredMessages(bool singleMessage)
 		{
 			switch (anEvent.type)
 			{
-				case SDL_EVENT_WINDOW_FOCUS_LOST:
-				case SDL_EVENT_WINDOW_FOCUS_GAINED:
+			case SDL_EVENT_WINDOW_FOCUS_LOST:
+			case SDL_EVENT_WINDOW_FOCUS_GAINED: {
+				SDL_Window *theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
+				if (theTargetWindow == mWindow->mInternalWindow)
 				{
-					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
-					if (theTargetWindow == mWindow->mInternalWindow)
-					{
-						WriteDemoTimingBlock();
-						mDemoBuffer.WriteNumBits(0, 1);
-						mDemoBuffer.WriteNumBits(DEMO_ACTIVATE_APP, 5);
-						mDemoBuffer.WriteNumBits((anEvent.type != SDL_EVENT_WINDOW_FOCUS_LOST) ? 1 : 0, 1);
-					}
-					break;
-				}
-				case SDL_EVENT_WINDOW_MAXIMIZED:
-				case SDL_EVENT_WINDOW_MINIMIZED:
 					WriteDemoTimingBlock();
 					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_SIZE, 5);
-					mDemoBuffer.WriteBoolean(anEvent.type == SDL_EVENT_WINDOW_MINIMIZED);
-					break;
-				case SDL_EVENT_MOUSE_MOTION:
-				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-				case SDL_EVENT_MOUSE_BUTTON_UP:
+					mDemoBuffer.WriteNumBits(DEMO_ACTIVATE_APP, 5);
+					mDemoBuffer.WriteNumBits((anEvent.type != SDL_EVENT_WINDOW_FOCUS_LOST) ? 1 : 0, 1);
+				}
+				break;
+			}
+			case SDL_EVENT_WINDOW_MAXIMIZED:
+			case SDL_EVENT_WINDOW_MINIMIZED:
+				WriteDemoTimingBlock();
+				mDemoBuffer.WriteNumBits(0, 1);
+				mDemoBuffer.WriteNumBits(DEMO_SIZE, 5);
+				mDemoBuffer.WriteBoolean(anEvent.type == SDL_EVENT_WINDOW_MINIMIZED);
+				break;
+			case SDL_EVENT_MOUSE_MOTION:
+			case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			case SDL_EVENT_MOUSE_BUTTON_UP: {
+
+				int aCurX = anEvent.button.x;
+				int aCurY = anEvent.button.y;
+				int aDiffX = aCurX - mLastDemoMouseX;
+				int aDiffY = aCurY - mLastDemoMouseY;
+
+				if ((abs(aCurX - mLastDemoMouseX) < 32) && (abs(aCurY - mLastDemoMouseY) < 32))
 				{
-
-					int aCurX = anEvent.button.x;
-					int aCurY = anEvent.button.y;
-					int aDiffX = aCurX - mLastDemoMouseX;
-					int aDiffY = aCurY - mLastDemoMouseY;
-
-					if ((abs(aCurX - mLastDemoMouseX) < 32) && (abs(aCurY - mLastDemoMouseY) < 32))
-					{
-						if ((aDiffX != 0) || (aDiffY != 0))
-						{
-							WriteDemoTimingBlock();
-							mDemoBuffer.WriteNumBits(1, 1);
-							mDemoBuffer.WriteNumBits(0, 1);
-							mDemoBuffer.WriteNumBits(aDiffX, 6);
-							mDemoBuffer.WriteNumBits(aDiffY, 6);
-						}
-					}
-					else
-					{
-						WriteDemoTimingBlock();
-						mDemoBuffer.WriteNumBits(0, 1);
-						mDemoBuffer.WriteNumBits(DEMO_MOUSE_POSITION, 5);
-						mDemoBuffer.WriteNumBits(aCurX, 12);
-						mDemoBuffer.WriteNumBits(aCurY, 12);
-					}
-
-					bool down = anEvent.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
-					int aBtnNum = 0;
-					switch (anEvent.button.button)
-					{
-						case SDL_BUTTON_LEFT:
-							aBtnNum = 1;
-							break;
-						case SDL_BUTTON_RIGHT:
-							aBtnNum = -1;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							aBtnNum = 3;
-							break;
-					}
-
-
-					if (aBtnNum != 0)
+					if ((aDiffX != 0) || (aDiffY != 0))
 					{
 						WriteDemoTimingBlock();
 						mDemoBuffer.WriteNumBits(1, 1);
-						mDemoBuffer.WriteNumBits(1, 1);
-						mDemoBuffer.WriteNumBits(down ? 1 : 0, 1);
-						mDemoBuffer.WriteNumBits(aBtnNum, 3);
-					}
-
-					mLastDemoMouseX = aCurX;
-					mLastDemoMouseY = aCurY;
-				}
-				break;
-				case SDL_EVENT_MOUSE_WHEEL:
-				{				
-					int aZDelta = anEvent.wheel.y;
-
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_MOUSE_WHEEL, 5);
-					mDemoBuffer.WriteNumBits(aZDelta, 8);
-				}
-				break;
-				case SDL_EVENT_KEY_DOWN:
-				case SDL_EVENT_KEY_UP:
-				{
-					bool isDown = anEvent.type == SDL_EVENT_KEY_DOWN;
-					SDL_Keycode aKeyCode = anEvent.key.key;
-
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(isDown ? DEMO_KEY_DOWN : DEMO_KEY_UP, 5);
-					mDemoBuffer.WriteNumBits((int)aKeyCode, 8);
-				}
-				break;
-				case SDL_EVENT_TEXT_INPUT:
-				{
-					SexyChar aChar = anEvent.text.text[0]; 
-
-					WriteDemoTimingBlock();
-					mDemoBuffer.WriteNumBits(0, 1);
-					mDemoBuffer.WriteNumBits(DEMO_KEY_CHAR, 5);
-					mDemoBuffer.WriteNumBits(sizeof(SexyChar) == 2, 1);
-					mDemoBuffer.WriteNumBits(aChar, sizeof(SexyChar) * 8);
-				}
-				break;
-				case SDL_EVENT_QUIT:
-				{
-					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
-					if (theTargetWindow == mWindow->mInternalWindow)
-					{
-						WriteDemoTimingBlock();
 						mDemoBuffer.WriteNumBits(0, 1);
-						mDemoBuffer.WriteNumBits(DEMO_CLOSE, 5);
+						mDemoBuffer.WriteNumBits(aDiffX, 6);
+						mDemoBuffer.WriteNumBits(aDiffY, 6);
 					}
 				}
+				else
+				{
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(DEMO_MOUSE_POSITION, 5);
+					mDemoBuffer.WriteNumBits(aCurX, 12);
+					mDemoBuffer.WriteNumBits(aCurY, 12);
+				}
+
+				bool down = anEvent.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
+				int aBtnNum = 0;
+				switch (anEvent.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					aBtnNum = 1;
+					break;
+				case SDL_BUTTON_RIGHT:
+					aBtnNum = -1;
+					break;
+				case SDL_BUTTON_MIDDLE:
+					aBtnNum = 3;
+					break;
+				}
+
+				if (aBtnNum != 0)
+				{
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(1, 1);
+					mDemoBuffer.WriteNumBits(1, 1);
+					mDemoBuffer.WriteNumBits(down ? 1 : 0, 1);
+					mDemoBuffer.WriteNumBits(aBtnNum, 3);
+				}
+
+				mLastDemoMouseX = aCurX;
+				mLastDemoMouseY = aCurY;
+			}
+			break;
+			case SDL_EVENT_MOUSE_WHEEL: {
+				int aZDelta = anEvent.wheel.y;
+
+				WriteDemoTimingBlock();
+				mDemoBuffer.WriteNumBits(0, 1);
+				mDemoBuffer.WriteNumBits(DEMO_MOUSE_WHEEL, 5);
+				mDemoBuffer.WriteNumBits(aZDelta, 8);
+			}
+			break;
+			case SDL_EVENT_KEY_DOWN:
+			case SDL_EVENT_KEY_UP: {
+				bool isDown = anEvent.type == SDL_EVENT_KEY_DOWN;
+				SDL_Keycode aKeyCode = anEvent.key.key;
+
+				WriteDemoTimingBlock();
+				mDemoBuffer.WriteNumBits(0, 1);
+				mDemoBuffer.WriteNumBits(isDown ? DEMO_KEY_DOWN : DEMO_KEY_UP, 5);
+				mDemoBuffer.WriteNumBits((int)aKeyCode, 8);
+			}
+			break;
+			case SDL_EVENT_TEXT_INPUT: {
+				SexyChar aChar = anEvent.text.text[0];
+
+				WriteDemoTimingBlock();
+				mDemoBuffer.WriteNumBits(0, 1);
+				mDemoBuffer.WriteNumBits(DEMO_KEY_CHAR, 5);
+				mDemoBuffer.WriteNumBits(sizeof(SexyChar) == 2, 1);
+				mDemoBuffer.WriteNumBits(aChar, sizeof(SexyChar) * 8);
+			}
+			break;
+			case SDL_EVENT_QUIT: {
+				SDL_Window *theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
+				if (theTargetWindow == mWindow->mInternalWindow)
+				{
+					WriteDemoTimingBlock();
+					mDemoBuffer.WriteNumBits(0, 1);
+					mDemoBuffer.WriteNumBits(DEMO_CLOSE, 5);
+				}
+			}
 
 				int aBufferSize = mDemoBuffer.GetDataLen();
 			}
-			
 		}
 
 		if (!mPlayingDemoBuffer)
 		{
 			switch (anEvent.type)
 			{
-				case SDL_EVENT_WINDOW_FOCUS_GAINED:
-					if ((!gInAssert) && (!mSEHOccured) && (!mShutdown))
-					{
-						mActive = true;
-						RehupFocus();
-						if (!mIsWindowed)
-							mWidgetManager->MarkAllDirty();
-						if (mIsOpeningURL && !mActive)
-							URLOpenSucceeded(mOpeningURL);
-					}
-					break;
-				case SDL_EVENT_WINDOW_FOCUS_LOST:
-					mActive = false;
+			case SDL_EVENT_WINDOW_FOCUS_GAINED:
+				if ((!gInAssert) && (!mSEHOccured) && (!mShutdown))
+				{
+					mActive = true;
 					RehupFocus();
-					if (mIsOpeningURL && mActive)
-						URLOpenFailed(mOpeningURL);
-					break;
-				case SDL_EVENT_WINDOW_MINIMIZED:
-					mMinimized = true;
-					if (mMuteOnLostFocus)
-						Mute(true);
-					break;
-				case SDL_EVENT_WINDOW_MAXIMIZED:
-				case SDL_EVENT_WINDOW_RESTORED:
-					mMinimized = false;
-					if (mMuteOnLostFocus)
-						Unmute(true);
-					mWidgetManager->MarkAllDirty();
-					break;
-				case SDL_EVENT_MOUSE_MOTION:
-					if (!gInAssert && !mSEHOccured)
-					{
-						int x = anEvent.motion.x;
-						int y = anEvent.motion.y;
+					if (!mIsWindowed)
+						mWidgetManager->MarkAllDirty();
+					if (mIsOpeningURL && !mActive)
+						URLOpenSucceeded(mOpeningURL);
+				}
+				break;
+			case SDL_EVENT_WINDOW_FOCUS_LOST:
+				mActive = false;
+				RehupFocus();
+				if (mIsOpeningURL && mActive)
+					URLOpenFailed(mOpeningURL);
+				break;
+			case SDL_EVENT_WINDOW_MINIMIZED:
+				mMinimized = true;
+				if (mMuteOnLostFocus)
+					Mute(true);
+				break;
+			case SDL_EVENT_WINDOW_MAXIMIZED:
+			case SDL_EVENT_WINDOW_RESTORED:
+				mMinimized = false;
+				if (mMuteOnLostFocus)
+					Unmute(true);
+				mWidgetManager->MarkAllDirty();
+				break;
+			case SDL_EVENT_MOUSE_MOTION:
+				if (!gInAssert && !mSEHOccured)
+				{
+					int x = anEvent.motion.x;
+					int y = anEvent.motion.y;
 
-#if SEXY_USE_CONTROLLER
-						if (mUsingGamepad)
-						{
-							// If this is genuine physical mouse movement (SDL flags SDL_MOUSEMOTION_RELATIVE
-							// as relative==true for mouse warp injections), revert to mouse mode.
-							// SDL3 sets event.motion.which == SDL_TOUCH_MOUSEID for touch/synthetic events.
-							if (anEvent.motion.which != SDL_TOUCH_MOUSEID &&
-								(std::abs(anEvent.motion.xrel) > 2 || std::abs(anEvent.motion.yrel) > 2))
-							{
-								mUsingGamepad = false;
-								EnforceCursor();
-							}
-							else
-							{
-								break; // Synthetic/injected movement — ignore it completely
-							}
-						}
-#endif
-
-						if (!(x >= mRenderer->mPresentationRect.mX && x < mRenderer->mPresentationRect.mX + mRenderer->mPresentationRect.mWidth &&
-							y >= mRenderer->mPresentationRect.mY && y < mRenderer->mPresentationRect.mY + mRenderer->mPresentationRect.mHeight && x > 0 && y > 0))
-						{
-							break;
-						}
-						mWidgetManager->RemapMouse(x, y);
-						mLastUserInputTick = mLastTimerTime;
-						mWidgetManager->MouseMove(x, y);
-						if (!mMouseIn)
-						{
-							mMouseIn = true;
-							EnforceCursor();
-						}
-					}
-					break;
-				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-				case SDL_EVENT_MOUSE_BUTTON_UP:
-					if (!gInAssert && !mSEHOccured)
-					{
-						int btnCode = 0;
-						bool down = anEvent.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
-
-#if SEXY_USE_CONTROLLER
-						// Do NOT revert to mouse mode on a button event alone — SDL3 on Windows
-						// can fire synthetic button events without any physical mouse movement.
-						// We switch back only when actual motion is detected (see MOUSE_MOTION).
-						if (mUsingGamepad)
-						{
-							break;
-						}
-#endif
-
-						switch (anEvent.button.button)
-						{
-						case SDL_BUTTON_LEFT:
-							btnCode = 1;
-							break;
-						case SDL_BUTTON_RIGHT:
-							btnCode = -1;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							btnCode = 3;
-							break;
-						}
-
-						int x = anEvent.button.x;
-						int y = anEvent.button.y;
-						if (!(x >= mRenderer->mPresentationRect.mX &&
-							  x < mRenderer->mPresentationRect.mX + mRenderer->mPresentationRect.mWidth &&
-							  y >= mRenderer->mPresentationRect.mY &&
-							  y < mRenderer->mPresentationRect.mY + mRenderer->mPresentationRect.mHeight && x > 0 &&
-							  y > 0))
-						{
-							break;
-						}
-						mWidgetManager->RemapMouse(x, y);
-
-						mLastUserInputTick = mLastTimerTime;
-
-						mWidgetManager->MouseMove(x, y);
-
-						if (!mMouseIn)
-						{
-							if (mRecordingDemoBuffer)
-							{
-								WriteDemoTimingBlock();
-								mDemoBuffer.WriteNumBits(0, 1);
-								mDemoBuffer.WriteNumBits(DEMO_MOUSE_ENTER, 5);
-							}
-
-							mMouseIn = true;
-							EnforceCursor();
-						}
-
-
-						if (down)
-							mWidgetManager->MouseDown(x, y, btnCode);
-						else
-							mWidgetManager->MouseUp(x, y, btnCode);
-					}
-					break;
-				case SDL_EVENT_MOUSE_WHEEL:
 #if SEXY_USE_CONTROLLER
 					if (mUsingGamepad)
 					{
-						break; // Ignore mouse wheel while gamepad is active to prevent cursor flicker
-					}
-#endif
-					mWidgetManager->MouseWheel(anEvent.wheel.y);
-					break;
-				case SDL_EVENT_KEY_DOWN:
-				case SDL_EVENT_KEY_UP: {
-					bool isDown = anEvent.type == SDL_EVENT_KEY_DOWN;
-					SDL_Keycode key = anEvent.key.key;
-
-					mLastUserInputTick = mLastTimerTime;
-
-					if (isDown && mDebugKeysEnabled && DebugKeyDown(GetKeyCodeFromSDLKeycode(key)))
-						break;
-
-					if (isDown)
-						mWidgetManager->KeyDown(GetKeyCodeFromSDLKeycode(key));
-					else
-						mWidgetManager->KeyUp(GetKeyCodeFromSDLKeycode(key));
-					break;
-				}
-				case SDL_EVENT_TEXT_INPUT: {
-					mLastUserInputTick = mLastTimerTime;
-
-					const char *it = anEvent.text.text;
-					const char *end = anEvent.text.text + strlen(anEvent.text.text);
-
-					uint32_t aChar = utf8::next(it, end);
-
-					mWidgetManager->KeyChar((SexyChar)aChar);
-					if (anEvent.type == SDL_EVENT_TEXT_INPUT && anEvent.text.text)
-						SDL_free((void*)anEvent.text.text);
-					break;
-				}
-				case SDL_EVENT_WINDOW_MOVED:
-				{
-					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
-					if (mWindow->mInternalWindow == theTargetWindow && mIsWindowed)
-					{
-						mPreferredSize.mX = anEvent.window.data1;
-						mPreferredSize.mY = anEvent.window.data2;
-					}
-					break;
-				}
-				case SDL_EVENT_WINDOW_RESIZED:
-				{
-					SDL_Window* theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
-					if (mWindow->mInternalWindow == theTargetWindow && !mShutdown)
-					{
-						mPreferredSize.mWidth = anEvent.window.data1;
-						mPreferredSize.mHeight = anEvent.window.data2;
-						mMinimized = SDL_GetWindowFlags(mWindow->mInternalWindow) & SDL_WINDOW_MINIMIZED;
-
-						// We don't want any sounds (or music) playing while its minimized
-						if (mMinimized)
+						// If this is genuine physical mouse movement (SDL flags SDL_MOUSEMOTION_RELATIVE
+						// as relative==true for mouse warp injections), revert to mouse mode.
+						// SDL3 sets event.motion.which == SDL_TOUCH_MOUSEID for touch/synthetic events.
+						if (anEvent.motion.which != SDL_TOUCH_MOUSEID &&
+							(std::abs(anEvent.motion.xrel) > 2 || std::abs(anEvent.motion.yrel) > 2))
 						{
-							if (mMuteOnLostFocus)
-								Mute(true);
+							mUsingGamepad = false;
+							EnforceCursor();
 						}
 						else
 						{
-							if (mMuteOnLostFocus)
-								Unmute(true);
-
-							mWidgetManager->MarkAllDirty();
-						}
-						RehupFocus();
-						mRenderer->UpdateViewport();
-						mWidgetManager->Resize(mScreenBounds, mRenderer->mPresentationRect);
-					}
-					break;
-				}
-				
-				case SDL_EVENT_WINDOW_DISPLAY_CHANGED:
-					mWidgetManager->SysColorChangedAll();
-					mWidgetManager->MarkAllDirty();
-					break;
-#if SEXY_USE_CONTROLLER
-
-				case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
-						gSexyAppBase->mUsingGamepad = true;
-					break;
-				case SDL_EVENT_GAMEPAD_AXIS_MOTION:
-					if (fabsf(anEvent.gaxis.value / 32767.0f) > mGamepads[0]->mWeight)
-						gSexyAppBase->mUsingGamepad = true;
-					break;
-
-				case SDL_EVENT_GAMEPAD_ADDED:
-					{
-						int anIdToUse = -1;
-						for (int i = 0; i < MAX_GAMEPADS; i++)
-						{
-							if (mGamepads[i] == nullptr)
-							{
-								anIdToUse = i;
-								break;
-							}
-						}
-						if (anIdToUse != -1)
-						{
-							mGamepads[anIdToUse] = new Gamepad();
-							mGamepads[anIdToUse]->SetDeviceID(anEvent.gdevice.which);
+							break; // Synthetic/injected movement — ignore it completely
 						}
 					}
-					break;
-				case SDL_EVENT_GAMEPAD_REMOVED:
-					{
-						int anIdRemoved = -1;
-						for (int i = 0; i < MAX_GAMEPADS; i++)
-						{
-							if (mGamepads[i] != nullptr && mGamepads[i]->GetDeviceID() == anEvent.gdevice.which)
-							{
-								anIdRemoved = i;
-								break;
-							}
-						}
-						if (anIdRemoved != -1)
-						{
-							delete mGamepads[anIdRemoved];
-							mGamepads[anIdRemoved] = nullptr;
-						}
-					}
-					break;
 #endif
+
+					if (!(x >= mRenderer->mPresentationRect.mX &&
+						  x < mRenderer->mPresentationRect.mX + mRenderer->mPresentationRect.mWidth &&
+						  y >= mRenderer->mPresentationRect.mY &&
+						  y < mRenderer->mPresentationRect.mY + mRenderer->mPresentationRect.mHeight && x > 0 && y > 0))
+					{
+						break;
+					}
+					mWidgetManager->RemapMouse(x, y);
+					mLastUserInputTick = mLastTimerTime;
+					mWidgetManager->MouseMove(x, y);
+					if (!mMouseIn)
+					{
+						mMouseIn = true;
+						EnforceCursor();
+					}
+				}
+				break;
+			case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			case SDL_EVENT_MOUSE_BUTTON_UP:
+				if (!gInAssert && !mSEHOccured)
+				{
+					int btnCode = 0;
+					bool down = anEvent.type == SDL_EVENT_MOUSE_BUTTON_DOWN;
+
+#if SEXY_USE_CONTROLLER
+					// Do NOT revert to mouse mode on a button event alone — SDL3 on Windows
+					// can fire synthetic button events without any physical mouse movement.
+					// We switch back only when actual motion is detected (see MOUSE_MOTION).
+					if (mUsingGamepad)
+					{
+						break;
+					}
+#endif
+
+					switch (anEvent.button.button)
+					{
+					case SDL_BUTTON_LEFT:
+						btnCode = 1;
+						break;
+					case SDL_BUTTON_RIGHT:
+						btnCode = -1;
+						break;
+					case SDL_BUTTON_MIDDLE:
+						btnCode = 3;
+						break;
+					}
+
+					int x = anEvent.button.x;
+					int y = anEvent.button.y;
+					if (!(x >= mRenderer->mPresentationRect.mX &&
+						  x < mRenderer->mPresentationRect.mX + mRenderer->mPresentationRect.mWidth &&
+						  y >= mRenderer->mPresentationRect.mY &&
+						  y < mRenderer->mPresentationRect.mY + mRenderer->mPresentationRect.mHeight && x > 0 && y > 0))
+					{
+						break;
+					}
+					mWidgetManager->RemapMouse(x, y);
+
+					mLastUserInputTick = mLastTimerTime;
+
+					mWidgetManager->MouseMove(x, y);
+
+					if (!mMouseIn)
+					{
+						if (mRecordingDemoBuffer)
+						{
+							WriteDemoTimingBlock();
+							mDemoBuffer.WriteNumBits(0, 1);
+							mDemoBuffer.WriteNumBits(DEMO_MOUSE_ENTER, 5);
+						}
+
+						mMouseIn = true;
+						EnforceCursor();
+					}
+
+					if (down)
+						mWidgetManager->MouseDown(x, y, btnCode);
+					else
+						mWidgetManager->MouseUp(x, y, btnCode);
+				}
+				break;
+			case SDL_EVENT_MOUSE_WHEEL:
+#if SEXY_USE_CONTROLLER
+				if (mUsingGamepad)
+				{
+					break; // Ignore mouse wheel while gamepad is active to prevent cursor flicker
+				}
+#endif
+				mWidgetManager->MouseWheel(anEvent.wheel.y);
+				break;
+			case SDL_EVENT_KEY_DOWN:
+			case SDL_EVENT_KEY_UP: {
+				bool isDown = anEvent.type == SDL_EVENT_KEY_DOWN;
+				SDL_Keycode key = anEvent.key.key;
+
+				mLastUserInputTick = mLastTimerTime;
+
+				if (isDown && mDebugKeysEnabled && DebugKeyDown(GetKeyCodeFromSDLKeycode(key)))
+					break;
+
+				if (isDown)
+					mWidgetManager->KeyDown(GetKeyCodeFromSDLKeycode(key));
+				else
+					mWidgetManager->KeyUp(GetKeyCodeFromSDLKeycode(key));
+				break;
+			}
+			case SDL_EVENT_TEXT_INPUT: {
+				mLastUserInputTick = mLastTimerTime;
+
+				const char *it = anEvent.text.text;
+				const char *end = anEvent.text.text + strlen(anEvent.text.text);
+
+				uint32_t aChar = utf8::next(it, end);
+
+				mWidgetManager->KeyChar((SexyChar)aChar);
+				if (anEvent.type == SDL_EVENT_TEXT_INPUT && anEvent.text.text)
+					SDL_free((void *)anEvent.text.text);
+				break;
+			}
+			case SDL_EVENT_WINDOW_MOVED: {
+				SDL_Window *theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
+				if (mWindow->mInternalWindow == theTargetWindow && mIsWindowed)
+				{
+					mPreferredSize.mX = anEvent.window.data1;
+					mPreferredSize.mY = anEvent.window.data2;
+				}
+				break;
+			}
+			case SDL_EVENT_WINDOW_RESIZED: {
+				SDL_Window *theTargetWindow = SDL_GetWindowFromEvent(&anEvent);
+				if (mWindow->mInternalWindow == theTargetWindow && !mShutdown)
+				{
+					mPreferredSize.mWidth = anEvent.window.data1;
+					mPreferredSize.mHeight = anEvent.window.data2;
+					mMinimized = SDL_GetWindowFlags(mWindow->mInternalWindow) & SDL_WINDOW_MINIMIZED;
+
+					// We don't want any sounds (or music) playing while its minimized
+					if (mMinimized)
+					{
+						if (mMuteOnLostFocus)
+							Mute(true);
+					}
+					else
+					{
+						if (mMuteOnLostFocus)
+							Unmute(true);
+
+						mWidgetManager->MarkAllDirty();
+					}
+					RehupFocus();
+					mRenderer->UpdateViewport();
+					mWidgetManager->Resize(mScreenBounds, mRenderer->mPresentationRect);
+				}
+				break;
 			}
 
+			case SDL_EVENT_WINDOW_DISPLAY_CHANGED:
+				mWidgetManager->SysColorChangedAll();
+				mWidgetManager->MarkAllDirty();
+				break;
+#if SEXY_USE_CONTROLLER
+
+			case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+				gSexyAppBase->mUsingGamepad = true;
+				break;
+			case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+				if (fabsf(anEvent.gaxis.value / 32767.0f) > mGamepads[0]->mWeight)
+					gSexyAppBase->mUsingGamepad = true;
+				break;
+
+			case SDL_EVENT_GAMEPAD_ADDED: {
+				int anIdToUse = -1;
+				for (int i = 0; i < MAX_GAMEPADS; i++)
+				{
+					if (mGamepads[i] == nullptr)
+					{
+						anIdToUse = i;
+						break;
+					}
+				}
+				if (anIdToUse != -1)
+				{
+					mGamepads[anIdToUse] = new Gamepad();
+					mGamepads[anIdToUse]->SetDeviceID(anEvent.gdevice.which);
+				}
+			}
+			break;
+			case SDL_EVENT_GAMEPAD_REMOVED: {
+				int anIdRemoved = -1;
+				for (int i = 0; i < MAX_GAMEPADS; i++)
+				{
+					if (mGamepads[i] != nullptr && mGamepads[i]->GetDeviceID() == anEvent.gdevice.which)
+					{
+						anIdRemoved = i;
+						break;
+					}
+				}
+				if (anIdRemoved != -1)
+				{
+					delete mGamepads[anIdRemoved];
+					mGamepads[anIdRemoved] = nullptr;
+				}
+			}
+			break;
+#endif
+			}
 		}
 
 		//Demo independent events.
 		switch (anEvent.type)
 		{
-			case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
-			case SDL_EVENT_QUIT:
-				// This should short-circuit all demo calls, otherwise we will get
-				//  all sorts of weird asserts because we are changing
-				//  program flow
-				mManualShutdown = true;
+		case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+		case SDL_EVENT_QUIT:
+			// This should short-circuit all demo calls, otherwise we will get
+			//  all sorts of weird asserts because we are changing
+			//  program flow
+			mManualShutdown = true;
 
-				Shutdown();
-				break;
-			
-			default:
-				break;
+			Shutdown();
+			break;
+
+		default:
+			break;
 		}
 	}
-	
+
 	return (mDeferredMessages.size() > 0);
 }
 
@@ -4020,7 +3976,6 @@ std::string SexyAppBase::NotifyCrashHook()
 {
 	return "";
 }
-
 
 bool SexyAppBase::TryCreateRenderer(RenderingBackend theBackend)
 {
@@ -4071,7 +4026,7 @@ void SexyAppBase::MakeWindow()
 		delete mWindow;
 		mWidgetManager->mImage = nullptr;
 	}
-	
+
 	mWindow = new Window(this);
 
 	SDL_StartTextInput(mWindow->mInternalWindow);
@@ -4091,7 +4046,6 @@ void SexyAppBase::MakeWindow()
 		{
 			SDL_Rect aUsableBounds{};
 			SDL_GetDisplayUsableBounds(SDL_GetDisplayForWindow(mWindow->mInternalWindow), &aUsableBounds);
-
 
 			int aWidth = (mPreferredSize.mWidth == -1) ? mWidth : mPreferredSize.mWidth;
 
@@ -4130,8 +4084,7 @@ void SexyAppBase::MakeWindow()
 
 			SDL_SetWindowPosition(mWindow->mInternalWindow, aPlaceX, aPlaceY);
 
- 			mSavedWindowedSize = Rect(aPlaceX, aPlaceY, aWidth, aHeight);
-
+			mSavedWindowedSize = Rect(aPlaceX, aPlaceY, aWidth, aHeight);
 		}
 		mIsPhysWindowed = true;
 	}
@@ -4186,7 +4139,6 @@ void SexyAppBase::MakeWindow()
 		}
 
 		printf("[SexyAppFramework] - Initialized Renderer Backend - %s\n", mRenderer->getBackendType().c_str());
-
 	}
 
 	int aResult = InitRenderer();
@@ -4850,7 +4802,6 @@ bool SexyAppBase::UpdateAppStep(bool *updated)
 
 				if (aMsg->type == SDL_EVENT_QUIT)
 					pushMessage = false;
-
 			}
 
 			if (pushMessage)
@@ -4861,14 +4812,12 @@ bool SexyAppBase::UpdateAppStep(bool *updated)
 					anEventCopy.text.text = SDL_strdup(anEvent.text.text);
 				}
 				mDeferredMessages.push_back(anEventCopy);
-
 			}
 			if (anEvent.type == SDL_EVENT_QUIT)
 			{
 				CloseRequestAsync();
 				break;
 			}
-
 		}
 
 		ProcessDemo();
@@ -4925,9 +4874,9 @@ int SexyAppBase::InitRenderer()
 {
 	PreRendererInitHook();
 	DeleteNativeImageData();
-	int aResult = mRenderer->Init();
+	bool aResult = mRenderer->Init();
 	DemoSyncRefreshRate();
-	if (true == aResult)
+	if (aResult)
 	{
 		mScreenBounds.mX = (mWidth - mRenderer->mWidth) / 2;
 		mScreenBounds.mY = (mHeight - mRenderer->mHeight) / 2;
@@ -4944,7 +4893,7 @@ int SexyAppBase::InitRenderer()
 		mImGuiManager->Init();
 	}
 #endif
-	
+
 	return aResult;
 }
 
@@ -5452,11 +5401,11 @@ void SexyAppBase::Init()
 
 	if (mOnlyAllowOneCopyToRun)
 	{
-		#ifdef _WIN32
+#ifdef _WIN32
 		mCopyMutex = CreateMutex(NULL, TRUE, (mProdName + "_OnlyAllowOneCopyToRun_Mutex").c_str());
 		if (::GetLastError() == ERROR_ALREADY_EXISTS)
 			HandleGameAlreadyRunning();
-		#endif
+#endif
 	}
 
 	mRandSeed = SDL_GetTicks();
@@ -5498,7 +5447,6 @@ void SexyAppBase::Init()
 			mForceFullscreen = true;
 		}
 	}
-
 
 	MakeWindow();
 
@@ -5596,8 +5544,8 @@ Sexy::GPUImage *SexyAppBase::GetImage(const std::string &theFileName, bool commi
 	return anImage;
 }
 
-Sexy::GPUImage *SexyAppBase::CreateCrossfadeImage(
-	Sexy::Image *theImage1, const Rect &theRect1, Sexy::Image *theImage2, const Rect &theRect2, double theFadeFactor)
+Sexy::GPUImage *SexyAppBase::CreateCrossfadeImage(Sexy::Image *theImage1, const Rect &theRect1, Sexy::Image *theImage2,
+												  const Rect &theRect2, double theFadeFactor)
 {
 	MemoryImage *aMemoryImage1 = dynamic_cast<MemoryImage *>(theImage1);
 	MemoryImage *aMemoryImage2 = dynamic_cast<MemoryImage *>(theImage2);
@@ -6226,8 +6174,8 @@ void SexyAppBase::DemoSyncRefreshRate()
 void SexyAppBase::Set3DAcclerated(bool is3D, bool reinit)
 {
 	// if (mRenderer->mIs3D == is3D)
-		return;
-	 //
+	return;
+	//
 	mUserChanged3DSetting = true;
 	//mDDInterface->mIs3D = is3D;
 

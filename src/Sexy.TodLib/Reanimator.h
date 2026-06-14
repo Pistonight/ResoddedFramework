@@ -37,11 +37,11 @@ enum ReanimFlags
 class ReanimatorTrack
 {
   public:
-    // name of the track
+	// name of the track
 	const char *mName;
-    // array of transform for each frame
+	// array of transform for each frame
 	ReanimatorTransform *mTransforms;
-    // num of transforms i.e. frames
+	// num of transforms i.e. frames
 	int mTransformCount;
 
   public:
@@ -71,7 +71,7 @@ class ReanimationParams
   public:
 	ReanimationType mReanimationType;
 	const char *mReanimFileName;
-	int mReanimParamFlags;
+	unsigned int mReanimParamFlags;
 };
 extern int gReanimationParamArraySize;
 extern ReanimationParams *gReanimationParamArray;
@@ -114,11 +114,11 @@ class ReanimationHolder
 class ReanimatorFrameTime
 {
   public:
-    // faction of what is already played between 2 frames
+	// faction of what is already played between 2 frames
 	float mFraction;
-    // previous integer frame
+	// previous integer frame
 	int mAnimFrameBeforeInt;
-    // next integer frame
+	// next integer frame
 	int mAnimFrameAfterInt;
 };
 
@@ -227,18 +227,12 @@ class Reanimation
 		;
 	}
 	Image *GetCurrentTrackImage(const char *theTrackName);
-	AttachEffect *AttachParticleToTrack(const char *theTrackName,
-										TodParticleSystem *theParticleSystem,
-										float thePosX,
+	AttachEffect *AttachParticleToTrack(const char *theTrackName, TodParticleSystem *theParticleSystem, float thePosX,
 										float thePosY);
 	void GetTrackBasePoseMatrix(int theTrackIndex, SexyTransform2D &theBasePosMatrix);
 	bool IsTrackShowing(const char *theTrackName);
-	void SetTruncateDisappearingFrames(const char *theTrackName = nullptr,
-												  bool theTruncateDisappearingFrames = false);
-	void PlayReanim(const char *theTrackName,
-							   ReanimLoopType theLoopType,
-							   int theBlendTime,
-							   float theAnimRate);
+	void SetTruncateDisappearingFrames(const char *theTrackName = nullptr, bool theTruncateDisappearingFrames = false);
+	void PlayReanim(const char *theTrackName, ReanimLoopType theLoopType, int theBlendTime, float theAnimRate);
 	void ReanimationDelete();
 	ReanimatorTrackInstance *GetTrackInstanceByName(const char *theTrackName);
 	void GetFramesForLayer(const char *theTrackName, int &theFrameStart, int &theFrameCount);
@@ -247,21 +241,14 @@ class Reanimation
 	void AttacherSynchWalkSpeed(int theTrackIndex, Reanimation *theAttachReanim, AttacherInfo &theAttacherInfo);
 	bool IsAnimPlaying(const char *theTrackName);
 	void SetBasePoseFromAnim(const char *theTrackName);
-	void ReanimBltMatrix(Graphics *g,
-						 Image *theImage,
-						 SexyMatrix3 &theTransform,
-						 const Rect &theClipRect,
-						 const Color &theColor,
-						 int theDrawMode,
-						 const Rect &theSrcRect);
+	void ReanimBltMatrix(Graphics *g, Image *theImage, SexyMatrix3 &theTransform, const Rect &theClipRect,
+						 const Color &theColor, int theDrawMode, const Rect &theSrcRect);
 	Reanimation *FindSubReanim(ReanimationType theReanimType);
 };
 
 void ReanimationCreateAtlas(ReanimatorDefinition *theDefinition, ReanimationType theReanimationType);
 void ReanimationPreload(ReanimationType theReanimationType);
-void BlendTransform(ReanimatorTransform *theResult,
-					const ReanimatorTransform &theTransform1,
-					const ReanimatorTransform &theTransform2,
-					float theBlendFactor);
+void BlendTransform(ReanimatorTransform *theResult, const ReanimatorTransform &theTransform1,
+					const ReanimatorTransform &theTransform2, float theBlendFactor);
 
 #endif

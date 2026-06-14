@@ -1,3 +1,6 @@
+#include <sstream>
+#include <iomanip>
+
 #if SEXY_CRASH_HANDLER
 #include "SEHCatcher.h"
 #include <SDL3/SDL.h>
@@ -13,7 +16,7 @@
 #if SEXY_USE_IMGUI
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdlrenderer3.h> //use SDL3 Renderer for the handler.
-#include <imgui/imgui_impl_sdl3.h> //use SDL3 Renderer for the handler.
+#include <imgui/imgui_impl_sdl3.h>		   //use SDL3 Renderer for the handler.
 #endif
 
 #include <cpptrace/cpptrace.hpp>
@@ -142,7 +145,7 @@ std::string GetCallStack()
 		if (!f.symbol.empty())
 			aCallStack += f.symbol;
 		else
-			aCallStack += StrFormat("0x%p" , f.raw_address);
+			aCallStack += StrFormat("0x%p", f.raw_address);
 
 		if (!f.filename.empty())
 			aCallStack += StrFormat("  (%s:%zu)", GetFileName(f.filename).c_str(), f.line);
@@ -159,11 +162,9 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 	std::string anErrorTitle;
 	std::string aDebugDump;
 
-	char aBuffer[2048];
-
 	///////////////////////////
 	// first name the exception
-	char *szName = NULL;
+	char *szName = nullptr;
 	for (int i = 0; gMsgTable[i].dwExceptionCode != 0xFFFFFFFF; i++)
 	{
 		if (gMsgTable[i].dwExceptionCode == lpEP->ExceptionRecord->ExceptionCode)
@@ -173,27 +174,27 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 		}
 	}
 
-	if (szName != NULL)
+	std::ostringstream aExceptionInfo;
+
+	if (szName)
 	{
-		sprintf(aBuffer,
-				"Exception: %s (code 0x%x) at address %08X in thread %X\r\n",
-				szName,
-				lpEP->ExceptionRecord->ExceptionCode,
-				lpEP->ExceptionRecord->ExceptionAddress,
-				GetCurrentThreadId());
+		aExceptionInfo << "Exception: " << szName;
 	}
 	else
 	{
-		sprintf(aBuffer,
-				"Unknown exception: (code 0x%x) at address %08X in thread %X\r\n",
-				lpEP->ExceptionRecord->ExceptionCode,
-				lpEP->ExceptionRecord->ExceptionAddress,
-				GetCurrentThreadId());
+		aExceptionInfo << "Unknown exception: ";
 	}
+	aExceptionInfo << std::hex;
+	aExceptionInfo << "(code 0x" << lpEP->ExceptionRecord->ExceptionCode << ") ";
+#ifdef SEXY_IS_X64
+	aExceptionInfo << "at address 0x" << std::setw(16) << lpEP->ExceptionRecord->ExceptionAddress;
+#endif
+#ifdef SEXY_IS_X86
+	aExceptionInfo << "at address 0x" << std::setw(8) << lpEP->ExceptionRecord->ExceptionAddress;
+#endif
+	aExceptionInfo << " in thread 0x" << GetCurrentThreadId() << "\r\n";
 
-	aDebugDump += aBuffer;
-
-
+	aDebugDump += aExceptionInfo.str();
 
 	aDebugDump += "\n";
 #ifdef DEBUG
@@ -202,7 +203,7 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 #endif
 	aDebugDump += GetSysInfo();
 
-	if (mApp != NULL)
+	if (mApp)
 	{
 		std::string aGameSEHInfo = mApp->GetGameSEHInfo();
 		if (aGameSEHInfo.length() > 0)
@@ -216,7 +217,7 @@ void SEHCatcher::DoHandleDebugEvent(LPEXCEPTION_POINTERS lpEP)
 
 	WriteToFile(aDebugDump);
 
-	if (mApp != NULL)
+	if (mApp)
 	{
 		if (mApp->mRecordingDemoBuffer)
 		{
@@ -338,7 +339,6 @@ void SEHCatcher::ShowErrorDialog(const std::string &theErrorTitle, const std::st
 
 		int numButtons = 2;
 
-
 		float totalWidth = numButtons * buttonWidth + (numButtons - 1) * spacing;
 		float availWidth = ImGui::GetContentRegionAvail().x;
 		float startX = (availWidth - totalWidth) * 0.5f;
@@ -416,7 +416,6 @@ std::string SEHCatcher::GetSysInfo()
 		aDebugDump += StrFormat("OpenGL - %s\r\n", glGetString(GL_VERSION));
 #endif
 		aDebugDump += StrFormat("OpenAL - %s\r\n", alGetString(AL_VERSION));
-
 	}
 
 	return aDebugDump;

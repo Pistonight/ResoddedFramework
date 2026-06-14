@@ -166,15 +166,14 @@ LawnApp::LawnApp()
 	mCrazyDaveBlinkCounter = 0;
 	mCrazyDaveBlinkReanimID = ReanimationID::REANIMATIONID_NULL;
 	mCrazyDaveMessageIndex = -1;
-	#if SEXY_USE_DRM
+#if SEXY_USE_DRM
 	mDRM = nullptr;
-	#endif
+#endif
 
 #if LAWN_DEBUG_TOOLS
 	mDebugWindow = nullptr;
 	mDebuggerEnabled = false;
 #endif
-
 }
 
 LawnApp::~LawnApp()
@@ -343,13 +342,13 @@ void LawnApp::Shutdown()
 		FreeGlobalAllocators();
 		UpdateRegisterInfo();
 		SexyAppBase::Shutdown();
-		#if SEXY_USE_DRM
+#if SEXY_USE_DRM
 		if (mDRM)
 		{
 			delete mDRM;
 		}
 		mDRM = nullptr;
-		#endif
+#endif
 	}
 }
 
@@ -385,8 +384,7 @@ bool LawnApp::CanPauseNow()
 	if (mCrazyDaveState != CrazyDaveState::CRAZY_DAVE_OFF)
 		return false;
 
-	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
-		mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
+	if (mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
 		return false;
 
 	return GetDialogCount() <= 0;
@@ -674,13 +672,8 @@ void LawnApp::DoBackToMain()
 
 void LawnApp::DoConfirmBackToMain()
 {
-	LawnDialog *aDialog = (LawnDialog *)DoDialog(
-		Dialogs::DIALOG_CONFIRM_BACK_TO_MAIN,
-		true,
-		"[LEAVE_GAME_HEADER]",
-		"[LEAVE_GAME]",
-		"",
-		Dialog::BUTTONS_YES_NO);
+	LawnDialog *aDialog = (LawnDialog *)DoDialog(Dialogs::DIALOG_CONFIRM_BACK_TO_MAIN, true, "[LEAVE_GAME_HEADER]",
+												 "[LEAVE_GAME]", "", Dialog::BUTTONS_YES_NO);
 
 	aDialog->mLawnYesButton->mLabel = TodStringTranslate("[LEAVE_BUTTON]");
 	aDialog->mLawnNoButton->mLabel = TodStringTranslate("[DIALOG_BUTTON_CANCEL]");
@@ -735,12 +728,9 @@ void LawnApp::DoPauseDialog()
 	mBoard->Pause(true);
 	//FinishModelessDialogs();
 
-	LawnDialog *aDialog = (LawnDialog *)DoDialog(Dialogs::DIALOG_PAUSED,
-												 true,
-												 "GAME PAUSED" /*"[GAME_PAUSED]"*/,
-												 "Click to resume game",
-												 "Resume Game" /*"[RESUME_GAME]"*/,
-												 Dialog::BUTTONS_FOOTER);
+	LawnDialog *aDialog =
+		(LawnDialog *)DoDialog(Dialogs::DIALOG_PAUSED, true, "GAME PAUSED" /*"[GAME_PAUSED]"*/, "Click to resume game",
+							   "Resume Game" /*"[RESUME_GAME]"*/, Dialog::BUTTONS_FOOTER);
 
 	aDialog->mReanimation->AddReanimation(72.0f, 42.0f, ReanimationType::REANIM_ZOMBIE_NEWSPAPER);
 	aDialog->mSpaceAfterHeader = 155;
@@ -748,12 +738,8 @@ void LawnApp::DoPauseDialog()
 	CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
 }
 
-int LawnApp::LawnMessageBox(int theDialogId,
-							const SexyString &theHeaderName,
-							const SexyString &theLinesName,
-							const SexyString &theButton1Name,
-							const SexyString &theButton2Name,
-							int theButtonMode)
+int LawnApp::LawnMessageBox(int theDialogId, const SexyString &theHeaderName, const SexyString &theLinesName,
+							const SexyString &theButton1Name, const SexyString &theButton2Name, int theButtonMode)
 {
 	Widget *aOldFocus = mWidgetManager->mFocusWidget;
 
@@ -776,12 +762,8 @@ int LawnApp::LawnMessageBox(int theDialogId,
 	return aResult;
 }
 
-Dialog *LawnApp::DoDialog(int theDialogId,
-						  bool isModal,
-						  const SexyString &theDialogHeader,
-						  const SexyString &theDialogLines,
-						  const SexyString &theDialogFooter,
-						  int theButtonMode)
+Dialog *LawnApp::DoDialog(int theDialogId, bool isModal, const SexyString &theDialogHeader,
+						  const SexyString &theDialogLines, const SexyString &theDialogFooter, int theButtonMode)
 {
 	SexyString aHeader = TodStringTranslate(theDialogHeader);
 	SexyString aLines = TodStringTranslate(theDialogLines);
@@ -796,15 +778,11 @@ Dialog *LawnApp::DoDialog(int theDialogId,
 	return aDialog;
 }
 
-Dialog *LawnApp::DoDialogDelay(int theDialogId,
-							   bool isModal,
-							   const SexyString &theDialogHeader,
-							   const SexyString &theDialogLines,
-							   const SexyString &theDialogFooter,
-							   int theButtonMode)
+Dialog *LawnApp::DoDialogDelay(int theDialogId, bool isModal, const SexyString &theDialogHeader,
+							   const SexyString &theDialogLines, const SexyString &theDialogFooter, int theButtonMode)
 {
-	LawnDialog *aDialog = (LawnDialog *)SexyAppBase::DoDialog(
-		theDialogId, isModal, theDialogHeader, theDialogLines, theDialogFooter, theButtonMode);
+	LawnDialog *aDialog = (LawnDialog *)SexyAppBase::DoDialog(theDialogId, isModal, theDialogHeader, theDialogLines,
+															  theDialogFooter, theButtonMode);
 	aDialog->SetButtonDelay(30);
 	return aDialog;
 }
@@ -862,23 +840,13 @@ void LawnApp::FinishCreateUserDialog(bool isYes)
 
 	if (isYes && aName.empty())
 	{
-		DoDialog(
-			Dialogs::DIALOG_CREATEUSERERROR,
-			true,
-			"[ENTER_YOUR_NAME]",
-			"[USER_ERROR_MESSAGE]",
-			"[DIALOG_BUTTON_OK]",
-			Dialog::BUTTONS_FOOTER);
+		DoDialog(Dialogs::DIALOG_CREATEUSERERROR, true, "[ENTER_YOUR_NAME]", "[USER_ERROR_MESSAGE]",
+				 "[DIALOG_BUTTON_OK]", Dialog::BUTTONS_FOOTER);
 	}
 	else if (mPlayerInfo == nullptr && (!isYes || aName.empty()))
 	{
-		DoDialog(
-			Dialogs::DIALOG_CREATEUSERERROR,
-			true,
-			"[ENTER_YOUR_NAME]",
-			"[USER_ERROR_MESSAGE]",
-			"[DIALOG_BUTTON_OK]",
-			Dialog::BUTTONS_FOOTER);
+		DoDialog(Dialogs::DIALOG_CREATEUSERERROR, true, "[ENTER_YOUR_NAME]", "[USER_ERROR_MESSAGE]",
+				 "[DIALOG_BUTTON_OK]", Dialog::BUTTONS_FOOTER);
 	}
 	else if (!isYes)
 	{
@@ -889,13 +857,8 @@ void LawnApp::FinishCreateUserDialog(bool isYes)
 		PlayerInfo *aProfile = mProfileMgr->AddProfile(aName);
 		if (aProfile == nullptr)
 		{
-			DoDialog(
-				Dialogs::DIALOG_CREATEUSERERROR,
-				true,
-				"[NAME_CONFLICT]",
-				"[ENTER_UNIQUE_PLAYER_NAME]",
-				"[DIALOG_BUTTON_OK]",
-				Dialog::BUTTONS_FOOTER);
+			DoDialog(Dialogs::DIALOG_CREATEUSERERROR, true, "[NAME_CONFLICT]", "[ENTER_UNIQUE_PLAYER_NAME]",
+					 "[DIALOG_BUTTON_OK]", Dialog::BUTTONS_FOOTER);
 		}
 		else
 		{
@@ -917,11 +880,8 @@ void LawnApp::FinishCreateUserDialog(bool isYes)
 void LawnApp::DoConfirmDeleteUserDialog(const SexyString &theName)
 {
 	KillDialog(Dialogs::DIALOG_CONFIRMDELETEUSER);
-	DoDialog(Dialogs::DIALOG_CONFIRMDELETEUSER,
-			 true,
-			 "[ARE_YOU_SURE]",
-			 StrFormat(TodStringTranslate("[DELETE_USER_WARNING]").c_str(), theName.c_str()),
-			 "",
+	DoDialog(Dialogs::DIALOG_CONFIRMDELETEUSER, true, "[ARE_YOU_SURE]",
+			 StrFormat(TodStringTranslate("[DELETE_USER_WARNING]").c_str(), theName.c_str()), "",
 			 Dialog::BUTTONS_YES_NO);
 }
 
@@ -1000,13 +960,8 @@ void LawnApp::FinishRenameUserDialog(bool isYes)
 	bool isCurrentUser = mProfileMgr->GetProfile(anOldName) == mPlayerInfo;
 	if (!mProfileMgr->RenameProfile(anOldName, aNewName))
 	{
-		DoDialog(
-			Dialogs::DIALOG_RENAMEUSERERROR,
-			true,
-			"[NAME_CONFLICT]",
-			"[ENTER_UNIQUE_PLAYER_NAME]",
-			"[DIALOG_BUTTON_OK]",
-			Dialog::BUTTONS_FOOTER);
+		DoDialog(Dialogs::DIALOG_RENAMEUSERERROR, true, "[NAME_CONFLICT]", "[ENTER_UNIQUE_PLAYER_NAME]",
+				 "[DIALOG_BUTTON_OK]", Dialog::BUTTONS_FOOTER);
 		return;
 	}
 
@@ -1087,26 +1042,17 @@ void LawnApp::DoConfirmSellDialog(const SexyString &theMessage)
 
 void LawnApp::DoConfirmPurchaseDialog(const SexyString &theMessage)
 {
-	LawnDialog *aComfirmDialog = (LawnDialog *)DoDialog(
-		Dialogs::DIALOG_STORE_PURCHASE, true, "买下这个物品？", theMessage, "", Dialog::BUTTONS_YES_NO);
+	LawnDialog *aComfirmDialog = (LawnDialog *)DoDialog(Dialogs::DIALOG_STORE_PURCHASE, true, "买下这个物品？",
+														theMessage, "", Dialog::BUTTONS_YES_NO);
 	aComfirmDialog->mLawnYesButton->mLabel = TodStringTranslate("[DIALOG_BUTTON_YES]");
 	aComfirmDialog->mLawnNoButton->mLabel = TodStringTranslate("[DIALOG_BUTTON_NO]");
 }
 
-Dialog *LawnApp::NewDialog(int theDialogId,
-						   bool isModal,
-						   const SexyString &theDialogHeader,
-						   const SexyString &theDialogLines,
-						   const SexyString &theDialogFooter,
-						   int theButtonMode)
+Dialog *LawnApp::NewDialog(int theDialogId, bool isModal, const SexyString &theDialogHeader,
+						   const SexyString &theDialogLines, const SexyString &theDialogFooter, int theButtonMode)
 {
-	LawnDialog *aDialog = new LawnDialog(this,
-										 theDialogId,
-										 isModal,
-										 theDialogHeader,
-										 theDialogLines,
-										 theDialogFooter,
-										 theButtonMode);
+	LawnDialog *aDialog =
+		new LawnDialog(this, theDialogId, isModal, theDialogHeader, theDialogLines, theDialogFooter, theButtonMode);
 
 	CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
 	return aDialog;
@@ -1226,7 +1172,7 @@ void LawnApp::Init()
 	TodAssertInitForApp();
 	gBetaSubmitFunc = BetaSubmitFunc;
 	TodTraceAndLog("[LawnProject] - session id: %u", mSessionID);
-	
+
 	// [SETUP] - Here you (can) add a link that contains the LATEST version of your mod. I recommend Github as it's free and easy to setup. (And you are probably using it now)
 
 	UpdateChecker::gUpdateHost =
@@ -1235,11 +1181,10 @@ void LawnApp::Init()
 	UpdateChecker::Check();
 
 	if (UpdateChecker::gIsOutdated)
-		TodTraceAndLog("[LawnProject] - OUTDATED: Current Version: %s | Latest Version: %s", gVersion.toString().c_str(),
-			   UpdateChecker::gLatestVersion.toString().c_str());
+		TodTraceAndLog("[LawnProject] - OUTDATED: Current Version: %s | Latest Version: %s",
+					   gVersion.toString().c_str(), UpdateChecker::gLatestVersion.toString().c_str());
 	else
 		TodTraceAndLog("[LawnProject] - UP TO DATE: Version : %s", gVersion.toString().c_str());
-
 
 #if SEXY_CRASH_HANDLER
 	gSEHCatcher.mSubmitHost = "https://github.com/LawnProject/ResoddedFramework";
@@ -1360,7 +1305,7 @@ bool LawnApp::DebugKeyDown(int theKey)
 			mDebugWindow->mEnabled = !mDebugWindow->mEnabled;
 		mDebuggerEnabled = mDebugWindow->mEnabled;
 #endif
-		
+		return true;
 	}
 	else
 		return SexyAppBase::DebugKeyDown(theKey);
@@ -1476,7 +1421,8 @@ void LawnApp::CheckForGameEnd()
 
 	if (IsAdventureMode())
 	{
-		if (mBoard->mPlantsPlaced > 0 && !IsWhackAZombieLevel() && !IsScaryPotterLevel() && !IsBungeeBlitzLevel() && !IsChallengeWithoutSeedBank())
+		if (mBoard->mPlantsPlaced > 0 && !IsWhackAZombieLevel() && !IsScaryPotterLevel() && !IsBungeeBlitzLevel() &&
+			!IsChallengeWithoutSeedBank())
 		{
 			if (mBoard->StageHasPool() && !mBoard->StageIsNight() && !mBoard->mDontPeaUsedPeashooter)
 			{
@@ -1574,7 +1520,6 @@ void LawnApp::CheckForGameEnd()
 
 		if (GetNumTrophies(ChallengePage::CHALLENGE_PAGE_CHALLENGE) == 20)
 			mAchievements->GiveAchievement(AchievementID::ACHIEVEMENT_BEYOND_THE_GRAVE, true);
-
 
 		if (aUnlockedNewChallenge && HasFinishedAdventure())
 		{
@@ -1720,12 +1665,12 @@ void LawnApp::LoadGroup(const char *theGroupName, int theGroupAveMsToLoad)
 	if (mShutdown || mCloseRequest)
 		return;
 	bool aResoddedResourceFound = ResoddedFrameworkExtractResourcesByName(mResourceManager, theGroupName);
-	if (mResourceManager->HadError() || (!ExtractResourcesByName(mResourceManager, theGroupName) && !aResoddedResourceFound))
+	if (mResourceManager->HadError() ||
+		(!ExtractResourcesByName(mResourceManager, theGroupName) && !aResoddedResourceFound))
 	{
 		ShowResourceError();
 		mLoadingFailed = true;
 	}
-
 
 	int aTotalGroupWeight = mResourceManager->GetNumResources(theGroupName) * theGroupAveMsToLoad;
 	int aGroupTime = std::max(aTimer.GetDuration(), 0.0);
@@ -1842,12 +1787,7 @@ void LawnApp::URLOpenFailed(const std::string &theURL)
 	std::string aString = "Please open the following URL in your browser\n\n" + theURL +
 						  "\n\nFor your convenience, this URL has already been copied to your clipboard.";
 
-	DoDialog(Dialogs::DIALOG_OPENURL_WAIT,
-			 true,
-			 "Open Browser",
-			 "OK",
-			 aString,
-			 Dialog::BUTTONS_FOOTER);
+	DoDialog(Dialogs::DIALOG_OPENURL_WAIT, true, "Open Browser", "OK", aString, Dialog::BUTTONS_FOOTER);
 }
 
 void LawnApp::URLOpenSucceeded(const std::string &theURL)
@@ -1858,8 +1798,7 @@ void LawnApp::URLOpenSucceeded(const std::string &theURL)
 
 bool LawnApp::OpenURL(const std::string &theURL, bool shutdownOnOpen)
 {
-	DoDialog(
-		Dialogs::DIALOG_OPENURL_WAIT, true, "Opening Browser", "Opening Browser", "", Dialog::BUTTONS_NONE);
+	DoDialog(Dialogs::DIALOG_OPENURL_WAIT, true, "Opening Browser", "Opening Browser", "", Dialog::BUTTONS_NONE);
 
 	DrawDirtyStuff();
 
@@ -1887,8 +1826,7 @@ void LawnApp::ButtonPress(int theId)
 
 void LawnApp::ButtonDepress(int theId)
 {
-	if (theId % 10000 >= 2000 &&
-		theId % 10000 < 3000)
+	if (theId % 10000 >= 2000 && theId % 10000 < 3000)
 	{
 		switch (theId - 2000)
 		{
@@ -1999,8 +1937,7 @@ void LawnApp::ButtonDepress(int theId)
 		}
 	}
 
-	if (theId % 10000 >= 3000 &&
-		theId < 4000)
+	if (theId % 10000 >= 3000 && theId < 4000)
 	{
 		switch (theId - 3000)
 		{
@@ -2997,20 +2934,11 @@ void LawnApp::DrawCrazyDave(Graphics *g)
 			clickToContinue = false;
 		}
 
-		TodDrawStringWrapped(g,
-							 aBubbleText,
-							 aRect,
-							 FONT_BRIANNETOD16,
-							 Color::Black,
+		TodDrawStringWrapped(g, aBubbleText, aRect, FONT_BRIANNETOD16, Color::Black,
 							 DrawStringJustification::DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 		if (clickToContinue)
 		{
-			TodDrawString(g,
-						  "click to continue",
-						  aPosX + 139,
-						  aPosY + 140,
-						  FONT_PICO129,
-						  Color::Black,
+			TodDrawString(g, "click to continue", aPosX + 139, aPosY + 140, FONT_PICO129, Color::Black,
 						  DrawStringJustification::DS_ALIGN_CENTER);
 		}
 	}
@@ -3187,17 +3115,17 @@ bool LawnApp::IsTrialStageLocked()
 {
 	if (mDebugTrialLocked)
 		return true;
-	#if SEXY_USE_DRM
+#if SEXY_USE_DRM
 	if (mDRM && mDRM->QueryData())
 		return false;
-	#endif
+#endif
 
 	return mTrialType == TrialType::TRIALTYPE_STAGELOCKED;
 }
 
 void LawnApp::InitHook()
 {
-	#if SEXY_USE_DRM
+#if SEXY_USE_DRM
 #ifdef _DEBUG
 	mDRM = nullptr;
 #else
@@ -3213,7 +3141,7 @@ void LawnApp::InitHook()
 		mTrialType = TrialType::TRIALTYPE_NONE;
 	}
 #endif
-	#endif
+#endif
 }
 
 SexyString LawnApp::GetMoneyString(int theAmount)
@@ -3221,9 +3149,7 @@ SexyString LawnApp::GetMoneyString(int theAmount)
 	int aValue = theAmount * 10;
 	if (aValue > 999999)
 	{
-		return StrFormat("$%d,%03d,%03d",
-						 aValue / 1000000,
-						 (aValue - aValue / 1000000 * 1000000) / 1000,
+		return StrFormat("$%d,%03d,%03d", aValue / 1000000, (aValue - aValue / 1000000 * 1000000) / 1000,
 						 aValue - aValue / 1000 * 1000);
 	}
 	else if (aValue > 9999)

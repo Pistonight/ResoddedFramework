@@ -13,6 +13,7 @@ if(MSVC)
 
     # Prevent PDB access conflicts when multiple CL.EXE instances compile in parallel.
     add_compile_options(/FS)
+    add_compile_options(/MP) # parallel compilation (e.g. cmake --build -- /m:16)
 endif()
 
 option(GITHUB_ACTIONS "Building in GitHub Actions" OFF)

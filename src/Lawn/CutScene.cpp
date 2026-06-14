@@ -32,7 +32,7 @@ static const int TimeEarlyDaveEnterStart = 2000;
 static const int TimeEarlyDaveEnterEnd = 2750;
 static const int TimeEarlyDaveLeaveStart = 3250;
 static const int TimeEarlyDaveLeaveEnd = 4000;
-static const int TimeSeedChoserSlideOnStart = 4000;	
+static const int TimeSeedChoserSlideOnStart = 4000;
 static const int TimeSeedChoserSlideOnEnd = 4250;
 static const int TimeSeedChoserSlideOffStart = 4500;
 static const int TimeSeedChoserSlideOffEnd = 4750;
@@ -46,7 +46,7 @@ static const int TimeRollSodStart = 6000;
 static const int TimeRollSodEnd = 8000;
 static const int TimeGraveStoneStart = 6000;
 static const int TimeGraveStoneEnd = 7000;
-static const int TimeReadySetPlantStart = 6000;	
+static const int TimeReadySetPlantStart = 6000;
 static const int TimeReadySetPlantEnd = 7830;
 static const int TimeFogRollIn = 5950;
 static const int TimeCrazyDaveEnterStart = 6500;
@@ -645,10 +645,8 @@ bool CutScene::CanGetPacketUpgrade(int theUpgradeIndex)
 {
 	int aCost = StoreScreen::GetItemCost(StoreItem::STORE_ITEM_PACKET_UPGRADE);
 
-	return mApp->mPlayerInfo->mPurchases[StoreItem::STORE_ITEM_PACKET_UPGRADE] ==
-			   theUpgradeIndex &&
-		   mApp->mPlayerInfo->mCoins >= aCost &&
-		   mApp->mPlayerInfo->mDidntPurchasePacketUpgrade < 2;
+	return mApp->mPlayerInfo->mPurchases[StoreItem::STORE_ITEM_PACKET_UPGRADE] == theUpgradeIndex &&
+		   mApp->mPlayerInfo->mCoins >= aCost && mApp->mPlayerInfo->mDidntPurchasePacketUpgrade < 2;
 }
 
 void CutScene::StartLevelIntro()
@@ -885,7 +883,7 @@ void CutScene::StartLevelIntro()
 			}
 			else
 			{
-				TOD_ASSERT();
+				TOD_ASSERT(false);
 			}
 		}
 		else
@@ -1063,8 +1061,8 @@ void CutScene::AddFlowerPots()
 
 int CutScene::CalcPosition(int theTimeStart, int theTimeEnd, int thePositionStart, int thePositionEnd)
 {
-	return TodAnimateCurve(
-		theTimeStart, theTimeEnd, mCutsceneTime, thePositionStart, thePositionEnd, TodCurves::CURVE_EASE_IN_OUT);
+	return TodAnimateCurve(theTimeStart, theTimeEnd, mCutsceneTime, thePositionStart, thePositionEnd,
+						   TodCurves::CURVE_EASE_IN_OUT);
 }
 
 void CutScene::AnimateBoard()
@@ -1162,8 +1160,8 @@ void CutScene::AnimateBoard()
 	{
 		int aSeedBankX =
 			CalcPosition(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, SEED_BANK_OFFSET_X, SEED_BANK_OFFSET_X_END);
-		int aDarken = TodAnimateCurve(
-			aTimeSeedBankRightStart, aTimeSeedBankRightEnd, mCutsceneTime, 255, 128, TodCurves::CURVE_EASE_OUT);
+		int aDarken = TodAnimateCurve(aTimeSeedBankRightStart, aTimeSeedBankRightEnd, mCutsceneTime, 255, 128,
+									  TodCurves::CURVE_EASE_OUT);
 		mBoard->mSeedBank->mCutSceneDarken = aDarken;
 		mBoard->mSeedBank->Move(aSeedBankX, mBoard->mSeedBank->mY);
 	}
@@ -1180,49 +1178,31 @@ void CutScene::AnimateBoard()
 			mApp->PlayFoley(FoleyType::FOLEY_DIGGER);
 			if (mBoard->mLevel == 1)
 			{
-				mApp->AddReanimation(
-					0, 0, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0), ReanimationType::REANIM_SODROLL);
-				mApp->AddTodParticle(35,
-									 348,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
+				mApp->AddReanimation(0, 0, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
+									 ReanimationType::REANIM_SODROLL);
+				mApp->AddTodParticle(35, 348, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
 									 ParticleEffect::PARTICLE_SOD_ROLL);
 			}
 			else if (mBoard->mLevel == 2)
 			{
-				mApp->AddReanimation(0,
-									 -102,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
+				mApp->AddReanimation(0, -102, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
 									 ReanimationType::REANIM_SODROLL);
-				mApp->AddReanimation(0,
-									 111,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
+				mApp->AddReanimation(0, 111, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
 									 ReanimationType::REANIM_SODROLL);
-				mApp->AddTodParticle(35,
-									 246,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
+				mApp->AddTodParticle(35, 246, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
 									 ParticleEffect::PARTICLE_SOD_ROLL);
-				mApp->AddTodParticle(35,
-									 459,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
+				mApp->AddTodParticle(35, 459, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
 									 ParticleEffect::PARTICLE_SOD_ROLL);
 			}
 			else if (mBoard->mLevel == 4)
 			{
-				mApp->AddReanimation(-3,
-									 -198,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
+				mApp->AddReanimation(-3, -198, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
 									 ReanimationType::REANIM_SODROLL);
-				mApp->AddReanimation(-3,
-									 203,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
+				mApp->AddReanimation(-3, 203, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 0),
 									 ReanimationType::REANIM_SODROLL);
-				mApp->AddTodParticle(32,
-									 150,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
+				mApp->AddTodParticle(32, 150, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
 									 ParticleEffect::PARTICLE_SOD_ROLL);
-				mApp->AddTodParticle(32,
-									 511,
-									 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
+				mApp->AddTodParticle(32, 511, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_TOP, 0, 1),
 									 ParticleEffect::PARTICLE_SOD_ROLL);
 			}
 		}
@@ -1303,9 +1283,7 @@ void CutScene::AnimateBoard()
 		TimeReadySetPlantStart + mLawnMowerTime + mSodTime + mGraveStoneTime + mCrazyDaveTime + mFogTime + mBossTime;
 	if (mReadySetPlantTime > 0 && mCutsceneTime == aTimeReadySetPlant)
 	{
-		mApp->AddReanimation(400,
-							 324,
-							 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0),
+		mApp->AddReanimation(400, 324, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0),
 							 ReanimationType::REANIM_READYSETPLANT);
 		mApp->PlaySample(SOUND_READYSETPLANT);
 		if (!mApp->IsFinalBossLevel())
@@ -1596,8 +1574,8 @@ void CutScene::AdvanceCrazyDaveDialog(bool theJustSkipping)
 		int aNumPackets = mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_PACKET_UPGRADE];
 		SexyString aBodyString = TodReplaceNumberString("[UPGRADE_DIALOG_BODY]", "{SLOTS}", aNumPackets + 1);
 		SexyString aAmountString = mApp->GetMoneyString(aCost);
-		Dialog *aDialog = mApp->DoDialog(
-			Dialogs::DIALOG_PURCHASE_PACKET_SLOT, true, aAmountString, aBodyString, "", Dialog::BUTTONS_YES_NO);
+		Dialog *aDialog = mApp->DoDialog(Dialogs::DIALOG_PURCHASE_PACKET_SLOT, true, aAmountString, aBodyString, "",
+										 Dialog::BUTTONS_YES_NO);
 		aDialog->mX += 120;
 		aDialog->mY += 130;
 		mBoard->ShowCoinBank(100);
@@ -1676,12 +1654,8 @@ void CutScene::KeyDown(KeyCode theKey)
 			mApp->PlaySample(SOUND_PAUSE);
 			mApp->mMusic->GameMusicPause(true);
 
-			int aResult = mApp->LawnMessageBox(Dialogs::DIALOG_MESSAGE,
-											   "[UPSELL_PAUSE_HEADER]",
-											   "[UPSELL_PAUSE_BODY]",
-											   "[UPSELL_RESUME_BUTTON]",
-											   "[MAIN_MENU_BUTTON]",
-											   Dialog::BUTTONS_YES_NO);
+			int aResult = mApp->LawnMessageBox(Dialogs::DIALOG_MESSAGE, "[UPSELL_PAUSE_HEADER]", "[UPSELL_PAUSE_BODY]",
+											   "[UPSELL_RESUME_BUTTON]", "[MAIN_MENU_BUTTON]", Dialog::BUTTONS_YES_NO);
 			if (aResult == Dialog::ID_NO)
 			{
 				mApp->KillCreditScreen();
@@ -2110,8 +2084,7 @@ void CutScene::UpdateUpsell()
 	Reanimation *aCrazyDaveReanim = mApp->ReanimationTryToGet(mApp->mCrazyDaveReanimID);
 	switch (mCrazyDaveLastTalkIndex)
 	{
-	case 3305:
-	{
+	case 3305: {
 		Reanimation *aReanimSquash = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_SQUASH);
 		aReanimSquash->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
 		AttachEffect *anAttachEffect = AttachReanim(
@@ -2122,8 +2095,7 @@ void CutScene::UpdateUpsell()
 		break;
 	}
 
-	case 3306:
-	{
+	case 3306: {
 		Reanimation *aReanimThreepeater = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_THREEPEATER);
 		aReanimThreepeater->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
 		for (int i = 1; i < 4; i++)
@@ -2142,13 +2114,12 @@ void CutScene::UpdateUpsell()
 		break;
 	}
 
-	case 3307:
-	{
+	case 3307: {
 		Reanimation *aReanimMagnet = mApp->AddReanimation(0, 0, 0, ReanimationType::REANIM_MAGNETSHROOM);
 		aReanimMagnet->PlayReanim("anim_idle", ReanimLoopType::REANIM_LOOP, 0, 15.0f);
 		TodScaleRotateTransformMatrix(aReanimMagnet->mOverlayMatrix, 0, 0, 0.3f, 1, 1);
-		AttachEffect *anAttachEffect = AttachReanim(
-			aCrazyDaveReanim->GetTrackInstanceByName("Dave_pot")->mAttachmentID, aReanimMagnet, 49.0f, 25.0f);
+		AttachEffect *anAttachEffect = AttachReanim(aCrazyDaveReanim->GetTrackInstanceByName("Dave_pot")->mAttachmentID,
+													aReanimMagnet, 49.0f, 25.0f);
 		anAttachEffect->mOffset.m11 = 1.2f;
 		anAttachEffect->mOffset.m22 = 1.2f;
 		aCrazyDaveReanim->Update();
@@ -2183,9 +2154,7 @@ void CutScene::UpdateUpsell()
 		ClearUpsellBoard();
 		mApp->PlaySample(SOUND_FINALWAVE);
 		mUpsellHideBoard = true;
-		mApp->AddTodParticle(592,
-							 240,
-							 Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0),
+		mApp->AddTodParticle(592, 240, Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_SCREEN_FADE, 0, 0),
 							 ParticleEffect::PARTICLE_PERSENT_PICK_UP_ARROW);
 		break;
 
@@ -2225,8 +2194,8 @@ void CutScene::DrawUpsell(Graphics *g)
 
 void CutScene::UpdateIntro()
 {
-	mBoard->Move(TodAnimateCurve(
-					 TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, 100, -100, TodCurves::CURVE_LINEAR),
+	mBoard->Move(TodAnimateCurve(TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, 100, -100,
+								 TodCurves::CURVE_LINEAR),
 				 0);
 
 	if (mCutsceneTime == 10)
@@ -2269,52 +2238,34 @@ void CutScene::DrawIntro(Graphics *g)
 	int aTimePanRightStart = TimeIntro_PanRightStart - TimeIntro_PresentsFadeIn;
 	if (mCutsceneTime > TimeIntro_PresentsFadeIn && mCutsceneTime <= aTimePanRightStart)
 	{
-		int anAlpha = mCutsceneTime < aTimePanRightStart - 600 ? TodAnimateCurve(TimeIntro_PresentsFadeIn,
-																				 TimeIntro_PresentsFadeIn + 300,
-																				 mCutsceneTime,
-																				 0,
-																				 255,
-																				 TodCurves::CURVE_LINEAR)
-															   : TodAnimateCurve(aTimePanRightStart - 600,
-																				 aTimePanRightStart - 300,
-																				 mCutsceneTime,
-																				 255,
-																				 0,
-																				 TodCurves::CURVE_LINEAR);
+		int anAlpha = mCutsceneTime < aTimePanRightStart - 600
+						  ? TodAnimateCurve(TimeIntro_PresentsFadeIn, TimeIntro_PresentsFadeIn + 300, mCutsceneTime, 0,
+											255, TodCurves::CURVE_LINEAR)
+						  : TodAnimateCurve(aTimePanRightStart - 600, aTimePanRightStart - 300, mCutsceneTime, 255, 0,
+											TodCurves::CURVE_LINEAR);
 
-		TodDrawString(g,
-					  "[INTRO_PRESENTS]",
-					  BOARD_WIDTH / 2 - mBoard->mX,
-					  310 - mBoard->mY,
-					  FONT_BRIANNETOD32,
-					  Color(255, 255, 255, anAlpha),
-					  DrawStringJustification::DS_ALIGN_CENTER);
+		TodDrawString(g, "[INTRO_PRESENTS]", BOARD_WIDTH / 2 - mBoard->mX, 310 - mBoard->mY, FONT_BRIANNETOD32,
+					  Color(255, 255, 255, anAlpha), DrawStringJustification::DS_ALIGN_CENTER);
 	}
 
 	if (mCutsceneTime > TimeIntro_LogoStart && mCutsceneTime <= TimeIntro_PanRightEnd)
 	{
-		float aScale = TodAnimateCurveFloat(
-			TimeIntro_LogoStart, TimeIntro_LogoEnd, mCutsceneTime, 5, 1, TodCurves::CURVE_EASE_OUT);
+		float aScale = TodAnimateCurveFloat(TimeIntro_LogoStart, TimeIntro_LogoEnd, mCutsceneTime, 5, 1,
+											TodCurves::CURVE_EASE_OUT);
 		float aCenter = aScale * 0.5;
 		int aOffsetX = BOARD_WIDTH / 2 - mBoard->mX, aOffsetY = BOARD_HEIGHT / 2 - mBoard->mY;
 		Rect aRect(aOffsetX - BOARD_WIDTH * aCenter, aOffsetY - 75 * aScale, BOARD_WIDTH * aScale, 150 * aScale);
 		g->SetColor(Color(0, 0, 0, 128));
 		g->FillRect(aRect);
 		Image *aImage = IMAGE_PVZ_LOGO;
-		TodDrawImageScaledF(g,
-							aImage,
-							aOffsetX - aImage->GetWidth() * aCenter,
-							aOffsetY - aImage->GetHeight() * aCenter,
-							aScale,
-							aScale);
+		TodDrawImageScaledF(g, aImage, aOffsetX - aImage->GetWidth() * aCenter,
+							aOffsetY - aImage->GetHeight() * aCenter, aScale, aScale);
 	}
 
 	if (mCutsceneTime > TimeIntro_FadeOut && mCutsceneTime <= TimeIntro_FadeOutEnd)
 	{
 		g->SetColor(Color(
-			0,
-			0,
-			0,
+			0, 0, 0,
 			TodAnimateCurve(TimeIntro_FadeOut, TimeIntro_FadeOutEnd, mCutsceneTime, 0, 255, TodCurves::CURVE_LINEAR)));
 		g->FillRect(-mBoard->mX, -mBoard->mY, BOARD_WIDTH, BOARD_HEIGHT);
 	}
