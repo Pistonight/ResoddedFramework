@@ -1134,7 +1134,7 @@ void ReanimatorEnsureDefinitionLoaded(ReanimationType theReanimType, bool theIsP
 		TodErrorMessageBox(aBuf, "Error");
 	}
 	int aDuration = aTimer.GetDuration();
-	if (aDuration > 100) //（仅内测版）创建时间过长的报告
+	if (aDuration > 100) // (beta only) - report if took too long
 		TodTraceAndLog("[TodLib] - LOADING:Long reanim '%s' %d ms on %s",
 					   aReanimParams->mReanimFileName,
 					   aDuration,

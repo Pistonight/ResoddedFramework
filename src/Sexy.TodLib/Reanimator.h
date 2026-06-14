@@ -37,9 +37,12 @@ enum ReanimFlags
 class ReanimatorTrack
 {
   public:
-	const char *mName;				  //+0x0：轨道名称
-	ReanimatorTransform *mTransforms; //+0x4：每一帧的动画变换的数组
-	int mTransformCount;			  //+0x8：动画变换数量，即帧数量
+    // name of the track
+	const char *mName;
+    // array of transform for each frame
+	ReanimatorTransform *mTransforms;
+    // num of transforms i.e. frames
+	int mTransformCount;
 
   public:
 	ReanimatorTrack() : mName(""), mTransforms(nullptr), mTransformCount(0)
@@ -111,9 +114,12 @@ class ReanimationHolder
 class ReanimatorFrameTime
 {
   public:
-	float mFraction;		 //+0x0：两帧之间已经过的比例
-	int mAnimFrameBeforeInt; //+0x4：前一个整数帧
-	int mAnimFrameAfterInt;	 //+0x8：后一个整数帧
+    // faction of what is already played between 2 frames
+	float mFraction;
+    // previous integer frame
+	int mAnimFrameBeforeInt;
+    // next integer frame
+	int mAnimFrameAfterInt;
 };
 
 class ReanimatorTransform
