@@ -1,6 +1,8 @@
 project(LawnProject)
 
 option(LAWN_USE_UNFINISHED_GAMEPAD_SUPPORT "Enable the unfinished gamepad support" OFF)
+option(LAWN_SHOW_TERMINAL_DEBUG "Show terminal output in debug mode when double-clicking to start the game" ON)
+option(LAWN_SHOW_TERMINAL_RELEASE "Show terminal output in release mode when double-clicking to start the game" OFF)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
@@ -36,6 +38,23 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     $<$<CONFIG:Debug>:_DEBUG>
     $<$<CONFIG:Release>:NDEBUG>
 )
+if (WIN32)
+    if (MSVC)
+        target_link_options(${PROJECT_NAME} PRIVATE
+            $<$<AND:$<CONFIG:Debug>,$<BOOL:${LAWN_SHOW_TERMINAL_DEBUG}>>:/SUBSYSTEM:CONSOLE>
+            $<$<AND:$<CONFIG:Release>,$<BOOL:${LAWN_SHOW_TERMINAL_RELEASE}>>:/SUBSYSTEM:CONSOLE>
+            $<$<AND:$<CONFIG:Debug>,$<NOT:$<BOOL:${LAWN_SHOW_TERMINAL_DEBUG}>>>:/SUBSYSTEM:WINDOWS>
+            $<$<AND:$<CONFIG:Release>,$<NOT:$<BOOL:${LAWN_SHOW_TERMINAL_RELEASE}>>>:/SUBSYSTEM:WINDOWS>
+        )
+    elseif(MINGW)
+        target_link_options(${PROJECT_NAME} PRIVATE
+            $<$<AND:$<CONFIG:Debug>,$<BOOL:${LAWN_SHOW_TERMINAL_DEBUG}>>:-mconsole>
+            $<$<AND:$<CONFIG:Release>,$<BOOL:${LAWN_SHOW_TERMINAL_RELEASE}>>:-mconsole>
+            $<$<AND:$<CONFIG:Debug>,$<NOT:$<BOOL:${LAWN_SHOW_TERMINAL_DEBUG}>>>:-mwindows>
+            $<$<AND:$<CONFIG:Release>,$<NOT:$<BOOL:${LAWN_SHOW_TERMINAL_RELEASE}>>>:-mwindows>
+        )
+    endif()
+endif()
 
 if(SEXY_USE_IMGUI)
     target_compile_definitions(${PROJECT_NAME} PUBLIC
