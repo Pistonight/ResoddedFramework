@@ -2068,7 +2068,7 @@ bool SexyAppBase::EraseFile(const std::string &theFileName)
 	if (mPlayingDemoBuffer)
 		return true;
 
-	return DeleteFileA(theFileName.c_str()) != 0;
+	return std::filesystem::remove(theFileName);
 }
 
 void SexyAppBase::SEHOccured()
