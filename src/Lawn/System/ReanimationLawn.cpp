@@ -11,20 +11,20 @@
 void ReanimatorCache::UpdateReanimationForVariation(Reanimation *theReanim, DrawVariation theDrawVariation)
 {
 	if (theDrawVariation >= DrawVariation::VARIATION_MARIGOLD_WHITE &&
-		theDrawVariation <= DrawVariation::VARIATION_MARIGOLD_LIGHT_GREEN)
+	    theDrawVariation <= DrawVariation::VARIATION_MARIGOLD_LIGHT_GREEN)
 	{
 		int aVariationIndex = (int)theDrawVariation - (int)DrawVariation::VARIATION_MARIGOLD_WHITE;
-		Color MARIGOLD_VARIATIONS[] = {Color(255, 255, 255),
-									   Color(230, 30, 195),
-									   Color(250, 125, 5),
-									   Color(255, 145, 215),
-									   Color(160, 255, 245),
-									   Color(230, 30, 30),
-									   Color(5, 130, 255),
-									   Color(195, 55, 235),
-									   Color(235, 210, 255),
-									   Color(255, 245, 55),
-									   Color(180, 255, 105)};
+		Color MARIGOLD_VARIATIONS[] = { Color(255, 255, 255),
+			                            Color(230, 30, 195),
+			                            Color(250, 125, 5),
+			                            Color(255, 145, 215),
+			                            Color(160, 255, 245),
+			                            Color(230, 30, 30),
+			                            Color(5, 130, 255),
+			                            Color(195, 55, 235),
+			                            Color(235, 210, 255),
+			                            Color(255, 245, 55),
+			                            Color(180, 255, 105) };
 
 		TOD_ASSERT(aVariationIndex >= 0 && aVariationIndex < LENGTH(MARIGOLD_VARIATIONS));
 		theReanim->GetTrackInstanceByName("Marigold_petals")->mTrackColor = MARIGOLD_VARIATIONS[aVariationIndex];
@@ -59,11 +59,11 @@ void ReanimatorCache::UpdateReanimationForVariation(Reanimation *theReanim, Draw
 }
 
 void ReanimatorCache::DrawReanimatorFrame(Graphics *g,
-										  float thePosX,
-										  float thePosY,
-										  ReanimationType theReanimationType,
-										  const char *theTrackName,
-										  DrawVariation theDrawVariation)
+                                          float thePosX,
+                                          float thePosY,
+                                          ReanimationType theReanimationType,
+                                          const char *theTrackName,
+                                          DrawVariation theDrawVariation)
 {
 	Reanimation aReanim;
 	aReanim.ReanimationInitializeType(thePosX, thePosY, theReanimationType);
@@ -112,7 +112,7 @@ GPUImage *ReanimatorCache::MakeBlankGPUImage(int theWidth, int theHeight)
 }
 
 void ReanimatorCache::GetPlantImageSize(
-	SeedType theSeedType, int &theOffsetX, int &theOffsetY, int &theWidth, int &theHeight)
+    SeedType theSeedType, int &theOffsetX, int &theOffsetY, int &theWidth, int &theHeight)
 {
 	theOffsetX = -20;
 	theOffsetY = -20;
@@ -148,11 +148,11 @@ GPUImage *ReanimatorCache::MakeCachedMowerFrame(LawnMowerType theMowerType)
 		aMemoryGraphics.mScaleX = 0.85f;
 		aMemoryGraphics.mScaleY = 0.85f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							10.0f,
-							0.0f,
-							ReanimationType::REANIM_LAWNMOWER,
-							"anim_normal",
-							DrawVariation::VARIATION_NORMAL);
+		                    10.0f,
+		                    0.0f,
+		                    ReanimationType::REANIM_LAWNMOWER,
+		                    "anim_normal",
+		                    DrawVariation::VARIATION_NORMAL);
 		break;
 	}
 	case LawnMowerType::LAWNMOWER_POOL: {
@@ -162,11 +162,11 @@ GPUImage *ReanimatorCache::MakeCachedMowerFrame(LawnMowerType theMowerType)
 		aMemoryGraphics.mScaleX = 0.8f;
 		aMemoryGraphics.mScaleY = 0.8f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							10.0f,
-							25.0f,
-							ReanimationType::REANIM_POOL_CLEANER,
-							nullptr,
-							DrawVariation::VARIATION_NORMAL);
+		                    10.0f,
+		                    25.0f,
+		                    ReanimationType::REANIM_POOL_CLEANER,
+		                    nullptr,
+		                    DrawVariation::VARIATION_NORMAL);
 		break;
 	}
 	case LawnMowerType::LAWNMOWER_ROOF: {
@@ -176,11 +176,11 @@ GPUImage *ReanimatorCache::MakeCachedMowerFrame(LawnMowerType theMowerType)
 		aMemoryGraphics.mScaleX = 0.85f;
 		aMemoryGraphics.mScaleY = 0.85f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							10.0f,
-							0.0f,
-							ReanimationType::REANIM_ROOF_CLEANER,
-							nullptr,
-							DrawVariation::VARIATION_NORMAL);
+		                    10.0f,
+		                    0.0f,
+		                    ReanimationType::REANIM_ROOF_CLEANER,
+		                    nullptr,
+		                    DrawVariation::VARIATION_NORMAL);
 		break;
 	}
 	case LawnMowerType::LAWNMOWER_SUPER_MOWER: {
@@ -190,11 +190,11 @@ GPUImage *ReanimatorCache::MakeCachedMowerFrame(LawnMowerType theMowerType)
 		aMemoryGraphics.mScaleX = 0.85f;
 		aMemoryGraphics.mScaleY = 0.85f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							10.0f,
-							0.0f,
-							ReanimationType::REANIM_LAWNMOWER,
-							"anim_tricked",
-							DrawVariation::VARIATION_NORMAL);
+		                    10.0f,
+		                    0.0f,
+		                    ReanimationType::REANIM_LAWNMOWER,
+		                    "anim_tricked",
+		                    DrawVariation::VARIATION_NORMAL);
 		break;
 	}
 	default:
@@ -221,73 +221,73 @@ GPUImage *ReanimatorCache::MakeCachedPlantFrame(SeedType theSeedType, DrawVariat
 		aMemoryGraphics.mScaleX = 0.85f;
 		aMemoryGraphics.mScaleY = 0.85f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							-(int)(aOffsetX - 12.0f),
-							-(int)(aOffsetY - 12.0f),
-							aPlantDef.mReanimationType,
-							"anim_armed",
-							theDrawVariation);
+		                    -(int)(aOffsetX - 12.0f),
+		                    -(int)(aOffsetY - 12.0f),
+		                    aPlantDef.mReanimationType,
+		                    "anim_armed",
+		                    theDrawVariation);
 	}
 	else if (theSeedType == SeedType::SEED_INSTANT_COFFEE)
 	{
 		aMemoryGraphics.mScaleX = 0.8f;
 		aMemoryGraphics.mScaleY = 0.8f;
 		DrawReanimatorFrame(&aMemoryGraphics,
-							-(int)(aOffsetX - 12.0f),
-							-(int)(aOffsetY - 12.0f),
-							aPlantDef.mReanimationType,
-							"anim_idle",
-							theDrawVariation);
+		                    -(int)(aOffsetX - 12.0f),
+		                    -(int)(aOffsetY - 12.0f),
+		                    aPlantDef.mReanimationType,
+		                    "anim_idle",
+		                    theDrawVariation);
 	}
 	else if (theSeedType == SeedType::SEED_EXPLODE_O_NUT)
 	{
 		aMemoryGraphics.SetColorizeImages(true);
 		aMemoryGraphics.SetColor(Color(255, 64, 64));
 		DrawReanimatorFrame(
-			&aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_idle", theDrawVariation);
+		    &aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_idle", theDrawVariation);
 	}
 	else
 	{
 		DrawReanimatorFrame(
-			&aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_idle", theDrawVariation);
+		    &aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_idle", theDrawVariation);
 
 		if (theSeedType == SeedType::SEED_PEASHOOTER || theSeedType == SeedType::SEED_SNOWPEA ||
-			theSeedType == SeedType::SEED_REPEATER || theSeedType == SeedType::SEED_LEFTPEATER ||
-			theSeedType == SeedType::SEED_GATLINGPEA)
+		    theSeedType == SeedType::SEED_REPEATER || theSeedType == SeedType::SEED_LEFTPEATER ||
+		    theSeedType == SeedType::SEED_GATLINGPEA)
 		{
 			DrawReanimatorFrame(
-				&aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_head_idle", theDrawVariation);
+			    &aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_head_idle", theDrawVariation);
 		}
 		else if (theSeedType == SeedType::SEED_SPLITPEA)
 		{
 			DrawReanimatorFrame(
-				&aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_head_idle", theDrawVariation);
+			    &aMemoryGraphics, -aOffsetX, -aOffsetY, aPlantDef.mReanimationType, "anim_head_idle", theDrawVariation);
 			DrawReanimatorFrame(&aMemoryGraphics,
-								-aOffsetX,
-								-aOffsetY,
-								aPlantDef.mReanimationType,
-								"anim_splitpea_idle",
-								theDrawVariation);
+			                    -aOffsetX,
+			                    -aOffsetY,
+			                    aPlantDef.mReanimationType,
+			                    "anim_splitpea_idle",
+			                    theDrawVariation);
 		}
 		else if (theSeedType == SeedType::SEED_THREEPEATER)
 		{
 			DrawReanimatorFrame(&aMemoryGraphics,
-								-aOffsetX,
-								-aOffsetY,
-								aPlantDef.mReanimationType,
-								"anim_head_idle1",
-								theDrawVariation);
+			                    -aOffsetX,
+			                    -aOffsetY,
+			                    aPlantDef.mReanimationType,
+			                    "anim_head_idle1",
+			                    theDrawVariation);
 			DrawReanimatorFrame(&aMemoryGraphics,
-								-aOffsetX,
-								-aOffsetY,
-								aPlantDef.mReanimationType,
-								"anim_head_idle3",
-								theDrawVariation);
+			                    -aOffsetX,
+			                    -aOffsetY,
+			                    aPlantDef.mReanimationType,
+			                    "anim_head_idle3",
+			                    theDrawVariation);
 			DrawReanimatorFrame(&aMemoryGraphics,
-								-aOffsetX,
-								-aOffsetY,
-								aPlantDef.mReanimationType,
-								"anim_head_idle2",
-								theDrawVariation);
+			                    -aOffsetX,
+			                    -aOffsetY,
+			                    aPlantDef.mReanimationType,
+			                    "anim_head_idle2",
+			                    theDrawVariation);
 		}
 	}
 
@@ -360,8 +360,6 @@ GPUImage *ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		aPropellerReanim.SetFramesForLayer("Propeller");
 		aReanim.Draw(&aMemoryGraphics);
 		aPropellerReanim.Draw(&aMemoryGraphics);
-
-
 	}
 	else if (aZombieDef.mReanimationType == ReanimationType::REANIM_BOSS)
 	{
@@ -400,7 +398,7 @@ GPUImage *ReanimatorCache::MakeCachedZombieFrame(ZombieType theZombieType)
 		}
 
 		DrawReanimatorFrame(
-			&aMemoryGraphics, aPosX, aPosY, aZombieDef.mReanimationType, aTrackName, DrawVariation::VARIATION_NORMAL);
+		    &aMemoryGraphics, aPosX, aPosY, aZombieDef.mReanimationType, aTrackName, DrawVariation::VARIATION_NORMAL);
 	}
 	return aGPUImage;
 }
@@ -433,7 +431,7 @@ void ReanimatorCache::ReanimatorCacheDispose()
 }
 
 void ReanimatorCache::DrawCachedPlant(
-	Graphics *g, float thePosX, float thePosY, SeedType theSeedType, DrawVariation theDrawVariation)
+    Graphics *g, float thePosX, float thePosY, SeedType theSeedType, DrawVariation theDrawVariation)
 {
 	TOD_ASSERT(theSeedType >= 0 && theSeedType < SeedType::NUM_SEED_TYPES);
 
@@ -441,7 +439,7 @@ void ReanimatorCache::DrawCachedPlant(
 	if (theDrawVariation != DrawVariation::VARIATION_NORMAL)
 	{
 		for (TodListNode<ReanimCacheImageVariation> *aNode = mImageVariationList.mHead; aNode != nullptr;
-			 aNode = aNode->mNext)
+		     aNode = aNode->mNext)
 		{
 			ReanimCacheImageVariation &aImageVariation = aNode->mValue;
 			if (aImageVariation.mSeedType == theSeedType && aImageVariation.mDrawVariation == theDrawVariation)
@@ -477,7 +475,7 @@ void ReanimatorCache::DrawCachedPlant(
 		g->DrawImage(aImage, thePosX + aOffsetX, thePosY + aOffsetY);
 	else
 		TodDrawImageScaledF(
-			g, aImage, thePosX + (aOffsetX * g->mScaleX), thePosY + (aOffsetY * g->mScaleY), g->mScaleX, g->mScaleY);
+		    g, aImage, thePosX + (aOffsetX * g->mScaleX), thePosY + (aOffsetY * g->mScaleY), g->mScaleX, g->mScaleY);
 }
 
 void ReanimatorCache::DrawCachedMower(Graphics *g, float thePosX, float thePosY, LawnMowerType theMowerType)

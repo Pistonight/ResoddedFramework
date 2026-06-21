@@ -157,7 +157,7 @@ void MessageWidget::LayoutReanimText()
 
 	// calculate line widths and codepoint count
 	size_t aCodepointCount = 0;
-	float aLineWidth[MAX_REANIM_LINES] = {0.};
+	float aLineWidth[MAX_REANIM_LINES] = { 0. };
 	{
 		int aCurLine = 0;
 		SexyString aLine;
@@ -255,7 +255,7 @@ void MessageWidget::Update()
 			else
 			{
 				aTextReanim->mAnimRate = TodAnimateCurveFloat(0, 50, (mDisplayTime - mDuration) * aTextSpeed - aPos,
-															  0.0f, 40.0f, TodCurves::CURVE_LINEAR);
+				                                              0.0f, 40.0f, TodCurves::CURVE_LINEAR);
 			}
 		}
 		else
@@ -265,7 +265,7 @@ void MessageWidget::Update()
 				aTextReanim->PlayReanim("anim_leave", ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD, 0, 0.0f);
 			}
 			aTextReanim->mAnimRate = TodAnimateCurveFloat(0, 50, (mSlideOffTime - mDuration) * aTextSpeed - aPos, 0.0f,
-														  40.0f, TodCurves::CURVE_LINEAR);
+			                                              40.0f, TodCurves::CURVE_LINEAR);
 		}
 
 		aTextReanim->Update();
@@ -452,7 +452,7 @@ void MessageWidget::Draw(Graphics *g)
 		if (aMinAlpha != 255)
 		{
 			aColor.mAlpha =
-				TodAnimateCurve(75, 0, mApp->mAppCounter % 75, aMinAlpha, 255, TodCurves::CURVE_BOUNCE_SLOW_MIDDLE);
+			    TodAnimateCurve(75, 0, mApp->mAppCounter % 75, aMinAlpha, 255, TodCurves::CURVE_BOUNCE_SLOW_MIDDLE);
 			aOutlineColor.mAlpha = aColor.mAlpha;
 		}
 		if (aFadeOut)
@@ -470,7 +470,7 @@ void MessageWidget::Draw(Graphics *g)
 
 			aRect.mY += aTextOffsetY;
 			TodDrawStringWrapped(g, mLabel.data(), aRect, aFont, aColor,
-								 DrawStringJustification::DS_ALIGN_CENTER_VERTICAL_MIDDLE);
+			                     DrawStringJustification::DS_ALIGN_CENTER_VERTICAL_MIDDLE);
 		}
 		else
 		{
@@ -479,7 +479,7 @@ void MessageWidget::Draw(Graphics *g)
 			if (aOutlineFont)
 			{
 				TodDrawStringWrapped(g, aLabelStr, aRect, aOutlineFont, aOutlineColor,
-									 DrawStringJustification::DS_ALIGN_CENTER);
+				                     DrawStringJustification::DS_ALIGN_CENTER);
 			}
 			TodDrawStringWrapped(g, aLabelStr, aRect, aFont, aColor, DrawStringJustification::DS_ALIGN_CENTER);
 		}
@@ -490,7 +490,7 @@ void MessageWidget::Draw(Graphics *g)
 			if (mApp->IsSurvivalMode() && mApp->mBoard->mChallenge->mSurvivalStage > 0)
 			{
 				int aFlags = mApp->mBoard->GetNumWavesPerSurvivalStage() * mApp->mBoard->mChallenge->mSurvivalStage /
-							 mApp->mBoard->GetNumWavesPerFlag();
+				             mApp->mBoard->GetNumWavesPerFlag();
 				SexyString aFlagStr = mApp->Pluralize(aFlags, "[ONE_FLAG]", "[COUNT_FLAGS]");
 				SexyString aSubStr = TodReplaceString("[FLAGS_COMPLETED]", "{FLAGS}", aFlagStr);
 			}
@@ -498,7 +498,7 @@ void MessageWidget::Draw(Graphics *g)
 			if (aSubStr.size() > 0)
 			{
 				TodDrawString(g, aSubStr, BOARD_WIDTH / 2 - mApp->mBoard->mX, aPosY + 26, Sexy::FONT_HOUSEOFTERROR16,
-							  Color(224, 187, 62, aColor.mAlpha), DrawStringJustification::DS_ALIGN_CENTER);
+				              Color(224, 187, 62, aColor.mAlpha), DrawStringJustification::DS_ALIGN_CENTER);
 			}
 		}
 	}

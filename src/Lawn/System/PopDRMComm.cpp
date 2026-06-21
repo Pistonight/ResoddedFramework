@@ -115,7 +115,7 @@ bool PopDRMComm::DoIPC()
 	{
 		mEventHwnd = CreateEvent(NULL, NULL, NULL, NULL);
 		PostMessage(
-			(HWND)0xFFFF, mWindowMessage[PopDRMComm::PopCapDRM_IPC], GetCurrentProcessId(), (LPARAM)mDrmGameWnd);
+		    (HWND)0xFFFF, mWindowMessage[PopDRMComm::PopCapDRM_IPC], GetCurrentProcessId(), (LPARAM)mDrmGameWnd);
 		WaitForSingleObject(mEventHwnd, 100);
 		CloseHandle(mEventHwnd);
 	}
