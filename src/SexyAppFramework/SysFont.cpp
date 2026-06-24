@@ -185,6 +185,7 @@ SysFont::SysFont(const SysFont &theSysFont)
 	mFontData = theSysFont.mFontData;
 	mBold = theSysFont.mBold;
 	mItalic = theSysFont.mItalic;
+	mUnderlined = theSysFont.mUnderlined;
 
 	mDrawShadow = false;
 }
@@ -217,7 +218,7 @@ int SysFont::StringWidth(const SexyString &theString)
 void SysFont::DrawString(
     Graphics *g, int theX, int theY, const SexyString &theString, const Color &theColor, const Rect &theClipRect)
 {
-	if (mFontData == nullptr)
+	if (mFontData == nullptr || !mFontData->mFace)
 		return;
 	int posX = theX;
 	int posY = theY;
@@ -252,7 +253,7 @@ void SysFont::DrawString(
 			    mFontData->mAtlas.mAtlas,
 			    mFontData->mAtlas.mWidth,
 			    mFontData->mAtlas.mHeight,
-			    Rect(aDrawX, aDrawY, aGlyph.mWidth, aGlyph.mHeight),
+			    Rect(aDrawX + g->mTransX, aDrawY - mAscent + g->mTransY, aGlyph.mWidth, aGlyph.mHeight),
 			    Rect(aGlyph.mX, aGlyph.mY, aGlyph.mWidth, aGlyph.mHeight),
 			    theClipRect,
 			    theColor,
@@ -278,7 +279,8 @@ void SysFont::DrawString(
 			    mFontData->mAtlas.mAtlas,
 			    mFontData->mAtlas.mWidth,
 			    mFontData->mAtlas.mHeight,
-			    Rect(aDrawX + g->mTransX + 1, aDrawY - mAscent + 1 + g->mTransY, aGlyph.mWidth, aGlyph.mHeight),
+			    Rect(aDrawX + g->mTransX + 1,
+			         aDrawY - mAscent + 1 + g->mTransY, aGlyph.mWidth, aGlyph.mHeight),
 			    Rect(aGlyph.mX, aGlyph.mY, aGlyph.mWidth, aGlyph.mHeight),
 			    theClipRect,
 			    theColor,
